@@ -3,6 +3,7 @@
       {
         "id": "91d8c0d2-27c2-47fd-9cb9-3f49431faa59",
         "name": "6061 Aluminum Sheet Plate",
+        "quantity": 0,
         "material": "aluminum",
         "link": "https://eu.makera.com/products/6061-aluminum-alloy-sheet-plate",
         "geometry": {
@@ -16,6 +17,7 @@
       {
         "id": "2b4f8c1a-7e3d-4f90-a612-8d5c2e7b9341",
         "name": "6061 Aluminum Block",
+        "quantity": 0,
         "material": "aluminum",
         "link": "https://eu.makera.com/products/6061-aluminum-block",
         "geometry": {
@@ -29,6 +31,7 @@
       {
         "id": "c7a21e54-9b63-4d08-bf72-16e8a3c59104",
         "name": "6061 Aluminum Round Bar",
+        "quantity": 0,
         "material": "aluminum",
         "link": "https://eu.makera.com/products/6061-aluminum-round-bar",
         "geometry": {
@@ -41,6 +44,7 @@
       {
         "id": "5e9d3a72-1c48-4b06-8f25-d7a91e6c3048",
         "name": "Bicolor Stock",
+        "quantity": 0,
         "material": "bicolor_stock",
         "link": "https://eu.makera.com/products/bicolor-stock",
         "geometry": {
@@ -54,6 +58,7 @@
       {
         "id": "a4c8f271-6d35-49b2-93e7-5f1a8c204d69",
         "name": "Clear Acrylic Sheet Plate",
+        "quantity": 0,
         "material": "acrylic",
         "link": "https://eu.makera.com/products/clear-acrylic-sheet-plate",
         "geometry": {
@@ -67,6 +72,7 @@
       {
         "id": "73f1b6c9-2a84-45de-9017-e5c3d8b46210",
         "name": "1.5mm Blank PCB Boards",
+        "quantity": 0,
         "material": "pcb",
         "link": "https://eu.makera.com/products/1-5mm-blank-pcb-boards",
         "geometry": {
@@ -80,6 +86,7 @@
       {
         "id": "d2a95e41-8c67-4fb3-a019-6e7d2c548b36",
         "name": "Black Delrin Sheet Plate",
+        "quantity": 0,
         "material": "delrin",
         "link": "https://eu.makera.com/products/black-delrin-sheet-plate",
         "geometry": {
@@ -93,6 +100,7 @@
       {
         "id": "4f8c2d71-a639-4e05-b927-1c5a73d84620",
         "name": "7075 Aluminum Plate",
+        "quantity": 0,
         "material": "aluminum",
         "link": "https://eu.makera.com/products/7075-aluminum-plate",
         "geometry": {
@@ -106,6 +114,7 @@
       {
         "id": "8a35d7c2-1e69-4fb0-b843-92c6e5710d24",
         "name": "Brass Sheet Plate",
+        "quantity": 0,
         "material": "brass",
         "link": "https://eu.makera.com/products/brass-sheet-plate",
         "geometry": {
@@ -119,6 +128,7 @@
       {
         "id": "e1c6a842-5d73-4f09-b218-6a94c3e75120",
         "name": "White Delrin Sheet Plate",
+        "quantity": 0,
         "material": "delrin",
         "link": "https://eu.makera.com/products/white-delrin-sheet-plate",
         "geometry": {
@@ -132,6 +142,7 @@
       {
         "id": "f5a2c871-3d96-4e04-ab28-7c1d65e94310",
         "name": "Brass Round Bar",
+        "quantity": 0,
         "material": "brass",
         "link": "https://eu.makera.com/products/brass-round-bar",
         "geometry": {
@@ -144,6 +155,7 @@
       {
         "id": "6d84b2e9-1f57-43c0-a618-95e3d7a24081",
         "name": "Black Delrin Round Bar",
+        "quantity": 0,
         "material": "delrin",
         "link": "https://eu.makera.com/products/black-delrin-round-bar",
         "geometry": {
@@ -156,6 +168,7 @@
       {
         "id": "a8c531d7-4e62-49f0-b293-16d7e8450c28",
         "name": "7075 Aluminum Round Bar",
+        "quantity": 0,
         "material": "aluminum",
         "link": "https://eu.makera.com/products/7075-aluminum-round-bar",
         "geometry": {
@@ -168,6 +181,7 @@
       {
         "id": "c2e94715-8a63-4fd1-b507-39d6e2c84170",
         "name": "Epoxy Tooling Board",
+        "quantity": 0,
         "material": "epoxy",
         "link": "https://eu.makera.com/products/epoxy-tooling-board-1",
         "geometry": {
@@ -181,6 +195,7 @@
       {
         "id": "7b3d91e6-5c28-4fa0-a714-62e8c3951047",
         "name": "Clear Polycarbonate Sheet Plate",
+        "quantity": 0,
         "material": "polycarbonate",
         "link": "https://eu.makera.com/products/clear-polycarbonate-sheet-plate",
         "geometry": {
@@ -194,6 +209,7 @@
       {
         "id": "e6a24c81-9d57-4fb3-b208-35c7e1460a92",
         "name": "Black Delrin Block",
+        "quantity": 0,
         "material": "delrin",
         "link": "https://eu.makera.com/products/black-delrin-block",
         "geometry": {
@@ -207,6 +223,7 @@
       {
         "id": "1c95e7b3-6a42-4d08-9f71-28c6a534e920",
         "name": "Epoxy Tooling Block",
+        "quantity": 0,
         "material": "epoxy",
         "link": "https://eu.makera.com/products/epoxy-tooling-block",
         "geometry": {
@@ -220,6 +237,7 @@
       {
         "id": "b4e861c2-7d39-45af-a105-93c6e2f74810",
         "name": "White Delrin Round Bar",
+        "quantity": 0,
         "material": "delrin",
         "link": "https://eu.makera.com/products/white-delrin-round-bar",
         "geometry": {
@@ -232,6 +250,7 @@
       {
         "id": "52a7d936-1e84-4c0b-b265-8f3d91e74018",
         "name": "Bakelite Plate",
+        "quantity": 0,
         "material": "bakelite",
         "link": "https://eu.makera.com/products/bakelite-plate",
         "geometry": {
@@ -245,6 +264,7 @@
       {
         "id": "d8c24175-6a93-4fb0-817e-35c7a624901e",
         "name": "Synthetic Stone Plate",
+        "quantity": 0,
         "material": "synthetic_stone",
         "link": "https://eu.makera.com/products/synthetic-stone-plate",
         "geometry": {
@@ -258,6 +278,7 @@
       {
         "id": "9e35c712-4a68-4fd0-b291-57d8e613c024",
         "name": "Copper Sheet",
+        "quantity": 0,
         "material": "copper",
         "link": "https://eu.makera.com/products/copper-sheet",
         "geometry": {
@@ -271,6 +292,7 @@
       {
         "id": "3a71e8c5-2d94-46bf-9053-c817e6240a59",
         "name": "7075 Aluminum Block",
+        "quantity": 0,
         "material": "aluminum",
         "link": "https://eu.makera.com/products/7075-aluminum-block",
         "geometry": {
@@ -284,6 +306,7 @@
       {
         "id": "c6f284a1-7e35-49d0-b218-53a9e7610c42",
         "name": "Copper Round Bar",
+        "quantity": 0,
         "material": "copper",
         "link": "https://eu.makera.com/products/copper-round-bar",
         "geometry": {
@@ -296,6 +319,7 @@
       {
         "id": "81d5a3e7-4c29-46f0-9b62-e715c384a108",
         "name": "White Delrin Block",
+        "quantity": 0,
         "material": "delrin",
         "link": "https://eu.makera.com/products/white-delrin-block",
         "geometry": {
@@ -309,6 +333,7 @@
       {
         "id": "f3a861c5-2e74-4b09-a627-95d3c718e140",
         "name": "Brass Block",
+        "quantity": 0,
         "material": "brass",
         "link": "https://eu.makera.com/products/brass-block",
         "geometry": {
@@ -322,6 +347,7 @@
       {
         "id": "6c927e41-5a38-4db0-b716-e3d8c245901f",
         "name": "Copper Block",
+        "quantity": 0,
         "material": "copper",
         "link": "https://eu.makera.com/products/copper-block",
         "geometry": {
@@ -335,6 +361,7 @@
       {
         "id": "a173e5c8-9d42-4fb6-b280-61c7d3940e25",
         "name": "Carbon Fiber Sheet Plate",
+        "quantity": 0,
         "material": "carbon_fiber",
         "link": "https://eu.makera.com/products/carbon-fiber-sheet-plate",
         "geometry": {
@@ -348,6 +375,7 @@
       {
         "id": "91d8c0d2-27c2-43fd-9cb9-3f49431faa59",
         "name": "Aluminum HDD plate",
+        "quantity": 0,
         "material": "aluminum",
         "geometry": {
           "disk": {

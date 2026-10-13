@@ -9,39 +9,41 @@ import SwiftUI
 
 struct StockSheet: View {
 
-    var store: StocksStore
+    @ObservedObject var store: StocksStore
 
     @State private var selectedStockID: StockMaterial.ID?
+    @State private var stockPendingDeletion: StockMaterial?
+    @State private var inStockOnly = false
+
+    /// Stocks shown in the list, after applying the in-stock filter.
+    private var visibleStocks: [StockMaterial] {
+        inStockOnly ? store.stocks.filter { $0.quantity > 0 } : store.stocks
+    }
 
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationSplitView {
-            StockListView(
-                stocks: store.stocks,
-                selectedStockID: $selectedStockID,
-                onAdd: addStock
-            )
-            .navigationSplitViewColumnWidth(200)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
-            }
-        } detail: {
-            if let selectedStockID,
-               let index = store.stocks.firstIndex(
-                    where: { $0.id == selectedStockID }
-               ) {
+        VStack(spacing: 0) {
+            header
+            Divider()
+            NavigationSplitView {
+                StockListView(
+                    stocks: visibleStocks,
+                    selectedStockID: $selectedStockID,
+                    inStockOnly: $inStockOnly,
+                    onDuplicate: duplicateStock,
+                    onDelete: { stockPendingDeletion = $0 }
+                )
+                .navigationSplitViewColumnWidth(min: 260, ideal: 300, max: 400)
+            } detail: {
+                if let selectedStockID,
+                   let index = store.stocks.firstIndex(
+                        where: { $0.id == selectedStockID }
+                   ) {
 
-                StockEditorView(
-                    stock: Binding(
-                        get: {
-                            store.stocks[index]
-                        },
-                        set: { newValue in
+                    StockEditorView(
+                        stock: store.stocks[index],
+                        onSave: { newValue in
                             do {
                                 try store.update(newValue)
                             } catch {
@@ -49,17 +51,100 @@ struct StockSheet: View {
                             }
                         }
                     )
-                )
+                    // Reset the draft when a different stock is selected.
+                    .id(store.stocks[index].id)
 
-            } else {
-                ContentUnavailableView(
-                    "No Stock Selected",
-                    systemImage: "cube",
-                    description: Text("Select a stock material from the list.")
-                )
+                } else {
+                    ContentUnavailableView(
+                        "No Stock Selected",
+                        systemImage: "cube",
+                        description: Text("Select a stock material from the list.")
+                    )
+                }
             }
+            .navigationTitle("Stock Materials")
+            .onAppear(perform: selectFirstIfNeeded)
+            .onChange(of: inStockOnly) { _ in
+                let visible = visibleStocks
+                if !visible.contains(where: { $0.id == selectedStockID }) {
+                    selectedStockID = visible.groupedByMaterial.first?.stocks.first?.id
+                }
+            }
+            .confirmationDialog(
+                "Delete \"\(stockPendingDeletion?.name ?? "")\"?",
+                isPresented: Binding(
+                    get: { stockPendingDeletion != nil },
+                    set: { if !$0 { stockPendingDeletion = nil } }
+                ),
+                titleVisibility: .visible,
+                presenting: stockPendingDeletion
+            ) { stock in
+                Button("Delete", role: .destructive) {
+                    deleteStock(stock)
+                }
+            } message: { _ in
+                Text("This can't be undone.")
+            }
+    
         }
-        .navigationTitle("Stock Materials")
+    }
+
+    private var header: some View {
+        HStack(spacing: 12) {
+            Text("Stock Materials")
+                .font(.title2.weight(.semibold))
+
+            Spacer()
+
+            Button {
+                addStock()
+            } label: {
+                Label("Add Stock", systemImage: "plus")
+            }
+
+            Button("Close") {
+                dismiss()
+            }
+            .keyboardShortcut(.cancelAction)
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 14)
+    }
+
+    /// Selects the first item as displayed in the (grouped) list.
+    private func selectFirstIfNeeded() {
+        guard selectedStockID == nil else { return }
+        selectedStockID = visibleStocks.groupedByMaterial.first?.stocks.first?.id
+    }
+
+    private func duplicateStock(_ stock: StockMaterial) {
+        do {
+            let copy = try store.duplicate(stock)
+            selectedStockID = copy.id
+        } catch {
+            print("Failed to duplicate stock: \(error)")
+        }
+    }
+
+    private func deleteStock(_ stock: StockMaterial) {
+        // Pick the neighbour in the displayed (grouped) order before deleting.
+        let ordered = visibleStocks.groupedByMaterial.flatMap(\.stocks)
+        let position = ordered.firstIndex(where: { $0.id == stock.id })
+
+        do {
+            try store.delete(stock)
+        } catch {
+            print("Failed to delete stock: \(error)")
+            return
+        }
+
+        guard selectedStockID == stock.id else { return }
+        let remaining = visibleStocks.groupedByMaterial.flatMap(\.stocks)
+        if let position, !remaining.isEmpty {
+            selectedStockID = remaining[min(position, remaining.count - 1)].id
+        } else {
+            selectedStockID = nil
+        }
     }
 
     private func addStock() {

@@ -9,19 +9,52 @@ import SwiftUI
 
 struct StockEditorView: View {
 
-    @Binding var stock: StockMaterial
+    /// The saved stock. Nothing is written until the user taps Save.
+    let stock: StockMaterial
+    let onSave: (StockMaterial) -> Void
+
+    @State private var draft: StockMaterial
+
+    @Environment(\.openURL) private var openURL
+
+    init(stock: StockMaterial, onSave: @escaping (StockMaterial) -> Void) {
+        self.stock = stock
+        self.onSave = onSave
+        _draft = State(initialValue: stock)
+    }
+
+    private var hasChanges: Bool {
+        draft != stock
+    }
 
     var body: some View {
         Form {
-            Section {
-                StockPreviewView(geometry: stock.geometry, material: stock.material)
-                    .frame(height: 200)
-            }
-            generalSection
             geometrySection
+            generalSection
         }
         .formStyle(.grouped)
         .navigationTitle(stock.name)
+        .safeAreaInset(edge: .bottom) {
+            if hasChanges {
+                HStack {
+                    Text("Unsaved changes")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Revert") {
+                        draft = stock
+                    }
+                    Button("Save") {
+                        onSave(draft)
+                    }
+                    .keyboardShortcut("s", modifiers: .command)
+                    .buttonStyle(.borderedProminent)
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 10)
+                .background(.bar)
+            }
+        }
     }
 }
 
@@ -29,15 +62,45 @@ private extension StockEditorView {
 
     var generalSection: some View {
         Section("Material") {
-            TextField("Name", text: $stock.name)
+            TextField("Name", text: $draft.name)
 
-            Picker("Material", selection: $stock.material) {
+            Picker("Material", selection: $draft.material) {
                 ForEach(StockMaterialType.allCases, id: \.self) { material in
                     Text(material.displayName)
                         .tag(material)
                 }
             }
+
+            Stepper(value: $draft.quantity, in: 0...9999) {
+                HStack {
+                    Text("In stock")
+                    Spacer()
+                    TextField("In stock", value: $draft.quantity, format: .number)
+                        .labelsHidden()
+                        .multilineTextAlignment(.trailing)
+                        .frame(width: 60)
+                }
+            }
+
+            HStack {
+                TextField("Link", text: linkBinding)
+                Button {
+                    if let url = draft.linkURL {
+                        openURL(url)
+                    }
+                } label: {
+                    Label("Buy", systemImage: "cart")
+                }
+                .disabled(draft.linkURL == nil)
+            }
         }
+    }
+
+    var linkBinding: Binding<String> {
+        Binding(
+            get: { draft.link ?? "" },
+            set: { draft.link = $0.isEmpty ? nil : $0 }
+        )
     }
 }
 
@@ -45,32 +108,40 @@ private extension StockEditorView {
 
     var geometrySection: some View {
         Section("Geometry") {
-            Picker("Shape", selection: geometryTypeBinding) {
-                ForEach(StockGeometry.allCases, id: \.self) { shape in
-                    Text(shape.displayName)
-                        .tag(shape)
+            GeometryReader { proxy in
+              HStack(alignment: .top, spacing: 16) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Picker("Shape", selection: geometryKindBinding) {
+                        ForEach(StockGeometry.Kind.allCases) { kind in
+                            Text(kind.displayName)
+                                .tag(kind)
+                        }
+                    }
+                    geometryFields
                 }
+                .frame(width: max(proxy.size.width / 3 - 8, 0), alignment: .topLeading)
+
+                Divider()
+
+                StockPreviewView(geometry: draft.geometry, material: draft.material)
+                    .frame(maxWidth: .infinity)
+                    .frame(maxHeight: .infinity)
+              }
             }
-            geometryFields
+            .frame(height: 220)
+            .padding(.vertical, 4)
         }
     }
 
-    var geometryTypeBinding: Binding<StockGeometry> {
+    var geometryKindBinding: Binding<StockGeometry.Kind> {
         Binding(
             get: {
-                stock.geometry
+                draft.geometry.kind
             },
-            set: { newShape in
-                changeGeometry(to: newShape)
+            set: { newKind in
+                draft.geometry = draft.geometry.converted(to: newKind)
             }
         )
-    }
-}
-
-private extension StockEditorView {
-
-    func changeGeometry(to shape: StockGeometry) {
-        stock.geometry = shape
     }
 }
 
@@ -79,7 +150,7 @@ private extension StockEditorView {
     @ViewBuilder
     var geometryFields: some View {
 
-        switch stock.geometry {
+        switch draft.geometry {
 
         case .rectangular(let width, let height, let depth):
             MeasurementField(
@@ -87,7 +158,7 @@ private extension StockEditorView {
                 value: Binding(
                     get: { width },
                     set: {
-                        stock.geometry = .rectangular(
+                        draft.geometry = .rectangular(
                             width: $0,
                             height: height,
                             depth: depth
@@ -102,7 +173,7 @@ private extension StockEditorView {
                 value: Binding(
                     get: { height },
                     set: {
-                        stock.geometry = .rectangular(
+                        draft.geometry = .rectangular(
                             width: width,
                             height: $0,
                             depth: depth
@@ -117,7 +188,7 @@ private extension StockEditorView {
                 value: Binding(
                     get: { depth },
                     set: {
-                        stock.geometry = .rectangular(
+                        draft.geometry = .rectangular(
                             width: width,
                             height: height,
                             depth: $0
@@ -133,7 +204,7 @@ private extension StockEditorView {
                 value: Binding(
                     get: { diameter },
                     set: {
-                        stock.geometry = .cylindrical(
+                        draft.geometry = .cylindrical(
                             diameter: $0,
                             length: length
                         )
@@ -147,7 +218,7 @@ private extension StockEditorView {
                 value: Binding(
                     get: { length },
                     set: {
-                        stock.geometry = .cylindrical(
+                        draft.geometry = .cylindrical(
                             diameter: diameter,
                             length: $0
                         )
@@ -162,7 +233,7 @@ private extension StockEditorView {
                 value: Binding(
                     get: { outerDiameter },
                     set: {
-                        stock.geometry = .disk(outerDiameter: $0, innerDiameter: innerDiameter, depth: depth)
+                        draft.geometry = .disk(outerDiameter: $0, innerDiameter: innerDiameter, depth: depth)
                     }
                 ),
                 unit: "mm"
@@ -173,7 +244,7 @@ private extension StockEditorView {
                 value: Binding(
                     get: { innerDiameter },
                     set: {
-                        stock.geometry = .disk(outerDiameter: outerDiameter, innerDiameter: $0, depth: depth)
+                        draft.geometry = .disk(outerDiameter: outerDiameter, innerDiameter: $0, depth: depth)
                     }
                 ),
                 unit: "mm"
@@ -184,7 +255,7 @@ private extension StockEditorView {
                 value: Binding(
                     get: { depth },
                     set: {
-                        stock.geometry = .disk(outerDiameter: outerDiameter, innerDiameter: innerDiameter, depth: $0)
+                        draft.geometry = .disk(outerDiameter: outerDiameter, innerDiameter: innerDiameter, depth: $0)
                     }
                 ),
                 unit: "mm"

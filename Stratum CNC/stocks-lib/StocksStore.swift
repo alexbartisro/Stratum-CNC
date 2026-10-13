@@ -11,7 +11,7 @@ import Observation
 @MainActor
 final class StocksStore: ObservableObject {
 
-    private(set) var library: StockLibrary
+    @Published private(set) var library: StockLibrary
 
     var stocks: [StockMaterial] {
         library.stocks
@@ -43,8 +43,8 @@ final class StocksStore: ObservableObject {
         if !fileManager.fileExists(atPath: stocksFileURL.path) {
             try copyDefaultStocks()
         } else {
-            try fileManager.removeItem(atPath: stocksFileURL.path)
-            try copyDefaultStocks()
+//            try fileManager.removeItem(atPath: stocksFileURL.path)
+//            try copyDefaultStocks()
         }
 
         let data = try Data(contentsOf: stocksFileURL)
@@ -90,9 +90,11 @@ final class StocksStore: ObservableObject {
         try save()
     }
 
-    func duplicate(_ stock: StockMaterial) throws {
-        let copy = StockMaterial(name: "\(stock.name) Copy", material: stock.material, geometry: stock.geometry)
+    @discardableResult
+    func duplicate(_ stock: StockMaterial) throws -> StockMaterial {
+        let copy = StockMaterial(name: "\(stock.name) Copy", link: stock.link, quantity: stock.quantity, material: stock.material, geometry: stock.geometry)
         try add(copy)
+        return copy
     }
 
     // MARK: - Defaults

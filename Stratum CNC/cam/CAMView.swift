@@ -30,6 +30,7 @@ import SwiftUI
 */
 struct CAMView: View {
 
+    @ObservedObject var appModel: AppModel
     @ObservedObject var camModel: CAMModel
     @ObservedObject var projectModel: ProjectModel
 
@@ -84,10 +85,13 @@ struct CAMView: View {
                     Spacer()
                     VStack(alignment: .trailing, spacing: 16) {
                         PanelStockMaterial(stock: $camModel.selectedStockMaterial,
-                                          isStockVisible: stockVisibleBinding,
-                                          isCompact: true)
+                                           isStockVisible: stockVisibleBinding,
+                                           isCompact: true,
+                                           onOpenStocksLib: {
+                                               return await appModel.pickStockMaterial()
+                                           })
                             .background(.background)// Without a background the canvas is displayed above the GroupBox background
-                            .frame(width: 250)
+                            .frame(width: 280)
                         // Only while a toolpath is selected in the list
                         if let toolpath = selectedToolpath {
                             toolpathSettingsPanel(for: toolpath)

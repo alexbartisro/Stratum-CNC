@@ -20,7 +20,7 @@ struct ProjectView: View {
 
             switch projectModel.activeTab {
                 case .cam:
-                    CAMView(camModel: projectModel.camModel, projectModel: projectModel)
+                    CAMView(appModel: appModel, camModel: projectModel.camModel, projectModel: projectModel)
                         .environmentObject(appModel)
 
                 case .controller:

@@ -508,7 +508,10 @@ private struct CanvasSection: View {
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 12) {
-                PanelStockMaterial(stock: $camModel.selectedStockMaterial, isStockVisible: isStockVisible, isCompact: true)
+                PanelStockMaterial(stock: $camModel.selectedStockMaterial,
+                                   isStockVisible: isStockVisible,
+                                   isCompact: true,
+                                   onOpenStocksLib: nil)
                     .frame(width: 300)
 
                 if !gCodeModel.tools.isEmpty {

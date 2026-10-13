@@ -30,7 +30,11 @@ struct ContentView: View {
                 .preferredColorScheme(appModel.isDarkMode ? .dark : .light)
         }
         .sheet(isPresented: $appModel.showingStocksSheet) {
-            StockSheet(store: appModel.stocksStore)
+            var onPick: ((StockMaterial) -> Void)? = { material in
+                appModel.stocksSheetContinuation?.resume(returning: material)
+                appModel.stocksSheetContinuation = nil
+            }
+            StockSheet(store: appModel.stocksStore, onPick: onPick)
                 .frame(width: 800, height: 600)
                 .preferredColorScheme(appModel.isDarkMode ? .dark : .light)
         }

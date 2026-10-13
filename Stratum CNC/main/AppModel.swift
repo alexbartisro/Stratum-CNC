@@ -16,6 +16,12 @@ class AppModel: ObservableObject {
 
     @Published var showingToolsSheet: Bool = false
     @Published var showingStocksSheet: Bool = false
+    var toolsSheetContinuation: CheckedContinuation<Tool, Never>?
+    var stocksSheetContinuation: CheckedContinuation<StockMaterial, Never>? {
+        didSet {
+            print("set continuation 2 \(stocksSheetContinuation)")
+        }
+    }
 
     /// App-wide day/night switch. Drives `.preferredColorScheme` for the
     /// whole app from the root (`ContentView`), so every screen — Projects,
@@ -23,6 +29,16 @@ class AppModel: ObservableObject {
     /// screen deciding its own appearance. Persisted, like the other
     /// standing preferences in this app.
     @Published var isDarkMode: Bool = UserDefaults.standard.bool(forKey: "app.isDarkMode") {
-        didSet { UserDefaults.standard.set(isDarkMode, forKey: "app.isDarkMode") }
+        didSet {
+            UserDefaults.standard.set(isDarkMode, forKey: "app.isDarkMode")
+        }
+    }
+
+    func pickStockMaterial() async -> StockMaterial {
+        await withCheckedContinuation { continuation in
+            print("set continuation 1 \(continuation)")
+            self.stocksSheetContinuation = continuation
+            self.showingStocksSheet = true
+        }
     }
 }

@@ -12,6 +12,7 @@ struct PanelStockMaterial: View {
     @Binding var stock: StockMaterial
     @Binding var isStockVisible: Bool
     let isCompact: Bool
+    var onOpenStocksLib: (() async -> StockMaterial)?
 
     @State private var selectedShapeID = "rectangular"
 
@@ -22,6 +23,19 @@ struct PanelStockMaterial: View {
                     if !isCompact {
                         visibilityButton
                     }
+
+                    Button(action: {
+                        Task {
+                            if let returnedItem = await onOpenStocksLib?() {
+                                self.stock = returnedItem
+                            } else {
+                                print("No object selected")
+                            }
+                        }
+                    }) {
+                        Image(systemName: "cube")
+                    }
+                    .buttonStyle(.borderless)
 
                     Picker("Material", selection: $stock.material) {
                         ForEach(StockMaterialType.allCases, id: \.self) { material in

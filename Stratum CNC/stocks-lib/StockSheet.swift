@@ -11,6 +11,10 @@ struct StockSheet: View {
 
     @ObservedObject var store: StocksStore
 
+    /// When set, the sheet shows a "Pick" button. Tapping it returns the selected
+    /// stock through this closure and dismisses the sheet. Leave `nil` to browse/edit only.
+    var onPick: ((StockMaterial) -> Void)?
+
     @State private var selectedStockID: StockMaterial.ID?
     @State private var stockPendingDeletion: StockMaterial?
     @State private var inStockOnly = false
@@ -89,6 +93,10 @@ struct StockSheet: View {
         }
     }
 
+    private var selectedStock: StockMaterial? {
+        store.stocks.first { $0.id == selectedStockID }
+    }
+
     private var header: some View {
         HStack(spacing: 12) {
             Text("Stock Materials")
@@ -106,6 +114,18 @@ struct StockSheet: View {
                 dismiss()
             }
             .keyboardShortcut(.cancelAction)
+
+            if let onPick {
+                Button("Pick") {
+                    if let stock = selectedStock {
+                        onPick(stock)
+                        dismiss()
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .keyboardShortcut(.defaultAction)
+                .disabled(selectedStock == nil)
+            }
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 14)

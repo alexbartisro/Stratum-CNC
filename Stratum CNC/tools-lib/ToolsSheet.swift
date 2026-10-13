@@ -10,6 +10,10 @@ import SwiftUI
 struct ToolsSheet: View {
 
     @ObservedObject var store: ToolsStore
+
+    /// When set, the sheet shows a "Pick" button. Tapping it returns the selected
+    /// tool through this closure and dismisses the sheet. Leave `nil` to browse/edit only.
+    var onPick: ((Tool) -> Void)?
     @State private var selectedToolID: Tool.ID?
     @State private var toolPendingDeletion: Tool?
     @State private var inStockOnly = false
@@ -88,6 +92,10 @@ struct ToolsSheet: View {
         }
     }
 
+    private var selectedTool: Tool? {
+        store.tools.first { $0.id == selectedToolID }
+    }
+
     private var header: some View {
         HStack(spacing: 12) {
             Text("Tools")
@@ -105,6 +113,18 @@ struct ToolsSheet: View {
                 dismiss()
             }
             .keyboardShortcut(.cancelAction)
+
+            if let onPick {
+                Button("Pick") {
+                    if let tool = selectedTool {
+                        onPick(tool)
+                        dismiss()
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .keyboardShortcut(.defaultAction)
+                .disabled(selectedTool == nil)
+            }
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 14)

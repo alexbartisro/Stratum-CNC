@@ -31,6 +31,7 @@ struct StockEditorView: View {
         Form {
             geometrySection
             generalSection
+            availabilitySection
         }
         .formStyle(.grouped)
         .navigationTitle(stock.name)
@@ -70,29 +71,34 @@ private extension StockEditorView {
                         .tag(material)
                 }
             }
+        }
+    }
 
-            Stepper(value: $draft.quantity, in: 0...9999) {
-                HStack {
-                    Text("In stock")
-                    Spacer()
-                    TextField("In stock", value: $draft.quantity, format: .number)
-                        .labelsHidden()
-                        .multilineTextAlignment(.trailing)
-                        .frame(width: 60)
-                }
-            }
 
-            HStack {
-                TextField("Link", text: linkBinding)
-                Button {
-                    if let url = draft.linkURL {
-                        openURL(url)
+    var availabilitySection: some View {
+        Section("Availability") {
+                Stepper(value: $draft.quantity, in: 0...9999) {
+                    HStack {
+                        Text("Quantity")
+                        Spacer()
+                        TextField("Quantity", value: $draft.quantity, format: .number)
+                            .labelsHidden()
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 60)
                     }
-                } label: {
-                    Label("Buy", systemImage: "cart")
                 }
-                .disabled(draft.linkURL == nil)
-            }
+
+                HStack {
+                    TextField("Link", text: linkBinding)
+                    Button {
+                        if let url = draft.linkURL {
+                            openURL(url)
+                        }
+                    } label: {
+                        Label("Buy", systemImage: "cart")
+                    }
+                    .disabled(draft.linkURL == nil)
+                }
         }
     }
 
@@ -109,7 +115,7 @@ private extension StockEditorView {
     var geometrySection: some View {
         Section("Geometry") {
             GeometryReader { proxy in
-              HStack(alignment: .top, spacing: 16) {
+              HStack(alignment: .center, spacing: 16) {
                 // Nested Form, same as the tools editor, so rows get the same
                 // label/value alignment and text field styling.
                 Form {
@@ -124,8 +130,10 @@ private extension StockEditorView {
                     geometryFields
                 }
                 .scrollDisabled(true)
-                // About a third of the box, but never narrower than the fields need.
-                .frame(width: max(proxy.size.width / 3, 300))
+                // Size to the content so the HStack can center it vertically.
+                .fixedSize(horizontal: false, vertical: true)
+                // Params take two thirds of the box, the drawing one third.
+                .frame(width: max(proxy.size.width * 2 / 3 - 8, 300))
 
                 Divider()
 

@@ -108,6 +108,7 @@ final class ToolsStore: ObservableObject {
             type: tool.type,
             group: tool.group,
             quantity: tool.quantity,
+            link: tool.link,
             tipAngle: tool.tipAngle,
             parameters: tool.parameters
         )

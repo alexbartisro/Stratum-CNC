@@ -18,6 +18,8 @@
 import SwiftUI
 
 struct ToolEditorView: View {
+    @Environment(\.openURL) private var openURL
+
     /// Edits apply live (the list updates immediately); nothing is written to disk until Save.
     @Binding var tool: Tool
     let hasUnsavedChanges: Bool
@@ -28,7 +30,7 @@ struct ToolEditorView: View {
         Form {
             geometrySection
             cuttingParametersSection
-            stockSection
+            availabilitySection
         }
         .formStyle(.grouped)
         .navigationTitle(tool.displayName)
@@ -146,23 +148,42 @@ private extension ToolEditorView {
     }
 }
 
-// MARK: - Stock
+// MARK: - Availability
 
 private extension ToolEditorView {
 
-    var stockSection: some View {
-        Section("Stock") {
+    var availabilitySection: some View {
+        Section("Availability") {
             Stepper(value: $tool.quantity, in: 0...9999) {
                 HStack {
-                    Text("In stock")
+                    Text("Quantity")
                     Spacer()
-                    TextField("In stock", value: $tool.quantity, format: .number)
+                    TextField("Quantity", value: $tool.quantity, format: .number)
                         .labelsHidden()
                         .multilineTextAlignment(.trailing)
                         .frame(width: 60)
                 }
             }
+
+            HStack {
+                TextField("Link", text: linkBinding)
+                Button {
+                    if let url = tool.linkURL {
+                        openURL(url)
+                    }
+                } label: {
+                    Label("Buy", systemImage: "cart")
+                }
+                .disabled(tool.linkURL == nil)
+            }
         }
+    }
+
+    var linkBinding: Binding<String> {
+        Binding(
+            get: { tool.link ?? "" },
+            set: { tool.link = $0.isEmpty ? nil : $0 }
+        )
     }
 }
 

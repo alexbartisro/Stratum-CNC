@@ -23,6 +23,9 @@ struct Tool: Identifiable, Codable, Hashable {
     /// Number of this tool currently in stock.
     var quantity: Int
 
+    /// Where to buy this tool.
+    var link: String?
+
     // Optional geometry specific to certain tools
     var tipAngle: Double?
 
@@ -38,6 +41,7 @@ struct Tool: Identifiable, Codable, Hashable {
         type: ToolType,
         group: String? = nil,
         quantity: Int = 0,
+        link: String? = nil,
         tipAngle: Double? = nil,
         parameters: [String: ToolCuttingParameters] = [:]
     ) {
@@ -49,13 +53,14 @@ struct Tool: Identifiable, Codable, Hashable {
         self.type = type
         self.group = group
         self.quantity = quantity
+        self.link = link
         self.tipAngle = tipAngle
         self.parameters = parameters
     }
 
     enum CodingKeys: String, CodingKey {
         case id, name, shankDiameter, toolDiameter, length, type, group
-        case quantity, tipAngle, parameters
+        case quantity, link, tipAngle, parameters
     }
 
     init(from decoder: Decoder) throws {
@@ -68,8 +73,21 @@ struct Tool: Identifiable, Codable, Hashable {
         type = try c.decode(ToolType.self, forKey: .type)
         group = try c.decodeIfPresent(String.self, forKey: .group)
         quantity = try c.decodeIfPresent(Int.self, forKey: .quantity) ?? 0
+        link = try c.decodeIfPresent(String.self, forKey: .link)
         tipAngle = try c.decodeIfPresent(Double.self, forKey: .tipAngle)
         parameters = try c.decodeIfPresent([String: ToolCuttingParameters].self, forKey: .parameters) ?? [:]
+    }
+
+    /// The link as a URL, if it is a valid http(s) address.
+    var linkURL: URL? {
+        guard let link = link?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !link.isEmpty,
+              let url = URL(string: link),
+              let scheme = url.scheme?.lowercased(),
+              scheme == "http" || scheme == "https" else {
+            return nil
+        }
+        return url
     }
 
     var displayName: String {

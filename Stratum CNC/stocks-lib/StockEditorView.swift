@@ -110,16 +110,22 @@ private extension StockEditorView {
         Section("Geometry") {
             GeometryReader { proxy in
               HStack(alignment: .top, spacing: 16) {
-                VStack(alignment: .leading, spacing: 10) {
+                // Nested Form, same as the tools editor, so rows get the same
+                // label/value alignment and text field styling.
+                Form {
                     Picker("Shape", selection: geometryKindBinding) {
                         ForEach(StockGeometry.Kind.allCases) { kind in
                             Text(kind.displayName)
                                 .tag(kind)
                         }
                     }
+                    .frame(minWidth: 100, maxWidth: 180)
+
                     geometryFields
                 }
-                .frame(width: max(proxy.size.width / 3 - 8, 0), alignment: .topLeading)
+                .scrollDisabled(true)
+                // About a third of the box, but never narrower than the fields need.
+                .frame(width: max(proxy.size.width / 3, 300))
 
                 Divider()
 
@@ -128,7 +134,7 @@ private extension StockEditorView {
                     .frame(maxHeight: .infinity)
               }
             }
-            .frame(height: 220)
+            .frame(height: 240)
             .padding(.vertical, 4)
         }
     }

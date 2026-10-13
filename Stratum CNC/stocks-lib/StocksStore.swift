@@ -43,8 +43,8 @@ final class StocksStore: ObservableObject {
         if !fileManager.fileExists(atPath: stocksFileURL.path) {
             try copyDefaultStocks()
         } else {
-//            try fileManager.removeItem(atPath: stocksFileURL.path)
-//            try copyDefaultStocks()
+            try fileManager.removeItem(atPath: stocksFileURL.path)
+            try copyDefaultStocks()
         }
 
         let data = try Data(contentsOf: stocksFileURL)

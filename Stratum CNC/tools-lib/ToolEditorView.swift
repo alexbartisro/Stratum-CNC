@@ -18,15 +18,41 @@
 import SwiftUI
 
 struct ToolEditorView: View {
+    /// Edits apply live (the list updates immediately); nothing is written to disk until Save.
     @Binding var tool: Tool
+    let hasUnsavedChanges: Bool
+    let onSave: () -> Void
+    let onRevert: () -> Void
 
     var body: some View {
         Form {
             geometrySection
             cuttingParametersSection
+            stockSection
         }
         .formStyle(.grouped)
         .navigationTitle(tool.displayName)
+        .safeAreaInset(edge: .bottom) {
+            if hasUnsavedChanges {
+                HStack {
+                    Text("Unsaved changes")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Revert") {
+                        onRevert()
+                    }
+                    Button("Save") {
+                        onSave()
+                    }
+                    .keyboardShortcut("s", modifiers: .command)
+                    .buttonStyle(.borderedProminent)
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 10)
+                .background(.bar)
+            }
+        }
     }
 }
 
@@ -116,6 +142,26 @@ private extension ToolEditorView {
             }
         } header: {
             Text("Geometry")
+        }
+    }
+}
+
+// MARK: - Stock
+
+private extension ToolEditorView {
+
+    var stockSection: some View {
+        Section("Stock") {
+            Stepper(value: $tool.quantity, in: 0...9999) {
+                HStack {
+                    Text("In stock")
+                    Spacer()
+                    TextField("In stock", value: $tool.quantity, format: .number)
+                        .labelsHidden()
+                        .multilineTextAlignment(.trailing)
+                        .frame(width: 60)
+                }
+            }
         }
     }
 }

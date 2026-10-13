@@ -14,6 +14,13 @@ final class ToolsStore: ObservableObject {
     private(set) var library: ToolLibrary?
     @Published var tools: [Tool] = []
 
+    /// Snapshot of what is on disk. Edits are live in `tools`; `save()` writes them out.
+    @Published private var savedTools: [Tool] = []
+
+    var hasUnsavedChanges: Bool {
+        tools != savedTools
+    }
+
     private let fileManager = FileManager.default
 
     private var applicationSupportURL: URL {
@@ -54,6 +61,7 @@ final class ToolsStore: ObservableObject {
         let decoder = JSONDecoder()
         library = try decoder.decode(ToolLibrary.self, from: data)
         tools = library?.tools ?? []
+        savedTools = tools
     }
 
     func save() throws {
@@ -68,6 +76,12 @@ final class ToolsStore: ObservableObject {
             to: toolsFileURL,
             options: .atomic
         )
+        savedTools = tools
+    }
+
+    /// Discards all edits made since the last save.
+    func revertChanges() {
+        tools = savedTools
     }
 
     func update(_ tool: Tool) throws {
@@ -82,6 +96,23 @@ final class ToolsStore: ObservableObject {
     func add(_ tool: Tool) throws {
         tools.append(tool)
         try save()
+    }
+
+    @discardableResult
+    func duplicate(_ tool: Tool) throws -> Tool {
+        let copy = Tool(
+            name: "\(tool.name) Copy",
+            shankDiameter: tool.shankDiameter,
+            toolDiameter: tool.toolDiameter,
+            length: tool.length,
+            type: tool.type,
+            group: tool.group,
+            quantity: tool.quantity,
+            tipAngle: tool.tipAngle,
+            parameters: tool.parameters
+        )
+        try add(copy)
+        return copy
     }
 
     func delete(_ tool: Tool) throws {

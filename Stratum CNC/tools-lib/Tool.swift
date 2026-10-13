@@ -20,6 +20,9 @@ struct Tool: Identifiable, Codable, Hashable {
     var type: ToolType
     var group: String?
 
+    /// Number of this tool currently in stock.
+    var quantity: Int
+
     // Optional geometry specific to certain tools
     var tipAngle: Double?
 
@@ -34,6 +37,7 @@ struct Tool: Identifiable, Codable, Hashable {
         length: Double?,
         type: ToolType,
         group: String? = nil,
+        quantity: Int = 0,
         tipAngle: Double? = nil,
         parameters: [String: ToolCuttingParameters] = [:]
     ) {
@@ -44,8 +48,28 @@ struct Tool: Identifiable, Codable, Hashable {
         self.length = length
         self.type = type
         self.group = group
+        self.quantity = quantity
         self.tipAngle = tipAngle
         self.parameters = parameters
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, shankDiameter, toolDiameter, length, type, group
+        case quantity, tipAngle, parameters
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(UUID.self, forKey: .id)
+        name = try c.decode(String.self, forKey: .name)
+        shankDiameter = try c.decode(Double.self, forKey: .shankDiameter)
+        toolDiameter = try c.decode(Double.self, forKey: .toolDiameter)
+        length = try c.decodeIfPresent(Double.self, forKey: .length)
+        type = try c.decode(ToolType.self, forKey: .type)
+        group = try c.decodeIfPresent(String.self, forKey: .group)
+        quantity = try c.decodeIfPresent(Int.self, forKey: .quantity) ?? 0
+        tipAngle = try c.decodeIfPresent(Double.self, forKey: .tipAngle)
+        parameters = try c.decodeIfPresent([String: ToolCuttingParameters].self, forKey: .parameters) ?? [:]
     }
 
     var displayName: String {

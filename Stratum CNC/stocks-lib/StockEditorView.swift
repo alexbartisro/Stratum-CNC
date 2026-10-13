@@ -77,28 +77,28 @@ private extension StockEditorView {
 
     var availabilitySection: some View {
         Section("Availability") {
-                Stepper(value: $draft.quantity, in: 0...9999) {
-                    HStack {
-                        Text("Quantity")
-                        Spacer()
-                        TextField("Quantity", value: $draft.quantity, format: .number)
-                            .labelsHidden()
-                            .multilineTextAlignment(.trailing)
-                            .frame(width: 60)
-                    }
-                }
-
+            Stepper(value: $draft.quantity, in: 0...999) {
                 HStack {
-                    TextField("Link", text: linkBinding)
-                    Button {
-                        if let url = draft.linkURL {
-                            openURL(url)
-                        }
-                    } label: {
-                        Label("Buy", systemImage: "cart")
-                    }
-                    .disabled(draft.linkURL == nil)
+                    Text("Quantity")
+                    Spacer()
+                    TextField("Quantity", value: $draft.quantity, format: .number)
+                        .labelsHidden()
+                        .multilineTextAlignment(.trailing)
+                        .frame(width: 60)
                 }
+            }
+
+            HStack {
+                TextField("Link", text: linkBinding)
+                Button {
+                    if let url = draft.linkURL {
+                        openURL(url)
+                    }
+                } label: {
+                    Label("Buy", systemImage: "cart")
+                }
+                .disabled(draft.linkURL == nil)
+            }
         }
     }
 
@@ -112,12 +112,9 @@ private extension StockEditorView {
 
 private extension StockEditorView {
 
-    var geometrySection: some View {
+    private var geometrySection: some View {
         Section("Geometry") {
-            GeometryReader { proxy in
-              HStack(alignment: .center, spacing: 16) {
-                // Nested Form, same as the tools editor, so rows get the same
-                // label/value alignment and text field styling.
+            HStack {
                 Form {
                     Picker("Shape", selection: geometryKindBinding) {
                         ForEach(StockGeometry.Kind.allCases) { kind in
@@ -129,25 +126,18 @@ private extension StockEditorView {
 
                     geometryFields
                 }
-                .scrollDisabled(true)
-                // Size to the content so the HStack can center it vertically.
-                .fixedSize(horizontal: false, vertical: true)
-                // Params take two thirds of the box, the drawing one third.
-                .frame(width: max(proxy.size.width * 2 / 3 - 8, 300))
 
                 Divider()
 
                 StockPreviewView(geometry: draft.geometry, material: draft.material)
                     .frame(maxWidth: .infinity)
                     .frame(maxHeight: .infinity)
-              }
             }
             .frame(height: 240)
-            .padding(.vertical, 4)
         }
     }
 
-    var geometryKindBinding: Binding<StockGeometry.Kind> {
+    private var geometryKindBinding: Binding<StockGeometry.Kind> {
         Binding(
             get: {
                 draft.geometry.kind
@@ -157,123 +147,73 @@ private extension StockEditorView {
             }
         )
     }
-}
-
-private extension StockEditorView {
 
     @ViewBuilder
-    var geometryFields: some View {
+    private var geometryFields: some View {
 
         switch draft.geometry {
 
-        case .rectangular(let width, let height, let depth):
-            MeasurementField(
-                title: "Width",
-                value: Binding(
-                    get: { width },
-                    set: {
-                        draft.geometry = .rectangular(
-                            width: $0,
-                            height: height,
-                            depth: depth
-                        )
-                    }
-                ),
-                unit: "mm"
-            )
+            case .rectangular(let width, let height, let depth):
 
-            MeasurementField(
-                title: "Height",
-                value: Binding(
-                    get: { height },
-                    set: {
-                        draft.geometry = .rectangular(
-                            width: width,
-                            height: $0,
-                            depth: depth
-                        )
-                    }
-                ),
-                unit: "mm"
-            )
+                MeasurementField(title: "Width",
+                                 value: Binding(
+                                    get: { width },
+                                    set: { draft.geometry = .rectangular(width: $0, height: height, depth: depth) }
+                                 ),
+                                 unit: "mm")
 
-            MeasurementField(
-                title: "Depth",
-                value: Binding(
-                    get: { depth },
-                    set: {
-                        draft.geometry = .rectangular(
-                            width: width,
-                            height: height,
-                            depth: $0
-                        )
-                    }
-                ),
-                unit: "mm"
-            )
+                MeasurementField(title: "Height",
+                                 value: Binding(
+                                    get: { height },
+                                    set: { draft.geometry = .rectangular(width: width, height: $0, depth: depth) }
+                                 ),
+                                 unit: "mm")
 
-        case .cylindrical(let diameter, let length):
-            MeasurementField(
-                title: "Diameter",
-                value: Binding(
-                    get: { diameter },
-                    set: {
-                        draft.geometry = .cylindrical(
-                            diameter: $0,
-                            length: length
-                        )
-                    }
-                ),
-                unit: "mm"
-            )
+                MeasurementField(title: "Depth",
+                                 value: Binding(
+                                    get: { depth },
+                                    set: { draft.geometry = .rectangular(width: width, height: height, depth: $0) }
+                                 ),
+                                 unit: "mm")
 
-            MeasurementField(
-                title: "Length",
-                value: Binding(
-                    get: { length },
-                    set: {
-                        draft.geometry = .cylindrical(
-                            diameter: diameter,
-                            length: $0
-                        )
-                    }
-                ),
-                unit: "mm"
-            )
+            case .cylindrical(let diameter, let length):
 
-        case .disk(let outerDiameter, let innerDiameter, let depth):
-            MeasurementField(
-                title: "Outer Diameter",
-                value: Binding(
-                    get: { outerDiameter },
-                    set: {
-                        draft.geometry = .disk(outerDiameter: $0, innerDiameter: innerDiameter, depth: depth)
-                    }
-                ),
-                unit: "mm"
-            )
+                MeasurementField(title: "Diameter",
+                                 value: Binding(
+                                    get: { diameter },
+                                    set: { draft.geometry = .cylindrical(diameter: $0, length: length) }
+                                 ),
+                                 unit: "mm")
 
-            MeasurementField(
-                title: "Inner Diameter",
-                value: Binding(
-                    get: { innerDiameter },
-                    set: {
-                        draft.geometry = .disk(outerDiameter: outerDiameter, innerDiameter: $0, depth: depth)
-                    }
-                ),
-                unit: "mm"
-            )
+                MeasurementField(title: "Length",
+                                 value: Binding(
+                                    get: { length },
+                                    set: { draft.geometry = .cylindrical(diameter: diameter, length: $0) }
+                                 ),
+                                 unit: "mm")
 
-            MeasurementField(
-                title: "Depth",
-                value: Binding(
-                    get: { depth },
-                    set: {
-                        draft.geometry = .disk(outerDiameter: outerDiameter, innerDiameter: innerDiameter, depth: $0)
-                    }
-                ),
-                unit: "mm"
-            )
+            case .disk(let outerDiameter, let innerDiameter, let depth):
+
+                MeasurementField(title: "Outer Diameter",
+                                 value: Binding(
+                                    get: { outerDiameter },
+                                    set: { draft.geometry = .disk(outerDiameter: $0, innerDiameter: innerDiameter, depth: depth) }
+                                 ),
+                                 unit: "mm")
+
+                MeasurementField(title: "Inner Diameter",
+                                 value: Binding(
+                                    get: { innerDiameter },
+                                    set: { draft.geometry = .disk(outerDiameter: outerDiameter, innerDiameter: $0, depth: depth) }
+                                 ),
+                                 unit: "mm")
+
+                MeasurementField(title: "Depth",
+                                 value: Binding(
+                                    get: { depth },
+                                    set: { draft.geometry = .disk(outerDiameter: outerDiameter, innerDiameter: innerDiameter, depth: $0) }
+                                 ),
+                                 unit: "mm")
         }
     }
 }

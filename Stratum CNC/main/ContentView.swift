@@ -24,17 +24,18 @@ struct ContentView: View {
         }
         .frame(minWidth: 800, minHeight: 600)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .sheet(isPresented: $appModel.showingToolsSheet) {
-            ToolsSheet(store: appModel.toolsStore)
+        // `onDismiss` also fires after a normal pick, but by then the continuation
+        // is already resolved, so resolving again with nil is a no-op.
+        .sheet(isPresented: $appModel.showingToolsSheet, onDismiss: { appModel.resolveToolPick(nil) }) {
+            // Only pass `onPick` when someone is awaiting a tool; otherwise the
+            // sheet is opened to browse/edit the library and shows no "Pick" button.
+            ToolsSheet(store: appModel.toolsStore,
+                       onPick: appModel.isPickingTool ? { appModel.resolveToolPick($0) } : nil)
                 .frame(width: 800, height: 600)
                 .preferredColorScheme(appModel.isDarkMode ? .dark : .light)
         }
-        .sheet(isPresented: $appModel.showingStocksSheet) {
-            var onPick: ((StockMaterial) -> Void)? = { material in
-                appModel.stocksSheetContinuation?.resume(returning: material)
-                appModel.stocksSheetContinuation = nil
-            }
-            StockSheet(store: appModel.stocksStore, onPick: onPick)
+        .sheet(isPresented: $appModel.showingStocksSheet, onDismiss: { appModel.resolveStockPick(nil) }) {
+            StockSheet(store: appModel.stocksStore, onPick: { appModel.resolveStockPick($0) })
                 .frame(width: 800, height: 600)
                 .preferredColorScheme(appModel.isDarkMode ? .dark : .light)
         }
@@ -47,12 +48,3 @@ struct ContentView: View {
         .preferredColorScheme(appModel.isDarkMode ? .dark : .light)
     }
 }
-//        .onChange(of: controllerModel.selectedMachine) { _, newValue in
-//            // Once we're actually talking to a machine over TCP, stop the UDP
-//            // broadcast listener — leaving it running alongside an active
-//            // connection is what triggers the repeated NECP "File exists"
-//            // flow-churn errors in Console.
-//            if newValue != nil {
-//                controllerModel.discovery.stopScanning()
-//            }
-//        }

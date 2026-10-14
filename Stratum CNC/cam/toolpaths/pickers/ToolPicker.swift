@@ -12,56 +12,6 @@ struct ToolPicker: View {
 
     @EnvironmentObject var appModel: AppModel
 
-    /// Hardcoded for now — later this should be the actual most-recently/most-often
-    /// used tools, probably persisted on `AppModel` or read from the library.
-    fileprivate static let mostUsedTools: [Tool] = [
-        Tool(id: UUID(),
-             name: "1mm End Mill",
-             shankDiameter: 3.175,
-             toolDiameter: 1,
-             length: 12,
-             type: .endMill,
-             group: nil,
-             tipAngle: nil,
-             parameters: [:]),
-        Tool(id: UUID(),
-             name: "2mm End Mill",
-             shankDiameter: 3.175,
-             toolDiameter: 2,
-             length: 12,
-             type: .endMill,
-             group: nil,
-             tipAngle: nil,
-             parameters: [:]),
-        Tool(id: UUID(),
-             name: "3.175mm End Mill",
-             shankDiameter: 3.175,
-             toolDiameter: 3.175,
-             length: 12,
-             type: .endMill,
-             group: nil,
-             tipAngle: nil,
-             parameters: [:]),
-        Tool(id: UUID(),
-             name: "6mm End Mill",
-             shankDiameter: 6,
-             toolDiameter: 6,
-             length: 20,
-             type: .endMill,
-             group: nil,
-             tipAngle: nil,
-             parameters: [:]),
-        Tool(id: UUID(),
-             name: "0.8mm Drill",
-             shankDiameter: 3.175,
-             toolDiameter: 0.8,
-             length: 12,
-             type: .drill,
-             group: nil,
-             tipAngle: 118,
-             parameters: [:])
-    ]
-
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
             Text("TOOL")
@@ -69,9 +19,10 @@ struct ToolPicker: View {
                 .foregroundStyle(.secondary)
 
             Menu {
-                ForEach(Self.mostUsedTools) { candidate in
+                // The last 5 tools used, most recent first (persisted in UserDefaults).
+                ForEach(appModel.recentTools) { candidate in
                     Button {
-                        tool = candidate
+                        select(candidate)
                     } label: {
                         if candidate.id == tool.id {
                             Label(title(for: candidate), systemImage: "checkmark")
@@ -81,12 +32,18 @@ struct ToolPicker: View {
                     }
                 }
 
-                Divider()
+                if !appModel.recentTools.isEmpty {
+                    Divider()
+                }
 
                 Button {
-                    appModel.showingToolsSheet = true
+                    Task {
+                        if let picked = await appModel.pickTool() {
+                            select(picked)
+                        }
+                    }
                 } label: {
-                    Label("Tool Library…", systemImage: "wrench.and.screwdriver")
+                    Label("Pick from Library", systemImage: "wrench.and.screwdriver")
                 }
             } label: {
                 HStack(spacing: 5) {
@@ -107,13 +64,22 @@ struct ToolPicker: View {
         }
     }
 
+    private func select(_ candidate: Tool) {
+        tool = candidate
+        appModel.noteToolUsed(candidate)
+    }
+
     private func title(for candidate: Tool) -> String {
         "\(candidate.name) — Ø\(String(format: "%.2f", candidate.toolDiameter))"
     }
 }
 
 #Preview {
-    @Previewable @State var tool = ToolPicker.mostUsedTools[2]
+    @Previewable @State var tool = Tool(name: "3.175mm End Mill",
+                                        shankDiameter: 3.175,
+                                        toolDiameter: 3.175,
+                                        length: 12,
+                                        type: .endMill)
     ToolPicker(tool: $tool)
         .environmentObject(AppModel())
         .padding()

@@ -23,19 +23,12 @@ final class ToolsStore: ObservableObject {
 
     private let fileManager = FileManager.default
 
-    private var applicationSupportURL: URL {
-        fileManager.urls(
-            for: .applicationSupportDirectory,
-            in: .userDomainMask
-        )[0]
-    }
-
-    private var toolsDirectoryURL: URL {
-        applicationSupportURL.appendingPathComponent("Tools", isDirectory: true)
+    private var documentDirectory: URL {
+        fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }
 
     private var toolsFileURL: URL {
-        toolsDirectoryURL.appendingPathComponent("tools.json")
+        documentDirectory.appendingPathComponent("tools.json")
     }
 
     init() {
@@ -48,10 +41,6 @@ final class ToolsStore: ObservableObject {
     }
 
     func load() throws {
-        try createDirectoryIfNeeded()
-
-        try? fileManager.removeItem(atPath: toolsFileURL.path)
-
         if !fileManager.fileExists(atPath: toolsFileURL.path) {
             try copyDefaultTools()
         }
@@ -65,17 +54,18 @@ final class ToolsStore: ObservableObject {
     }
 
     func save() throws {
-        try createDirectoryIfNeeded()
-
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
 
-        let data = try encoder.encode(tools)
+        // Write the whole library (not just the array) so `load()` can read it back.
+        guard var library else {
+            throw ToolStoreError.libraryNotLoaded
+        }
+        library.tools = tools
+        self.library = library
+        let data = try encoder.encode(library)
 
-        try data.write(
-            to: toolsFileURL,
-            options: .atomic
-        )
+        try data.write(to: toolsFileURL, options: .atomic)
         savedTools = tools
     }
 
@@ -116,16 +106,37 @@ final class ToolsStore: ObservableObject {
         return copy
     }
 
+    /// Adds imported tools, skipping any whose id is already in the library
+    /// (re-importing the same file doesn't create duplicates), then saves once.
+    /// An existing tool that has no cutting parameters yet gets the imported ones,
+    /// so tools imported before presets were supported are filled in on re-import.
+    @discardableResult
+    func importTools(_ imported: [Tool]) throws -> (added: Int, updated: Int, skipped: Int) {
+        var indexByID: [UUID: Int] = [:]
+        for (index, tool) in tools.enumerated() { indexByID[tool.id] = index }
+
+        var added = 0, updated = 0, skipped = 0
+        for tool in imported {
+            if let index = indexByID[tool.id] {
+                if tools[index].parameters.isEmpty && !tool.parameters.isEmpty {
+                    tools[index].parameters = tool.parameters
+                    updated += 1
+                } else {
+                    skipped += 1
+                }
+            } else {
+                tools.append(tool)
+                added += 1
+            }
+        }
+
+        if added + updated > 0 { try save() }
+        return (added, updated, skipped)
+    }
+
     func delete(_ tool: Tool) throws {
         tools.removeAll { $0.id == tool.id }
         try save()
-    }
-
-    private func createDirectoryIfNeeded() throws {
-        try fileManager.createDirectory(
-            at: toolsDirectoryURL,
-            withIntermediateDirectories: true
-        )
     }
 
     private func copyDefaultTools() throws {
@@ -139,11 +150,14 @@ final class ToolsStore: ObservableObject {
 
 enum ToolStoreError: LocalizedError {
     case defaultToolsNotFound
+    case libraryNotLoaded
 
     var errorDescription: String? {
         switch self {
         case .defaultToolsNotFound:
             "The bundled default_tools.json could not be found."
+        case .libraryNotLoaded:
+            "The tool library is not loaded, so it can't be saved."
         }
     }
 }

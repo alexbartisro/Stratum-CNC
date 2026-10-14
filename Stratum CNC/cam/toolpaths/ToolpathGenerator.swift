@@ -206,12 +206,13 @@ private extension ToolpathGenerator {
         // included angle. A tool with a tip angle is taken as a V-bit there.
         let type: SC.ToolType = (kind == .chamfer && (vAngle ?? 0) > 0) ? .vBit : .flatEndMill
 
+        // TODO: engraving tool length can be nil, how do we handle?
         return SC.ToolParams(id: tool.id,
                              name: tool.name,
                              type: type,
                              diameter: Double(tool.toolDiameter),
                              vAngle: vAngle,
-                             fluteLength: Double(tool.length!))
+                             fluteLength: Double(tool.length ?? 0))
     }
 
     /// Rejects option values the engine can't work with, with a message the user can act on.

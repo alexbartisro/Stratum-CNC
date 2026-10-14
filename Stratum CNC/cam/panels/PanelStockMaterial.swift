@@ -12,7 +12,7 @@ struct PanelStockMaterial: View {
     @Binding var stock: StockMaterial
     @Binding var isStockVisible: Bool
     let isCompact: Bool
-    var onOpenStocksLib: (() async -> StockMaterial)?
+    var onOpenStocksLib: (() async -> StockMaterial?)?
 
     @State private var selectedShapeID = "rectangular"
 

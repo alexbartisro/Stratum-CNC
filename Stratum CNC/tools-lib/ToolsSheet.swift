@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct ToolsSheet: View {
 
@@ -17,6 +18,8 @@ struct ToolsSheet: View {
     @State private var selectedToolID: Tool.ID?
     @State private var toolPendingDeletion: Tool?
     @State private var inStockOnly = false
+    @State private var isImporting = false
+    @State private var importMessage: String?
 
     /// Tools shown in the list, after applying the in-stock filter.
     private var visibleTools: [Tool] {
@@ -109,6 +112,12 @@ struct ToolsSheet: View {
                 Label("Add Tool", systemImage: "plus")
             }
 
+            Button {
+                isImporting = true
+            } label: {
+                Label("Import", systemImage: "square.and.arrow.down")
+            }
+
             Button("Close") {
                 dismiss()
             }
@@ -128,6 +137,45 @@ struct ToolsSheet: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 14)
+        .fileImporter(
+            isPresented: $isImporting,
+            allowedContentTypes: [UTType(filenameExtension: "tools") ?? .data, .zip, .json]
+        ) { result in
+            handleImport(result)
+        }
+        .alert("Import Tools", isPresented: Binding(
+            get: { importMessage != nil },
+            set: { if !$0 { importMessage = nil } }
+        )) {
+            Button("OK") { importMessage = nil }
+        } message: {
+            Text(importMessage ?? "")
+        }
+    }
+
+    private func handleImport(_ result: Result<URL, Error>) {
+        do {
+            let url = try result.get()
+            let didAccess = url.startAccessingSecurityScopedResource()
+            defer { if didAccess { url.stopAccessingSecurityScopedResource() } }
+
+            let imported = try FusionToolsImporter.importTools(from: url)
+            let counts = try store.importTools(imported.tools)
+
+            var message = "Imported \(counts.added) tools."
+            if counts.updated > 0 {
+                message += " Added cutting parameters to \(counts.updated) existing tools."
+            }
+            if counts.skipped > 0 {
+                message += " \(counts.skipped) already in the library were skipped."
+            }
+            if imported.unsupportedCount > 0 {
+                message += " \(imported.unsupportedCount) unsupported entries (holders, taps, …) were ignored."
+            }
+            importMessage = message
+        } catch {
+            importMessage = error.localizedDescription
+        }
     }
 
     /// Selects the first item as displayed in the (grouped) list.

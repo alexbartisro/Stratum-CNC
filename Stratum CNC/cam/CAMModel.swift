@@ -197,7 +197,7 @@ class CAMModel: ObservableObject {
                                 type: .endMill,
                                 group: nil,
                                 tipAngle: nil,
-                                parameters: [:]),
+                                presets: []),
                      startZ: 0,
                      endZ: -1,
                      contour: .outline,

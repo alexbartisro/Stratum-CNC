@@ -15,8 +15,17 @@ struct ToolParametersMatrix: View {
         GridItem(.flexible(), alignment: .trailing),
         GridItem(.flexible(), alignment: .trailing),
         GridItem(.flexible(), alignment: .trailing),
+        GridItem(.flexible(), alignment: .trailing),
+        GridItem(.flexible(), alignment: .trailing),
         GridItem(.flexible(), alignment: .trailing)
     ]
+
+    /// Presets in alphabetical order by name.
+    private var sortedPresets: [ToolPreset] {
+        tool.presets.sorted {
+            $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+        }
+    }
 
     var body: some View {
         LazyVGrid(columns: columns, spacing: 0) {
@@ -27,16 +36,18 @@ struct ToolParametersMatrix: View {
             headerCell("Feed Rate")
             headerCell("Plunge Feed")
             headerCell("Depth of Cut")
+            headerCell("Step Down")
+            headerCell("Ramp Angle")
 
             // Rows
-            ForEach(tool.parameters.keys.sorted(), id: \.self) { material in
-                if let parameters = tool.parameters[material] {
-                    cell(material.capitalized, alignment: .leading)
-                    cell("\(parameters.spindleRPM ?? -1)")
-                    cell("\(parameters.feedRate ?? -1)")
-                    cell("\(parameters.plungeFeedRate ?? -1)")
-                    cell(format(parameters.depthOfCut ?? -1))
-                }
+            ForEach(sortedPresets) { preset in
+                cell(preset.name, alignment: .leading)
+                cell(preset.spindleRPM.map { "\($0)" })
+                cell(preset.feedRate.map(format))
+                cell(preset.plungeFeedRate.map(format))
+                cell(preset.depthOfCut.map(format))
+                cell(preset.stepDown.map(format))
+                cell(preset.rampAngle.map(format))
             }
         }
         .padding()
@@ -50,8 +61,9 @@ struct ToolParametersMatrix: View {
             .padding(.vertical, 10)
     }
 
-    private func cell(_ text: String, alignment: Alignment = .trailing) -> some View {
-        Text(text)
+    private func cell(_ text: String?, alignment: Alignment = .trailing) -> some View {
+        Text(text ?? "–")
+            .foregroundStyle(text == nil ? .secondary : .primary)
             .frame(maxWidth: .infinity, alignment: alignment)
             .padding(.vertical, 12)
             .overlay(alignment: .bottom) {

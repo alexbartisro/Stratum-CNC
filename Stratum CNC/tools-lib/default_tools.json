@@ -24,44 +24,56 @@
       "length": 3.0,
       "type": "endMill",
       "group": "Single Flute Metal",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "89F603E2-235C-5803-BDCC-22238EEA81C9",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "brass": {
+        {
+          "id": "A038AAB0-042E-577D-BA25-064EF33CEA0A",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.05
         },
-        "copper": {
+        {
+          "id": "F7662800-62E9-521F-8235-E96755D9AF58",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.05
         },
-        "hardwood": {
+        {
+          "id": "C2727BF5-C894-592D-B7C2-A64E8E92C420",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 0.5
         },
-        "plastic": {
+        {
+          "id": "CE7C3002-B3EC-5527-AEAF-62E8C1DCD499",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 0.5
         },
-        "softwood": {
+        {
+          "id": "1B4CE0F1-29F1-58BA-B840-BD9783102139",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "12b5a4c8-5a2e-4b5e-823e-0ba5fa69cad2",
@@ -73,44 +85,56 @@
       "length": 6.0,
       "type": "endMill",
       "group": "Single Flute Metal",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "EA40E902-29A5-5F40-992E-82B3CD2F9032",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "brass": {
+        {
+          "id": "C79C6B76-271E-5850-9B1E-FD9EE8D4915E",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.05
         },
-        "copper": {
+        {
+          "id": "5B4902F0-A7DB-5ED9-8C1A-D2B6ECB34102",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.05
         },
-        "hardwood": {
+        {
+          "id": "A37F5626-1884-5E90-8D28-2DB4264D7D46",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 0.5
         },
-        "plastic": {
+        {
+          "id": "0181FE43-D7B5-5AA0-BBF1-8BC129C0DE09",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 0.5
         },
-        "softwood": {
+        {
+          "id": "77A4D790-A8AD-5A9E-9689-CF680A5712DF",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "05ba905f-a907-4555-a312-2c0c46d74fd1",
@@ -122,44 +146,56 @@
       "length": 8.0,
       "type": "endMill",
       "group": "Single Flute Metal",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "2D325325-A69D-5A3C-BC6C-6BBC3E284FBE",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.15
         },
-        "brass": {
+        {
+          "id": "0A980EDF-43E2-5379-92C7-3FA5F801E62D",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "3C24D58D-C2B6-5DBE-9B11-B5C04C373CD9",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "25226DFD-CB0B-5E24-B2F7-C76851531884",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 0.5
         },
-        "plastic": {
+        {
+          "id": "172AFCE7-374D-5287-BA87-EB290D0DDA04",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 0.5
         },
-        "softwood": {
+        {
+          "id": "6AA4FC04-2360-5D8D-8E47-73E1A25AF309",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "4691dbca-216f-4585-ad00-fa281e8b2576",
@@ -171,44 +207,56 @@
       "length": 12.0,
       "type": "endMill",
       "group": "Single Flute Metal",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "DA00DA44-30CB-55AA-A2E2-157BE88BA5AC",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "1F187088-BD29-5BEC-849E-9EC244CCC546",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "52CDFDCB-4F7F-5E41-B695-ED57CFC780CD",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "A6F93040-4912-58B3-A51C-075D01694B25",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "14916996-984A-5508-B264-D845FB9A3390",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "F83E1D82-C29E-5354-9C83-1373E3782999",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "ee6c6633-17b8-4ab4-88d0-acc18b0f7618",
@@ -220,44 +268,56 @@
       "length": 12.0,
       "type": "endMill",
       "group": "Single Flute Metal",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "7AAD21BE-AD27-5864-8107-BDB657CD78AC",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "C27FDBB3-4BB1-558C-B6D6-4552557B5B50",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "F9D4FA3A-559C-552A-97F1-2AFC8B1356CC",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "266F9F4C-FA15-5625-8E73-7A49E1F24E1B",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "326D17FF-4086-544B-B9DA-630824DE861D",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "DBBDE12A-CC5B-5533-81AC-6D27363375DD",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "97d0db3e-3750-42b5-9310-5b6bc4ca8026",
@@ -269,26 +329,32 @@
       "length": 3,
       "type": "endMill",
       "group": "Single Flute Non Metal",
-      "parameters": {
-        "hardwood": {
+      "presets": [
+        {
+          "id": "36A8902E-4104-5735-B1F8-251846CC60EF",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "F505ED7C-56C8-543B-8CDC-BAC75EA02E26",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "4D8BAD83-58C5-50D9-9133-C755F609583E",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "8b65464e-f0dd-49e8-9f63-7941cfc3df49",
@@ -300,26 +366,32 @@
       "length": 8,
       "type": "endMill",
       "group": "Single Flute Non Metal",
-      "parameters": {
-        "hardwood": {
+      "presets": [
+        {
+          "id": "8F908B6C-B27F-543B-843C-5D56B0DD5C91",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 0.5
         },
-        "plastic": {
+        {
+          "id": "6BB98AF2-1D2C-5983-B2A8-8B1D2A1EEB90",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 0.5
         },
-        "softwood": {
+        {
+          "id": "B22EFE31-1654-5B9A-9759-8F21E218AF22",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "fb9ba8c6-8e2e-4cbb-a660-5313315cc1d3",
@@ -331,26 +403,32 @@
       "length": 12,
       "type": "endMill",
       "group": "Single Flute Non Metal",
-      "parameters": {
-        "hardwood": {
+      "presets": [
+        {
+          "id": "F180ED27-8B26-568B-83F2-45902EFD3594",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 0.5
         },
-        "plastic": {
+        {
+          "id": "CE9DB47E-25E1-5536-97CA-7D00FAAB3DD7",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 0.5
         },
-        "softwood": {
+        {
+          "id": "16399D27-B3DD-5644-8837-A4B9F7B93E0D",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "a6f0cacd-118c-4d35-b342-3f5b6dfca0ca",
@@ -362,26 +440,32 @@
       "length": 15,
       "type": "endMill",
       "group": "Single Flute Non Metal",
-      "parameters": {
-        "hardwood": {
+      "presets": [
+        {
+          "id": "D9D50A81-FD54-546D-A19B-D8B8A9D4CA52",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "204F1A33-315A-5D21-AD11-C1C9EA401B82",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "CAB04910-DCAF-51FA-BAFD-169FB83257AA",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "456a9828-4ac8-47c4-baee-ff90fa72409a",
@@ -393,26 +477,32 @@
       "length": 17,
       "type": "endMill",
       "group": "Single Flute Non Metal",
-      "parameters": {
-        "hardwood": {
+      "presets": [
+        {
+          "id": "A933FEBB-3226-5C6D-942F-0ED1EB05B701",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "EEE0919D-DF2A-5BAF-9964-0C6F494B0C13",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "678B56D8-E9A0-513E-95AC-F4DA0BD75F41",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "cf7653b8-8b8b-4536-8bd4-3844cb458618",
@@ -424,26 +514,32 @@
       "length": 25,
       "type": "endMill",
       "group": "Single Flute Non Metal",
-      "parameters": {
-        "hardwood": {
+      "presets": [
+        {
+          "id": "D23067FD-3298-5A16-9750-69DF95070A26",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "BFCB9104-4A1E-572D-A72D-0D7E84C2E2A5",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "59605367-0B10-5324-BA39-C78C691AE516",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "dbfc37be-5a5c-493d-b4ef-3ee3f8e53f25",
@@ -455,26 +551,32 @@
       "length": 32,
       "type": "endMill",
       "group": "Single Flute Non Metal",
-      "parameters": {
-        "hardwood": {
+      "presets": [
+        {
+          "id": "6D19FB16-00C5-5C3F-BE43-66A22D699D42",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "CD40460B-CD91-5AEE-8549-940D7FEE5FCD",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "19203FA5-5115-5EAE-9ABF-3D4BA12A9C51",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "9e8d859c-82b1-47a1-8f24-e19e2a06c3e0",
@@ -486,26 +588,32 @@
       "length": 42,
       "type": "endMill",
       "group": "Single Flute Non Metal",
-      "parameters": {
-        "hardwood": {
+      "presets": [
+        {
+          "id": "25F3DD62-AEC8-5B26-8B5F-0503D31385CA",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "A41D9647-CDA6-5A37-86F3-9C8CAACAB65D",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "6F9A2FB3-D33F-5772-BA59-4DAAB61E35E8",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "84c14b5a-ca47-49f2-adf2-c561484790db",
@@ -516,51 +624,65 @@
       "toolDiameter": 0.1,
       "type": "engraving",
       "group": "Engraving Metal",
-      "parameters": {
-        "aluminum": {
+      "tipAngle": 60,
+      "presets": [
+        {
+          "id": "1D98F874-4763-5E5C-9F33-9C9797B65C84",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "F5973675-D2A0-562D-8CB7-C2D87F74E180",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "C1E5A544-6E90-51D7-9CDB-F90552CF3FD6",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "D1DC30FB-475B-50F4-9C72-AC05B2D1CA7C",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "B827294F-487C-5296-9399-34327F9E1A39",
+          "name": "PCB",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "plastic": {
+        {
+          "id": "78D92246-9203-5018-8A6C-883E45961698",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "EDBF5664-4EA4-5ECF-97FA-C3756D41509D",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 2
         }
-      },
-      "tipAngle": 60
+      ]
     },
     {
       "id": "061f9bba-cba4-4f0d-b743-1832caef8aa8",
@@ -571,51 +693,65 @@
       "toolDiameter": 0.2,
       "type": "engraving",
       "group": "Engraving Metal",
-      "parameters": {
-        "aluminum": {
+      "tipAngle": 30,
+      "presets": [
+        {
+          "id": "54FCF367-F391-5A48-8782-99B12C556AB0",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "581B534E-D487-53B2-90FB-77D917254F2C",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "A399BE9A-7174-5480-98F8-398DA4485126",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "935790E7-7D8E-5B0E-9460-B1692FEE5B06",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "734524DE-D52A-515F-B756-928C72EE6864",
+          "name": "PCB",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "plastic": {
+        {
+          "id": "F74CA591-E7B6-527D-BA33-CD8FC0811B01",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "A258CDB3-000D-502D-B103-3F7D69B87AD8",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 2
         }
-      },
-      "tipAngle": 30
+      ]
     },
     {
       "id": "bfd01a1d-d1d2-4839-8ca9-164d517385c2",
@@ -626,51 +762,65 @@
       "toolDiameter": 0.3,
       "type": "engraving",
       "group": "Engraving Metal",
-      "parameters": {
-        "aluminum": {
+      "tipAngle": 30,
+      "presets": [
+        {
+          "id": "7FBAFEF5-DB5F-58A4-81BA-C32494812476",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "3EDCF2AF-33E9-524D-8E1B-E4BFF8257E17",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "273457D4-4E95-5F80-A0F2-9837482C27A2",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "3BBD1560-26A2-55BA-95DB-B91B0BC0ACFA",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "A844D166-1EE6-55E2-9E97-3D3951404F8A",
+          "name": "PCB",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "plastic": {
+        {
+          "id": "A771688D-0A2B-5078-99F3-E776C47D803E",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "C26F4FBD-7ABA-52F6-93D0-7DF95DD806D0",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 2
         }
-      },
-      "tipAngle": 30
+      ]
     },
     {
       "id": "3dac755e-eb50-4d5a-9c8b-fafecad27f52",
@@ -681,51 +831,65 @@
       "toolDiameter": 0.4,
       "type": "engraving",
       "group": "Engraving Metal",
-      "parameters": {
-        "aluminum": {
+      "tipAngle": 30,
+      "presets": [
+        {
+          "id": "E1C0CC71-18FE-5F66-B436-6FAEF7D05855",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "E49075D2-D65F-5EA7-9FDE-62E7CB50734F",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "D3A43F61-C066-5412-98FC-1A5853F1C927",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "E93E8364-1233-50AE-BF54-866D0F7A5D9A",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "005113A3-7B6F-5DB5-AEAD-2016C6A8D29B",
+          "name": "PCB",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "plastic": {
+        {
+          "id": "2B289155-5816-510B-8539-A27AAD64D7AB",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "7F708D22-1F5F-5519-9420-767CBA10A136",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 2
         }
-      },
-      "tipAngle": 30
+      ]
     },
     {
       "id": "2a2fbd33-59a5-4690-a99a-465e6647b460",
@@ -736,51 +900,65 @@
       "toolDiameter": 0.5,
       "type": "engraving",
       "group": "Engraving Metal",
-      "parameters": {
-        "aluminum": {
+      "tipAngle": 30,
+      "presets": [
+        {
+          "id": "8A0A91DF-B287-53C2-AB1A-5E79495D2886",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "E86A801C-2474-51AA-B540-BF3C73DE5329",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "4E1921E4-A279-5476-938E-9559EE2B4FB2",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 300,
           "plungeFeedRate": 100,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "7E56AF51-2A4D-5D31-B44F-3D827D4E7861",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "1BEDF772-B3D8-5EB4-9933-FC9037E9FBD2",
+          "name": "PCB",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "plastic": {
+        {
+          "id": "CD0C4035-3235-54CA-A6F1-4191CD4C33EC",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "4FC8BA43-47CF-52F4-B1F8-9AF52269AC60",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 2
         }
-      },
-      "tipAngle": 30
+      ]
     },
     {
       "id": "0e73218a-0dfe-42a9-b832-a70d05c3e5ad",
@@ -791,27 +969,33 @@
       "toolDiameter": 0.1,
       "type": "engraving",
       "group": "Engraving Non Metal",
-      "parameters": {
-        "hardwood": {
+      "tipAngle": 30,
+      "presets": [
+        {
+          "id": "0A95DD07-F6B8-5815-8857-06D5151D0AE4",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "F517AB55-EDB1-5F9D-A649-4FC09CBB1A42",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "E27BD9DB-30BC-5AC7-B8CC-D5E6FE5444CA",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 2
         }
-      },
-      "tipAngle": 30
+      ]
     },
     {
       "id": "cf174c63-7e9d-4639-8967-70ca8f419bb6",
@@ -822,27 +1006,33 @@
       "toolDiameter": 0.2,
       "type": "engraving",
       "group": "Engraving Non Metal",
-      "parameters": {
-        "hardwood": {
+      "tipAngle": 30,
+      "presets": [
+        {
+          "id": "C2736A31-69EA-5D77-90ED-CCF80C04B43F",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "7AABA1B9-62E0-5F62-A65B-B40232007DB7",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "9353A96A-05D3-5F1B-81C4-992615299786",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 2
         }
-      },
-      "tipAngle": 30
+      ]
     },
     {
       "id": "d7f86f74-6e37-4b77-9e2e-29339640e367",
@@ -853,27 +1043,33 @@
       "toolDiameter": 0.3,
       "type": "engraving",
       "group": "Engraving Non Metal",
-      "parameters": {
-        "hardwood": {
+      "tipAngle": 30,
+      "presets": [
+        {
+          "id": "FE3ED7B1-BE6D-59A3-9289-DDDBACF7CA4E",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "8374D67D-AF73-5446-9224-E8EB8E72CB73",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "7D647790-DC03-5F88-9A9B-F226C8317EC5",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 2
         }
-      },
-      "tipAngle": 30
+      ]
     },
     {
       "id": "7150c7e5-bd99-4cae-9aea-bb99b6621c4e",
@@ -884,27 +1080,33 @@
       "toolDiameter": 0.4,
       "type": "engraving",
       "group": "Engraving Non Metal",
-      "parameters": {
-        "hardwood": {
+      "tipAngle": 30,
+      "presets": [
+        {
+          "id": "6764CA2B-B79A-5098-AC7F-7F51ABB58DD3",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "5CB4D1B7-A188-5052-8FE2-8C0A7F35DA5E",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "EB205FC3-7AB0-56BB-A49E-C677E67CD728",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 2
         }
-      },
-      "tipAngle": 30
+      ]
     },
     {
       "id": "019cb420-910b-4dff-8930-8b09cadbb9b3",
@@ -915,27 +1117,33 @@
       "toolDiameter": 0.5,
       "type": "engraving",
       "group": "Engraving Non Metal",
-      "parameters": {
-        "hardwood": {
+      "tipAngle": 30,
+      "presets": [
+        {
+          "id": "AB003567-98D6-54FF-991C-E49E18FCE2AA",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "E285972A-6C37-5EDF-9A75-C953DAC786D9",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "98190B46-05C1-59B1-BD9E-D1813671A5AF",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 2
         }
-      },
-      "tipAngle": 30
+      ]
     },
     {
       "id": "a5ff3704-5822-451a-b6d2-38ac22637226",
@@ -947,44 +1155,56 @@
       "length": 3,
       "type": "ballNose",
       "group": "Ball Nose Metal",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "87F43150-5EBB-5E70-97EF-7780F97686CB",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "140797EA-6D9D-5DA1-BB1B-C4A53BFC604D",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "53C87A12-932C-5988-B976-5C15C1FF8437",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "8EA60264-DBB6-5387-91B7-E8AFACC474D1",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "8471FD0A-BDD4-5944-981F-490C63B4900D",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "0B52F8B7-3820-5EA4-B68F-A75443F5E916",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "b73e6e99-5f1d-4caa-82e4-cf85f7961e51",
@@ -996,44 +1216,56 @@
       "length": 4.5,
       "type": "ballNose",
       "group": "Ball Nose Metal",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "19C4F2E3-A284-5089-B6F1-6BE78C13A701",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "34854FE4-BEDC-5D66-9688-3754BD6D3C4D",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "9D9DCBED-FE50-5BB3-922D-AD8269FD765D",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "C799B289-6E60-59F3-9C99-F4D7FB14E1DB",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "BB89C821-2B3C-5A3F-85AB-5AFFCC7AA02A",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "7B465463-203F-58FE-BF95-2AF05FA87CD6",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "5cf7e0a5-9ddf-4f50-8fea-e10bf61a9c22",
@@ -1045,44 +1277,56 @@
       "length": 6,
       "type": "ballNose",
       "group": "Ball Nose Metal",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "796B3066-64EA-5967-B7B1-57BD67AADAE1",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "8E0185FB-E9C1-53C2-9849-32259FF7BAEF",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "568987F1-C6BA-5CF8-8C32-CB3ED8285422",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "5D5E7048-4D9D-5CBD-B69B-B1D2A4B4E6F1",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "A5C83781-7E3D-5D85-B8EC-254631EB0A4B",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "B9A4246D-B8DA-506F-B7BC-8B861B01F188",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "ff8c056e-2118-4d11-bdae-332cf2fc8df8",
@@ -1094,44 +1338,56 @@
       "length": 7.5,
       "type": "ballNose",
       "group": "Ball Nose Metal",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "AEB7D037-2BBC-5391-BBF7-2E2C1456EA81",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "9CF15AA2-93F1-5F6B-AFB9-FEEAA0516FC5",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "E972D820-6087-5CB0-B22D-5988FA011741",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "4C8D0653-DC38-5547-89DF-AB717CBFE8AF",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "B69A28FA-0CF9-536E-AEE7-A455B57FD3E9",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "DB3F1A14-A2E8-5E76-836D-EF3EE38770E1",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "9e2e4298-f70c-4a37-bc0f-5ec751e5b8af",
@@ -1143,44 +1399,56 @@
       "length": 10,
       "type": "ballNose",
       "group": "Ball Nose Metal",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "B79E5DEB-64B8-5247-B6CE-0505B7A53763",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "46396F9C-BD22-53B6-8EAE-77E9A2E426C9",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "B1A54D52-FAAF-5D7F-BCC1-72F9DE3C3B91",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "2A0F5610-B353-599C-B97B-1417890EA579",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "B5AAD62A-D4DF-51BE-8AA6-419893A44E82",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "E2D0521B-8AEE-5C0B-9B7C-4916B8996483",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "52d86f75-ec2f-4ce5-b2d4-0ba024d82f36",
@@ -1192,26 +1460,32 @@
       "length": 4,
       "type": "ballNose",
       "group": "Ball Nose Non Metal",
-      "parameters": {
-        "hardwood": {
+      "presets": [
+        {
+          "id": "1D5B7F2F-115C-5209-A0B0-EA7739C92273",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "6F6A3AB0-7B5C-56EA-B7A3-7084B0F075CA",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "487D7E08-3A79-5081-8063-BEC905747E9D",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "394f6944-7be4-44cb-8d6e-fd2dc2b1d484",
@@ -1223,26 +1497,32 @@
       "length": 8,
       "type": "ballNose",
       "group": "Ball Nose Non Metal",
-      "parameters": {
-        "hardwood": {
+      "presets": [
+        {
+          "id": "58210B58-39E6-5636-92D6-667B2EC3A7B7",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "8B96B741-F0D1-593B-9309-3541E8634D93",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "E046D8A2-135D-52E6-89AA-49C22430C926",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "9edfc9c2-f620-4d70-8dbb-2112833e3db0",
@@ -1254,26 +1534,32 @@
       "length": 12,
       "type": "ballNose",
       "group": "Ball Nose Non Metal",
-      "parameters": {
-        "hardwood": {
+      "presets": [
+        {
+          "id": "0A7F4B70-88F0-5DE4-9079-A0F092ED452D",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "36E3A0F9-3E96-5D0C-A682-C1E6161C3D2F",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "9158AB28-10AC-5B67-885D-96773875B7D5",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 2
         }
-      }
+      ]
     },
     {
       "id": "8ae41927-6297-4095-b649-1d352ea45b03",
@@ -1284,20 +1570,24 @@
       "toolDiameter": 1.0,
       "type": "corn",
       "group": "Corn",
-      "parameters": {
-        "carbonFiber": {
+      "presets": [
+        {
+          "id": "87E194C6-1D24-5A06-863D-19DBF950A2B5",
+          "name": "Carbon Fiber",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         },
-        "copper": {
+        {
+          "id": "94E3A104-94A7-5C72-804B-367BB8E92C0C",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         }
-      }
+      ]
     },
     {
       "id": "55ae5c42-4918-437b-9fd7-df39848e55a9",
@@ -1308,20 +1598,24 @@
       "toolDiameter": 1.6,
       "type": "corn",
       "group": "Corn",
-      "parameters": {
-        "carbonFiber": {
+      "presets": [
+        {
+          "id": "997EAD60-4BA5-5849-A5D3-F830E0E85A94",
+          "name": "Carbon Fiber",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         },
-        "copper": {
+        {
+          "id": "5E6217F4-E160-5C4F-877D-9EFB1DCCB966",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         }
-      }
+      ]
     },
     {
       "id": "156d7413-5ee8-46bc-b04f-7ee018196978",
@@ -1332,20 +1626,24 @@
       "toolDiameter": 1.7,
       "type": "corn",
       "group": "Corn",
-      "parameters": {
-        "carbonFiber": {
+      "presets": [
+        {
+          "id": "6E5E4913-1802-5A43-809E-779B5D99A557",
+          "name": "Carbon Fiber",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         },
-        "copper": {
+        {
+          "id": "19CC8B2F-D1D8-52C3-8C9D-2EA5B4BE5D5E",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         }
-      }
+      ]
     },
     {
       "id": "54bd1f13-7307-49eb-adb6-e938160b970b",
@@ -1356,20 +1654,24 @@
       "toolDiameter": 1.8,
       "type": "corn",
       "group": "Corn",
-      "parameters": {
-        "carbonFiber": {
+      "presets": [
+        {
+          "id": "FDC038E9-9ADF-5673-BCC7-8CA398C864C2",
+          "name": "Carbon Fiber",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         },
-        "copper": {
+        {
+          "id": "192D3139-FF9B-5D4F-9ABF-BD14D2D721D7",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         }
-      }
+      ]
     },
     {
       "id": "a54b796f-8233-4b65-b668-c185130fedc6",
@@ -1380,20 +1682,24 @@
       "toolDiameter": 1.9,
       "type": "corn",
       "group": "Corn",
-      "parameters": {
-        "carbonFiber": {
+      "presets": [
+        {
+          "id": "99FD30B7-F577-5C4A-BF69-F8FFA78AF590",
+          "name": "Carbon Fiber",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         },
-        "copper": {
+        {
+          "id": "F07CD8C1-8D05-5026-8E30-FB7DF2651AD4",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         }
-      }
+      ]
     },
     {
       "id": "9550060d-f790-4cae-9274-72e29c7a3fc5",
@@ -1404,20 +1710,24 @@
       "toolDiameter": 2.0,
       "type": "corn",
       "group": "Corn",
-      "parameters": {
-        "carbonFiber": {
+      "presets": [
+        {
+          "id": "29B7A86F-2BF3-55FA-9145-3CD621264440",
+          "name": "Carbon Fiber",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         },
-        "copper": {
+        {
+          "id": "12BBD3DD-631B-5415-8DDC-0804B816E131",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         }
-      }
+      ]
     },
     {
       "id": "dac9aaa4-4a39-418e-a300-05a980867184",
@@ -1428,20 +1738,24 @@
       "toolDiameter": 2.1,
       "type": "corn",
       "group": "Corn",
-      "parameters": {
-        "carbonFiber": {
+      "presets": [
+        {
+          "id": "23FB55DA-CA43-591F-BF13-0E4A9DAC2788",
+          "name": "Carbon Fiber",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         },
-        "copper": {
+        {
+          "id": "89284CA4-4EA3-51E4-93D0-F602DD95CC6F",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         }
-      }
+      ]
     },
     {
       "id": "be203ad1-a54c-4ba8-81cf-d8b47d897980",
@@ -1452,20 +1766,24 @@
       "toolDiameter": 2.4,
       "type": "corn",
       "group": "Corn",
-      "parameters": {
-        "carbonFiber": {
+      "presets": [
+        {
+          "id": "656D01B7-A326-5912-910B-4EDA94166123",
+          "name": "Carbon Fiber",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         },
-        "copper": {
+        {
+          "id": "793DBB5F-E9DA-561E-B578-E20337252A88",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         }
-      }
+      ]
     },
     {
       "id": "89bd54f2-76d8-4561-992f-a4fd9ab48f26",
@@ -1476,20 +1794,24 @@
       "toolDiameter": 2.5,
       "type": "corn",
       "group": "Corn",
-      "parameters": {
-        "carbonFiber": {
+      "presets": [
+        {
+          "id": "4E860A82-A2CA-5FFD-BFFC-70498B29C093",
+          "name": "Carbon Fiber",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         },
-        "copper": {
+        {
+          "id": "94DEB30D-C472-53D6-9FBB-3A16B8B1EE81",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         }
-      }
+      ]
     },
     {
       "id": "977dc387-88e9-4cc0-8933-7e8b24b6fb5a",
@@ -1500,20 +1822,24 @@
       "toolDiameter": 3.0,
       "type": "corn",
       "group": "Corn",
-      "parameters": {
-        "carbonFiber": {
+      "presets": [
+        {
+          "id": "247A1691-3AB9-5D3B-8CB8-74548B05BE0A",
+          "name": "Carbon Fiber",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         },
-        "copper": {
+        {
+          "id": "251AB5A4-554F-5E22-8A88-34003A1AC3A4",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         }
-      }
+      ]
     },
     {
       "id": "b215244f-f0a9-4517-8fb0-58dd274afd8d",
@@ -1524,20 +1850,24 @@
       "toolDiameter": 3.175,
       "type": "corn",
       "group": "Corn",
-      "parameters": {
-        "carbonFiber": {
+      "presets": [
+        {
+          "id": "01E3174B-A4E6-5238-9558-DFE556318AF7",
+          "name": "Carbon Fiber",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         },
-        "copper": {
+        {
+          "id": "5598B49C-AD3D-5454-8923-B91F974727D4",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 300,
           "depthOfCut": 0.3
         }
-      }
+      ]
     },
     {
       "id": "ed5795c3-1cbe-432a-844a-7804f5328bcf",
@@ -1549,56 +1879,72 @@
       "length": 3.5,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "C6E1FE12-0AB7-5546-973E-5B07D800A8A4",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "D49BE460-0F39-5A91-B3BF-3F9EC67E397A",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "carbonFiber": {
+        {
+          "id": "E5939E2E-7E36-5030-87BF-BAA4827564E5",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 0.5
         },
-        "copper": {
+        {
+          "id": "031A95FB-E9DE-5F28-952D-4740EC490C7B",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "38A2E478-317C-5366-9938-F2E1297A564F",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "231FB7D2-CBA1-5252-BED6-35BCF370B232",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "plastic": {
+        {
+          "id": "AF9DC5C9-318A-562B-A458-1FFFCB9B650A",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "CAD4BB4C-C6F4-541C-87CB-6986DB0D2FF5",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "3551c231-bce9-44ca-bf34-4dc048bb8de2",
@@ -1610,56 +1956,72 @@
       "length": 5.5,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "0E4B3944-9891-583E-B1E3-B0ED0519E567",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "86FE0768-AB3C-5341-8A2F-43B019F68DDD",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "carbonFiber": {
+        {
+          "id": "9E7F661E-CB86-5B29-9F03-15481E3F9233",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 0.5
         },
-        "copper": {
+        {
+          "id": "0AE248A4-1CA4-5FD5-8A4A-A1E39EE7EC52",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "E265947B-18B5-5450-B3F6-2CD602257996",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "267E745B-4F59-56A4-A81D-783F0C703661",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "plastic": {
+        {
+          "id": "EFD7DB81-6511-5FD4-9A43-1C9D447DA1E6",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "795340DF-815D-5D95-A279-6364D8133DF3",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "6239323e-f2e1-4b35-b7b5-41f75846e0e6",
@@ -1671,56 +2033,72 @@
       "length": 7.0,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "42F9B7D1-14A4-55D4-8E44-3B0CABF2AD63",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "3CB1B930-75A0-5E7C-9699-D1D57240E3FD",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "carbonFiber": {
+        {
+          "id": "2B22E4CF-4407-56B8-A1F8-648CA5AF452F",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 0.5
         },
-        "copper": {
+        {
+          "id": "953ADC9C-592C-5322-85CE-060E6D049678",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "B875CCB1-7885-5A47-BDC7-690407F2570F",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "7CAE8670-F94A-53EF-8BED-CC939382EA43",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "plastic": {
+        {
+          "id": "E9AB9825-FF98-566B-8EDE-531B0D7D99D8",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "D1E2D460-370A-5F69-A809-7E10A94EE781",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "658e9b05-2fe2-4d75-8beb-e33dfc320a5a",
@@ -1732,56 +2110,72 @@
       "length": 8.5,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "59F169DE-AEC3-5B16-B215-0DF3804E4E3D",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "A8F128D2-12EB-5AC5-9711-8D9A73BFB6B0",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "carbonFiber": {
+        {
+          "id": "13FB4478-D4CC-5DB4-AA8C-7241A9DB2C6C",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 0.5
         },
-        "copper": {
+        {
+          "id": "B6B7EA01-C17D-51EB-BC51-EFC63F89DA9D",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "61B3E479-5873-5BB0-BA8E-E0C36DAF7EE8",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "862F9477-E863-58A5-B0AF-A068DC79CAE3",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "plastic": {
+        {
+          "id": "B2759920-4DE9-5155-99A1-E1C4A6CF96C0",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "BAA147F5-B9C7-5AD3-B5BB-58655B0BA265",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "5275c0d1-18ab-449e-8621-36d1804423f3",
@@ -1793,56 +2187,72 @@
       "length": 9.5,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "3ECECB5B-A258-57C1-BD0E-057F50702462",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "22B9A994-9525-5642-92FE-FD0FACD22A03",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "E0348818-EDF0-5023-A23F-450BBA01CAA4",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "E7769F47-963D-5716-84D0-DD5A9512A62B",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "B2C38D8F-A8C8-5F88-BC44-A035E763C158",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "7C61BA7B-B470-5C13-B873-CB1C05258450",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "83812878-4D7C-513C-AEDB-8A4B6D711530",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "B68C47CB-D4C8-5570-BF8C-7A580429E5D0",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "404ddea2-f913-4e43-9ef2-d7a6f4332fe1",
@@ -1854,56 +2264,72 @@
       "length": 10,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "4D01D07F-2BA2-5570-AF93-C265BFA1C9E4",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "381711D8-0BC4-5391-ACD5-16CCD0FF9514",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "6B2ACC58-9A30-53B5-93AF-F1FA8CDC1806",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "30A70084-F255-5D64-96AA-05A38C409F89",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "47531CD7-6FD4-5586-BD7E-402409BC7C31",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "085AAD86-5668-5492-B0EB-468AF3018B6C",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "22F42835-9F7E-57E2-82A8-1DD1FEDD1E1D",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "445C96CA-6DCD-527E-8E36-275627CCE3C7",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "023060da-abad-41c6-a8f3-340c01bdf121",
@@ -1915,56 +2341,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "E7D0509E-9463-5A70-9E2F-193B5AD320A4",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "B22B0D80-6E1F-51F0-99D5-71155BCE09DF",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "C6FF2171-C6E5-58B4-AABC-39BDBCE3E208",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "D51CD733-877D-5B13-8FFD-D93D9A0C0D0B",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "CC720291-91E6-53E3-963D-BBE1F3E1A3C3",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "8F14C7A3-FA65-5BCD-A141-1659C9ACD632",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "EE6AFB97-08F0-5B31-AF44-E6A13EC9DFA5",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "DA934AEC-8DE6-51E1-A711-E192459D7E8B",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "b951d243-6902-44ff-b022-22c35353750c",
@@ -1976,56 +2418,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "7971EBDA-F9E0-5114-815F-3A53B6C153B3",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "45E78BF7-8396-5F67-A5AA-A3913BA0905E",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "1E5D39C5-656A-561C-A2D0-BBA3340B92BE",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "833D6E70-B941-5E2D-BD85-A9EFDB128A42",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "CD497567-D3AC-51C5-88D0-415F1817C40A",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "BF2750BC-61BD-5B5D-9878-0184357C1CEF",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "3B24E1AD-4E3B-5978-9916-527F1E8267DC",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "1602A76D-7E62-5C59-BAE1-4ADA3190A93C",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "28994abf-fe28-42f3-acf9-698c88bd24f0",
@@ -2037,56 +2495,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "4F36CF2C-8924-5FF6-9B43-30F0EAA2A310",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "DA664903-362E-5ACA-9DCA-5BACAFBCB4CA",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "E1D82A89-F1C8-5962-B6CD-27E4A5F6D660",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "2D45C8F0-AB9B-5984-BC1E-444A8DD86E40",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "5C94552C-4BDF-5FCC-A019-8DEAFA61B01B",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "3C009AD6-42B9-53A0-BF11-DD806C3FFCFC",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "5D390B41-85F4-5183-8BB8-7C5C3564DDB4",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "2BB2B856-94DB-5075-8035-00278A24F8D9",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "1dad5c18-efaf-4568-b928-62e5fd9e5e87",
@@ -2098,56 +2572,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "DD81650F-423B-5B46-8634-EF566038395C",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "E8F8DAFC-4C3A-5F0C-B588-56D50C49090B",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "3D2297DE-E607-53C0-96A0-8E752EAB077F",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "4E7DC20E-3FDA-51FB-B09F-95C0CE02D532",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "89CB3847-16BB-58B4-BE18-F97A2CC1CC7C",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "63F7D6AD-D4FD-5BB3-A673-A63BE0E84451",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "2AE64DCA-AB31-5A4D-A394-9C045093D516",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "5235CDBE-CE57-5D34-85A5-768BFCB417A9",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "7ca9065b-6210-4c7e-8fb9-4a1c83d67ac4",
@@ -2159,56 +2649,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "A8382635-6A16-51D6-A69F-3C35B63A0FC2",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "2CA249A0-66A0-59FE-A9A2-DEF516E4302D",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "E022116B-5B7C-50D7-BD48-6EC92EDF6C01",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "E7FE9379-5A41-5063-AC6D-ACD8E15AA4D6",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "911C2559-2957-52B9-8AB8-CE3ACACE7EA1",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "7B3A416D-C2DD-5633-9547-9C39BA303547",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "8221F84E-4615-52CE-8D7B-68054787D66B",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "511380B7-B620-5ADD-A713-DDB4F181B623",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "a21b065b-3dac-4dfd-9e20-76e6bf5070dc",
@@ -2220,56 +2726,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "C7A07D9A-E6F3-5240-8EE1-699F3F889F8B",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "390995E1-D267-5DFB-A6AD-D0F6E17135A4",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "721CF75A-7AD4-5A12-A137-CF72F9C501C7",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "52469461-B8A2-5079-ACCA-431CBE5AC8E8",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "A7534AEC-9787-5157-8281-A398C5144FD8",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "7FA19028-DA85-5A6E-AB3C-FF975196E7D3",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "8662824B-8139-517C-AA37-A1AD574AB21F",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "55B38989-E612-50C0-B981-AB96F971112C",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "d0b6533f-01c1-4b7b-9c81-065228c6e1e2",
@@ -2281,56 +2803,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "52129925-10C3-5262-987F-3B02C78614CA",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "90D6DE9B-51E4-5B72-AA93-83ADA139D26A",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "7D9762AA-2BCF-534E-A1E2-E3B6B9F39F05",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "DCD01EFB-CC01-54D7-B3FD-0FF27B3CA495",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "98FD57B4-65E6-58E1-80B1-7065D6D57FC6",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "3C6F8EFE-B7C5-5739-BFD4-048FCFC122EE",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "298CB5AB-1A27-5D5F-9504-EC8C8D27BB42",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "E244C454-DE0D-5988-9B50-6BE54EF48C71",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "c6502165-9edb-47a2-9ff7-637d6c39d25b",
@@ -2342,56 +2880,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "54EAED6F-CA20-5192-B561-E394D4939257",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "2AB0A2F8-6389-5F4D-A03E-DF9E8B9EA8E1",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "F7A00B15-3C65-5F30-994A-609124974E4B",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "3090EF06-C5F5-5E54-82A6-97245C37B8EB",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "D7003E7F-9AD5-518B-9BC9-B2735F1D7276",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "CA79CDAF-BC68-55DB-8633-5BC03783D5A6",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "002817DA-2CEC-52B2-BFD4-A498BA37BB9B",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "3A70D2E3-6F3C-5B8A-A1E9-74905B9AA42E",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "25dec942-46dc-49fb-a125-43ada0b8ed61",
@@ -2403,56 +2957,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "02968DDF-ED5C-5BB5-B265-87ACAFAC01EC",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "1D72C4F4-2A63-5062-B7C9-DB77359C9DCA",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "A6E7DF02-4FE7-5FA8-A9B8-EF0562C7087F",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "585F8D8B-7908-5D71-B72D-43FBFFFC3DA9",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "567E96CC-1DF5-582D-98F8-8D3E0CD1FF0C",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "F0479F33-ABA8-5652-ADE3-E5B1A0B300A3",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "8458F88D-E4DC-5F82-B47F-2AD8A6C47062",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "5C19CC48-747D-59E9-BB24-86C7E0C6D208",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "16927c38-4140-48e4-9339-449606f7ed79",
@@ -2464,56 +3034,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "2022DF49-FD71-547D-BB31-111F0E7738CE",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "9FDA9001-AD89-57B1-A4F3-930738604271",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "F5ED3116-3557-55F8-970C-0FFFE14D9C20",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "181400DC-A088-54AF-9955-7BE209C70047",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "AD289508-BDBF-56B9-9DF5-9BED5F73723F",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "12225523-77E6-536B-96F6-2185F8A4BF1E",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "65CD1525-BA48-5790-B91D-4ED0A86723CF",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "E2451FEF-E0FD-5147-AA89-8CC1ED259100",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "95c9ee20-173b-4504-9a7a-74ad44297a98",
@@ -2525,56 +3111,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "AD3491E6-6E53-586B-AF04-4B16172B57E7",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "0A556524-42B2-595A-9B02-18ED0030D49B",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "A30B9CA7-7613-55BB-B1C4-1570E2A72189",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "A69C3D67-2697-54F2-A8B9-B01E6A76CACE",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "7A2A3696-7C10-512D-A525-A6F4FA9C7098",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "1F5C38EA-D815-5E50-8990-36AA19F5C743",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "3E24070D-0D7A-5C07-862E-4C3F297F4554",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "9C2917DB-ADD7-5551-849C-E4B53974C267",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "7b0aeb53-b043-44d8-8d95-ccc7b0a01d84",
@@ -2586,56 +3188,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "349FDC72-73B7-52BD-8A6F-53688D13A377",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "2DBF31F7-BC62-5FCA-A277-D20C9247B031",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "49C48CF0-03EA-5544-A91A-393929D0F155",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "F0A4609F-2C20-5D15-8544-C570558E6A76",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "A9E09528-9511-5A02-93E7-F73441D8D2F4",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "368BFEE5-CD40-55FC-A895-FAAD8FDCBC74",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "3E0D8340-6203-51C4-9E2C-3480DBCD20EC",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "BB82ADE4-46E5-59B8-AFAC-CBE98AAFC941",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "068d81fe-d1eb-4274-9f23-6992c9cc0526",
@@ -2647,56 +3265,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "C9AFAC8F-3559-5952-8CA4-2A44C5CAECF1",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "0B8FE127-DFF8-537A-B32F-19465AAA6B7A",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "95753F59-3A0E-52CB-8641-DD10D00BBC1B",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "DD8BB362-C021-506A-9FF3-558189B68299",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "24E56FD7-CCA8-5E55-AE01-9A7BCB7F4A20",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "B3DB8C39-6DD9-519E-A130-090BD7B665C3",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "AD735D4E-DB39-5C22-AC8E-07F5B7A11AE7",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "C14D0130-91D4-5C9A-B589-80D521EDDBD5",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "059053ad-6147-43f4-b8c8-112c406cf9ea",
@@ -2708,56 +3342,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "CB14C9C4-4592-59B4-8FDB-C0A40F05B444",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "9D97FE2E-D904-5CBA-B164-E86799E58E09",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "8FCA4F9B-3C0F-5BB0-A90F-BDFCB4D34D29",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "AC3954D3-5468-5CF2-8463-6216F6E89437",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "015AA80C-FC40-58D1-859A-45206D88D21D",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "AEE33762-4E3A-5F21-94D7-0BC3C631B946",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "D1CD3F77-EAB2-52DE-902E-9C1D2F1F6700",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "D08BC704-B4EF-5629-B073-7997D90C2178",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "dd319818-5cb1-4c2e-be3b-199230e4234b",
@@ -2769,56 +3419,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "D11303FA-85D0-5FAF-9C40-8891A2CE2EE0",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "1DA3C3AA-C40E-5E6B-9968-BB51F979AE0E",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "02388BDC-F398-557F-8A1C-42C9387B2F4D",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "364FDD4C-843E-58C7-B5B4-46F6B22F1939",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "16ED434E-C8C1-5787-87BC-A4B33C1C1DDA",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "E4962DFD-52AE-54C6-A120-C9D2F149F50C",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "33D2832A-D59A-5FCB-AA80-86A7E9AD90D4",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "262C99C3-B761-50A1-8932-EA80CEA4B511",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "84f61360-46e8-477c-8988-12e7e7039b6e",
@@ -2830,56 +3496,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "5F0F85F1-8AD7-5EE4-87D9-07A5960B1541",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "F556238A-92D9-569A-B75C-613DD91CB8F1",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "B059D409-41BF-5CBF-AC14-FD58F69FD2BE",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "B0527EBA-3798-5577-9D18-CAF0C10A1130",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "4C544AA0-7A5C-5403-A2E3-6D39A25D8049",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "A0D16DB3-AD77-5646-B8CB-92651261A4E9",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "8A2C036B-5FD6-55BA-AFC2-52C9A005E3C8",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "DAD55FDC-2E61-5B22-9E18-1F1C6CAAC584",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "5c916ccf-3646-453e-bc0f-a19636314327",
@@ -2891,56 +3573,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "598E2B1E-23D5-5152-A0BA-F08DABF68772",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "542C8801-1CB7-5295-8932-0BC35E52D5B9",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "554B77DE-A31E-5F3D-B7F5-00F4DDA0231B",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "9CB66B7F-0188-5440-85AD-D4C0CAB9D4F3",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "455A46ED-57E0-5F1B-BA02-41599D1D98C7",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "3EC7AC64-6A91-51E6-8D5D-1B31E00A8D6F",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "C6234877-FDB5-5933-B45C-F42E67DA003D",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "8ABDE07E-2EAA-5CE9-8A63-340A134851D4",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "53611762-e396-46bc-b14e-1886f8606884",
@@ -2952,56 +3650,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "8646FCA5-FC05-5B87-8947-874022976078",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "F08B45E0-13DD-5E43-9BA6-1BBFC58C30C8",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "547FC0FA-B2BE-5E02-90BA-0594C882906A",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "7AB04270-C44F-5803-B298-23FFE7113819",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "76D758F9-6694-5F7F-9125-FC67FDDBDF4D",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "2A34BF4E-BAB1-5295-80A2-422761710440",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "24A73C78-A2FE-5B94-9FD4-39CF43D11856",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "0C89171C-9249-5637-BE4D-0CAA18F4201B",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "cde04e49-0d56-4cdc-b1f1-3839f243f899",
@@ -3013,56 +3727,72 @@
       "length": 12,
       "type": "drill",
       "group": "Drill",
-      "parameters": {
-        "aluminum": {
+      "presets": [
+        {
+          "id": "C243F96D-C731-5655-B117-588FE16D4E3B",
+          "name": "Aluminum",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "9C6ACBEB-C44E-5F37-8C1C-DF08C3DE7367",
+          "name": "Brass",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 1
         },
-        "carbonFiber": {
+        {
+          "id": "219EE5EC-EF01-54D3-8FDA-FBB99B812EE3",
+          "name": "Carbon Fiber",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "copper": {
+        {
+          "id": "79330675-A4A9-57C5-96ED-311E95911686",
+          "name": "Copper",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 100,
           "depthOfCut": 0.2
         },
-        "hardwood": {
+        {
+          "id": "71F8053C-E50B-51BF-A07F-735C0480DF3D",
+          "name": "Hardwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "0E72ADF9-AE48-5624-A9C3-CDEEC934F97B",
+          "name": "PCB",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 200,
           "depthOfCut": 1
         },
-        "plastic": {
+        {
+          "id": "76A21073-E168-5E78-95BC-3FBF93FAAE88",
+          "name": "Plastic",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "1C66F797-2427-5A75-8405-F90FF5C28143",
+          "name": "Softwood",
           "spindleRPM": 10000,
           "feedRate": 1000,
           "plungeFeedRate": 300,
           "depthOfCut": 1
         }
-      }
+      ]
     },
     {
       "id": "97d001a3-b1bd-456f-9e49-984e1ce0e3a8",
@@ -3073,57 +3803,73 @@
       "toolDiameter": 0.1,
       "type": "chamfer",
       "group": "Chamfering Bits",
-      "parameters": {
-        "aluminum": {
+      "tipAngle": 90,
+      "presets": [
+        {
+          "id": "7397ABE5-AA7C-5CE5-90F0-0DFB03379766",
+          "name": "Aluminum",
           "spindleRPM": 12000,
           "feedRate": 600,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         },
-        "brass": {
+        {
+          "id": "576B55A2-C8D2-58CB-BE43-53ECF0F6D917",
+          "name": "Brass",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "carbonFiber": {
+        {
+          "id": "4C0D2B76-A1AD-5080-87F7-287926F1EDED",
+          "name": "Carbon Fiber",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "copper": {
+        {
+          "id": "50F6C3A5-A3E4-5972-9F2A-46D9588347BA",
+          "name": "Copper",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "hardwood": {
+        {
+          "id": "18D2C897-D40C-52C7-ADD2-FDDCD848DD5B",
+          "name": "Hardwood",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "pcb": {
+        {
+          "id": "7DAE8603-ACE3-53B7-BEF7-B003D82972C4",
+          "name": "PCB",
           "spindleRPM": 12000,
           "feedRate": 500,
           "plungeFeedRate": 200,
           "depthOfCut": 0.1
         },
-        "plastic": {
+        {
+          "id": "02CA3899-49B3-5344-A157-D0811077E095",
+          "name": "Plastic",
           "spindleRPM": 12000,
           "feedRate": 1000,
           "plungeFeedRate": 500,
           "depthOfCut": 1
         },
-        "softwood": {
+        {
+          "id": "1863D4C9-7FCA-5AFC-AA46-497516F49C62",
+          "name": "Softwood",
           "spindleRPM": 12000,
           "feedRate": 1200,
           "plungeFeedRate": 500,
           "depthOfCut": 2
         }
-      },
-      "tipAngle": 90
+      ]
     },
     {
       "id": "420aec1f-19e3-4ba1-a72b-20d648e389fc",
@@ -3134,15 +3880,17 @@
       "toolDiameter": 0.3,
       "type": "engraving",
       "group": "Solder Mask Remover",
-      "parameters": {
-        "pcb": {
+      "tipAngle": 30,
+      "presets": [
+        {
+          "id": "7FB6F432-D33D-5819-9799-0C8420DAAB2F",
+          "name": "PCB",
           "spindleRPM": 6000,
           "feedRate": 400,
           "plungeFeedRate": 200,
           "depthOfCut": 0.2
         }
-      },
-      "tipAngle": 30
+      ]
     }
   ]
 }

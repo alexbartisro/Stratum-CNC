@@ -164,7 +164,7 @@ struct ToolsSheet: View {
 
             var message = "Imported \(counts.added) tools."
             if counts.updated > 0 {
-                message += " Added cutting parameters to \(counts.updated) existing tools."
+                message += " Added presets to \(counts.updated) existing tools."
             }
             if counts.skipped > 0 {
                 message += " \(counts.skipped) already in the library were skipped."

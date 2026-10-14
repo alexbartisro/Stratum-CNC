@@ -29,8 +29,9 @@ struct Tool: Identifiable, Codable, Hashable {
     // Optional geometry specific to certain tools
     var tipAngle: Double?
 
-    // Cutting parameters by material
-    var parameters: [String: ToolCuttingParameters]
+    /// Cutting presets (speeds and feeds). Usually one per material, named after it.
+    /// Shown alphabetically by name in the UI.
+    var presets: [ToolPreset]
 
     init(
         id: UUID = UUID(),
@@ -43,7 +44,7 @@ struct Tool: Identifiable, Codable, Hashable {
         quantity: Int = 0,
         link: String? = nil,
         tipAngle: Double? = nil,
-        parameters: [String: ToolCuttingParameters] = [:]
+        presets: [ToolPreset] = []
     ) {
         self.id = id
         self.name = name
@@ -55,12 +56,12 @@ struct Tool: Identifiable, Codable, Hashable {
         self.quantity = quantity
         self.link = link
         self.tipAngle = tipAngle
-        self.parameters = parameters
+        self.presets = presets
     }
 
     enum CodingKeys: String, CodingKey {
         case id, name, shankDiameter, toolDiameter, length, type, group
-        case quantity, link, tipAngle, parameters
+        case quantity, link, tipAngle, presets
     }
 
     init(from decoder: Decoder) throws {
@@ -75,7 +76,19 @@ struct Tool: Identifiable, Codable, Hashable {
         quantity = try c.decodeIfPresent(Int.self, forKey: .quantity) ?? 0
         link = try c.decodeIfPresent(String.self, forKey: .link)
         tipAngle = try c.decodeIfPresent(Double.self, forKey: .tipAngle)
-        parameters = try c.decodeIfPresent([String: ToolCuttingParameters].self, forKey: .parameters) ?? [:]
+        if let presets = try c.decodeIfPresent([ToolPreset].self, forKey: .presets) {
+            self.presets = presets
+        } else {
+            // Libraries saved before presets existed stored `parameters` keyed by material.
+            let legacy = try decoder.container(keyedBy: LegacyCodingKeys.self)
+            let byMaterial = try legacy.decodeIfPresent([String: ToolCuttingParameters].self,
+                                                        forKey: .parameters) ?? [:]
+            presets = byMaterial.map { ToolPreset(legacyMaterialKey: $0.key, parameters: $0.value) }
+        }
+    }
+
+    private enum LegacyCodingKeys: String, CodingKey {
+        case parameters
     }
 
     /// The link as a URL, if it is a valid http(s) address.

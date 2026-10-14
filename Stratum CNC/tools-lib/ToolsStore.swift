@@ -100,16 +100,18 @@ final class ToolsStore: ObservableObject {
             quantity: tool.quantity,
             link: tool.link,
             tipAngle: tool.tipAngle,
-            parameters: tool.parameters
+            presets: tool.presets
         )
         try add(copy)
         return copy
     }
 
-    /// Adds imported tools, skipping any whose id is already in the library
-    /// (re-importing the same file doesn't create duplicates), then saves once.
-    /// An existing tool that has no cutting parameters yet gets the imported ones,
-    /// so tools imported before presets were supported are filled in on re-import.
+    /// Adds imported tools, then saves once.
+    ///
+    /// A tool whose id is already in the library is not duplicated; instead any imported
+    /// presets it doesn't have yet are added to it. That way re-importing fills in presets
+    /// without touching what was edited. The "-" placeholder preset written by an earlier
+    /// version of the importer is dropped when real presets arrive.
     @discardableResult
     func importTools(_ imported: [Tool]) throws -> (added: Int, updated: Int, skipped: Int) {
         var indexByID: [UUID: Int] = [:]
@@ -117,17 +119,21 @@ final class ToolsStore: ObservableObject {
 
         var added = 0, updated = 0, skipped = 0
         for tool in imported {
-            if let index = indexByID[tool.id] {
-                if tools[index].parameters.isEmpty && !tool.parameters.isEmpty {
-                    tools[index].parameters = tool.parameters
-                    updated += 1
-                } else {
-                    skipped += 1
-                }
-            } else {
+            guard let index = indexByID[tool.id] else {
                 tools.append(tool)
                 added += 1
+                continue
             }
+
+            let known = Set(tools[index].presets.map(\.id))
+            let newPresets = tool.presets.filter { !known.contains($0.id) }
+            guard !newPresets.isEmpty else {
+                skipped += 1
+                continue
+            }
+            tools[index].presets.removeAll { $0.name == "-" }
+            tools[index].presets.append(contentsOf: newPresets)
+            updated += 1
         }
 
         if added + updated > 0 { try save() }

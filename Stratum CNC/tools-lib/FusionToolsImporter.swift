@@ -101,7 +101,11 @@ enum FusionToolsImporter {
         let typeTitle = f.type.capitalized
         let group = vendor.isEmpty ? typeTitle : "\(vendor) \(typeTitle)"
 
-        let link = f.productLink?.trimmingCharacters(in: .whitespaces)
+        var link = f.productLink?.trimmingCharacters(in: .whitespacesAndNewlines)
+        // Some Fusion entries omit the scheme ("amanatool.com/…"); `Tool.linkURL` needs http(s).
+        if let value = link, !value.isEmpty, !value.contains("://") {
+            link = "https://" + value
+        }
 
         return Tool(
             id: UUID(uuidString: f.guid) ?? UUID(),
@@ -114,32 +118,51 @@ enum FusionToolsImporter {
             quantity: 0,
             link: (link?.isEmpty ?? true) ? nil : link,
             tipAngle: tipAngle(for: type, geometry: g),
-            parameters: parameters(from: f, scale: scale)
+            presets: presets(from: f, scale: scale)
         )
     }
 
-    /// Key used for the preset, since Fusion presets don't say which material they're for.
-    static let noMaterialKey = "-"
+    /// Converts every Fusion preset of a tool, converting units on the way:
+    /// lengths and feeds from inches to mm when needed, and surface speed
+    /// from ft/min to m/min.
+    private static func presets(from f: FusionTool, scale: Double) -> [ToolPreset] {
+        let speedScale = scale == 25.4 ? 0.3048 : 1.0
 
-    /// Fusion's first preset becomes a single entry under `noMaterialKey`.
-    /// Feeds are stored in the tool's unit per minute, so they're scaled like lengths.
-    private static func parameters(from f: FusionTool, scale: Double) -> [String: ToolCuttingParameters] {
-        guard let preset = f.startValues?.presets?.first else { return [:] }
-
-        func feed(_ value: Double?) -> Double? {
+        func scaled(_ value: Double?, scale: Double = 1, decimals: Double = 1) -> Double? {
             guard let value, value > 0 else { return nil }
-            return (value * scale * 10).rounded() / 10
+            let factor = pow(10, decimals)
+            return (value * scale * factor).rounded() / factor
+        }
+        func rpm(_ value: Double?) -> Int? {
+            guard let value, value > 0 else { return nil }
+            return Int(value.rounded())
         }
 
-        let rpm = preset.n.flatMap { $0 > 0 ? Int($0.rounded()) : nil }
-        let parameters = ToolCuttingParameters(
-            spindleRPM: rpm,
-            feedRate: feed(preset.vF),
-            plungeFeedRate: feed(preset.vFPlunge),
-            depthOfCut: nil             // Fusion presets here have no step-down
-        )
-        guard parameters.spindleRPM != nil || parameters.feedRate != nil else { return [:] }
-        return [noMaterialKey: parameters]
+        return (f.startValues?.presets ?? []).map { p in
+            ToolPreset(
+                id: UUID(uuidString: p.guid ?? "") ?? UUID(),
+                name: p.name?.isEmpty == false ? p.name! : "Default",
+                notes: p.description?.isEmpty == false ? p.description : nil,
+                spindleRPM: rpm(p.n),
+                rampSpindleRPM: rpm(p.nRamp),
+                surfaceSpeed: scaled(p.vC, scale: speedScale),
+                feedPerTooth: scaled(p.fZ, scale: scale, decimals: 4),
+                feedPerRevolution: scaled(p.fN, scale: scale, decimals: 4),
+                feedRate: scaled(p.vF, scale: scale),
+                plungeFeedRate: scaled(p.vFPlunge, scale: scale),
+                rampFeedRate: scaled(p.vFRamp, scale: scale),
+                leadInFeedRate: scaled(p.vFLeadIn, scale: scale),
+                leadOutFeedRate: scaled(p.vFLeadOut, scale: scale),
+                transitionFeedRate: scaled(p.vFTransition, scale: scale),
+                retractFeedRate: scaled(p.vFRetract, scale: scale),
+                stepDown: scaled(p.stepdown, scale: scale, decimals: 3),
+                useStepDown: p.useStepdown,
+                stepOver: scaled(p.stepover, scale: scale, decimals: 3),
+                useStepOver: p.useStepover,
+                rampAngle: scaled(p.rampAngle, decimals: 2),
+                coolant: p.toolCoolant
+            )
+        }
     }
 
     private static func mapType(_ f: FusionTool) -> ToolType? {
@@ -209,25 +232,89 @@ private struct FusionStartValues: Decodable {
     let presets: [FusionPreset]?
 }
 
+/// One entry of `start-values.presets`. Fusion uses short names; what they mean:
+///
+/// - `guid`            unique id of the preset
+/// - `name`            preset label, usually the material ("Aluminum")
+/// - `description`     free-text note
+/// - `n`               spindle speed, RPM
+/// - `n_ramp`          spindle speed while ramping, RPM
+/// - `v_c`             cutting (surface) speed at the tool edge, = π·D·n; m/min, or ft/min for inch tools
+/// - `f_z`             feed per tooth (chip load), in the tool's length unit
+/// - `f_n`             feed per revolution, in the tool's length unit (equals plunge feed ÷ n)
+/// - `v_f`             main cutting feed rate per minute (= f_z · flutes · n)
+/// - `v_f_plunge`      feed rate when plunging straight down
+/// - `v_f_ramp`        feed rate while ramping down at an angle
+/// - `v_f_leadIn`      feed on the lead-in arc at the start of a cut
+/// - `v_f_leadOut`     feed on the lead-out arc at the end of a cut
+/// - `v_f_transition`  feed when moving between cuts at the same depth
+/// - `v_f_retract`     feed for retract moves
+/// - `ramp-angle`      entry angle when ramping, degrees
+/// - `stepdown`        depth per pass, in the tool's length unit
+/// - `use-stepdown`    whether the preset's stepdown is applied
+/// - `stepover`        sideways distance between passes, in the tool's length unit
+/// - `use-stepover`    whether the preset's stepover is applied
+/// - `tool-coolant`    coolant mode: "flood", "mist", "disabled", …
+/// - `material`        optional material filter (category/query); not imported
 private struct FusionPreset: Decodable {
-    let n: Double?                  // spindle speed, RPM
-    let vF: Double?                 // cutting feed per minute
-    let vFPlunge: Double?           // plunge feed per minute
+    let guid: String?
+    let name: String?
+    let description: String?
+    let n: Double?
+    let nRamp: Double?
+    let vC: Double?
+    let fZ: Double?
+    let fN: Double?
+    let vF: Double?
+    let vFPlunge: Double?
+    let vFRamp: Double?
+    let vFLeadIn: Double?
+    let vFLeadOut: Double?
+    let vFTransition: Double?
+    let vFRetract: Double?
+    let rampAngle: Double?
+    let stepdown: Double?
+    let useStepdown: Bool?
+    let stepover: Double?
+    let useStepover: Bool?
+    let toolCoolant: String?
 
     enum CodingKeys: String, CodingKey {
-        case n
+        case guid, name, description, n, stepdown, stepover
+        case nRamp = "n_ramp"
+        case vC = "v_c"
+        case fZ = "f_z"
+        case fN = "f_n"
         case vF = "v_f"
         case vFPlunge = "v_f_plunge"
+        case vFRamp = "v_f_ramp"
+        case vFLeadIn = "v_f_leadIn"
+        case vFLeadOut = "v_f_leadOut"
+        case vFTransition = "v_f_transition"
+        case vFRetract = "v_f_retract"
+        case rampAngle = "ramp-angle"
+        case useStepdown = "use-stepdown"
+        case useStepover = "use-stepover"
+        case toolCoolant = "tool-coolant"
     }
 }
 
+/// The `geometry` block of a Fusion tool. Short names:
+///
+/// - `DC`               cutting diameter
+/// - `SFDM`             shank diameter
+/// - `OAL`              overall length
+/// - `LCF`              length of cutting flutes
+/// - `TA`               taper half angle, degrees
+/// - `SIG`              point / tip angle, degrees
+/// - `shoulder-length`  length from the tip to the end of the shoulder
 private struct FusionGeometry: Decodable {
-    let DC: Double?                 // cutting diameter
-    let SFDM: Double?               // shank diameter
-    let OAL: Double?                // overall length
-    let LCF: Double?                // length of cutting flutes
-    let TA: Double?                 // taper half angle
-    let SIG: Double?                // point / tip angle
+    let DC: Double?
+    let SFDM: Double?
+    let OAL: Double?
+    let LCF: Double?
+    let TA: Double?
+    let SIG: Double?
     let shoulderLength: Double?
 
     enum CodingKeys: String, CodingKey {

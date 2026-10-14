@@ -112,7 +112,7 @@ private extension ToolEditorView {
 private extension ToolEditorView {
 
     var geometrySection: some View {
-        Section {
+        Section("Geometry") {
             HStack {
                 Form {
                     MeasurementField(title: "Shank Diameter (DS)", value: $tool.shankDiameter, unit: "mm")
@@ -142,8 +142,18 @@ private extension ToolEditorView {
                 Divider()
                 diagramSection
             }
-        } header: {
-            Text("Geometry")
+        }
+    }
+}
+
+// MARK: - Cutting Parameters
+
+private extension ToolEditorView {
+
+    var cuttingParametersSection: some View {
+        Section("Cutting Parameters") {
+            ToolParametersMatrix(presets: $tool.presets)
+                .frame(maxWidth: .infinity)
         }
     }
 }
@@ -184,141 +194,5 @@ private extension ToolEditorView {
             get: { tool.link ?? "" },
             set: { tool.link = $0.isEmpty ? nil : $0 }
         )
-    }
-}
-
-// MARK: - Cutting Parameters
-
-private extension ToolEditorView {
-
-    var cuttingParametersSection: some View {
-        Section {
-            ToolParametersMatrix(tool: tool)
-                .frame(maxWidth: .infinity)
-//            Picker("Material", selection: $selectedMaterial) {
-//                ForEach(availableMaterials, id: \.self) { material in
-//                    Text(material.displayName)
-//                        .tag(material)
-//                }
-//            }
-//
-//            if let parametersBinding = parametersBinding {
-//                MeasurementField(
-//                    title: "Spindle Speed",
-//                    value: Binding(
-//                        get: {
-//                            Double(parametersBinding.wrappedValue.spindleRPM ?? 0)
-//                        },
-//                        set: {
-//                            parametersBinding.wrappedValue.spindleRPM = Int($0)
-//                        }
-//                    ),
-//                    unit: "RPM"
-//                )
-//
-//                MeasurementField(
-//                    title: "Feed Rate",
-//                    value: Binding(
-//                        get: {
-//                            parametersBinding.wrappedValue.feedRate ?? 0
-//                        },
-//                        set: {
-//                            parametersBinding.wrappedValue.feedRate = $0
-//                        }
-//                    ),
-//                    unit: "mm/min"
-//                )
-//
-//                MeasurementField(
-//                    title: "Plunge Rate",
-//                    value: Binding(
-//                        get: {
-//                            parametersBinding.wrappedValue.plungeFeedRate ?? 0
-//                        },
-//                        set: {
-//                            parametersBinding.wrappedValue.plungeFeedRate = $0
-//                        }
-//                    ),
-//                    unit: "mm/min"
-//                )
-//
-//                MeasurementField(
-//                    title: "Depth of Cut",
-//                    value: Binding(
-//                        get: {
-//                            parametersBinding.wrappedValue.depthOfCut ?? 0
-//                        },
-//                        set: {
-//                            parametersBinding.wrappedValue.depthOfCut = $0
-//                        }
-//                    ),
-//                    unit: "mm"
-//                )
-//            } else {
-//                ContentUnavailableView(
-//                    "No Parameters",
-//                    systemImage: "slider.horizontal.3",
-//                    description: Text(
-//                        "No cutting parameters are defined for \(selectedMaterial.displayName)."
-//                    )
-//                )
-//            }
-        } header: {
-            Text("Cutting Parameters")
-        }
-    }
-
-//    var parametersBinding: Binding<ToolCuttingParameters>? {
-//        guard tool.parameters[selectedMaterial.rawValue] != nil else {
-//            return nil
-//        }
-//
-//        return Binding(
-//            get: {
-//                tool.parameters[selectedMaterial.rawValue]!
-//            },
-//            set: {
-//                tool.parameters[selectedMaterial.rawValue] = $0
-//            }
-//        )
-//    }
-}
-
-// MARK: - Metadata
-
-private extension ToolEditorView {
-
-    /// Reworked as a plain label/value list, monospaced values right
-    /// aligned — same layout language as the reference "Tool Information"
-    /// panel (Number, Type, Handle Diameter, Shoulder Length, Flute
-    /// Length, Diameter).
-    var metadataSection: some View {
-        Section("Information") {
-            if let group = tool.group {
-                infoRow("Group", group)
-            }
-            infoRow("Type", tool.type.displayName)
-            infoRow("ID", tool.id.uuidString, monospaced: true)
-//            infoRow("Handle Diameter (DS)", formatted(tool.shankDiameter, unit: "mm"))
-//            infoRow("Diameter (DC)", formatted(tool.toolDiameter, unit: "mm"))
-//            if let length = tool.length {
-//                infoRow("Length", formatted(length, unit: "mm"))
-//            }
-        }
-    }
-
-    func infoRow(_ label: String, _ value: String, monospaced: Bool = false) -> some View {
-        LabeledContent(label) {
-            Text(value)
-                .font(monospaced ? .caption.monospaced() : .body)
-                .foregroundStyle(.secondary)
-        }
-    }
-
-    func formatted(_ value: Double, unit: String) -> String {
-        let number = value.truncatingRemainder(dividingBy: 1) == 0
-            ? String(format: "%.0f", value)
-            : String(format: "%.3f", value)
-        return "\(number) \(unit)"
     }
 }

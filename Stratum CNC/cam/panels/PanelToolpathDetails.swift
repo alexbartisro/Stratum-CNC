@@ -19,7 +19,7 @@ struct PanelToolpathDetails: View {
     @Binding var toolpath: ToolpathData
 
     /// The stock being cut, used to choose the tool's preset when a tool is picked.
-    var stockMaterial: StockMaterialType = .aluminum
+    var stockMaterial: StockMaterialType
 
     /// Every other toolpath's current name, so the auto-generated name for this
     /// one (see `operationKindBinding`) picks a number that isn't already taken.

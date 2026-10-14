@@ -87,4 +87,34 @@ enum StockMaterialType: String, Codable, CaseIterable, Hashable {
             "Bicolor Stock"
         }
     }
+
+    /// Preset names that suit this stock, best match first. Compared ignoring case,
+    /// spaces, hyphens and underscores, so "Carbon Fiber" matches `carbon_fiber`.
+    var presetNameCandidates: [String] {
+        switch self {
+        case .aluminum:         ["aluminum", "aluminium"]
+        case .steel:            ["steel"]
+        case .stainless_steel:  ["stainlesssteel", "steel"]
+        case .brass:            ["brass"]
+        case .bronze:           ["bronze", "brass", "copper"]
+        case .copper:           ["copper"]
+        case .wood:             ["wood", "hardwood", "softwood"]
+        case .hardwood:         ["hardwood", "wood"]
+        case .softwood:         ["softwood", "wood"]
+        case .plywood:          ["plywood", "softwood", "wood"]
+        case .plastic:          ["plastic"]
+        case .acrylic:          ["acrylic", "plastic"]
+        case .hdpe:             ["hdpe", "plastic"]
+        case .pvc:              ["pvc", "plastic"]
+        case .delrin:           ["delrin", "pom", "plastic"]
+        case .polycarbonate:    ["polycarbonate", "plastic"]
+        case .epoxy:            ["epoxy", "plastic"]
+        case .bakelite:         ["bakelite", "plastic"]
+        case .carbon_fiber:     ["carbonfiber"]
+        case .pcb:              ["pcb"]
+        case .synthetic_stone:  ["syntheticstone"]
+        case .bicolor_stock:    ["bicolorstock"]
+        case .custom:           []
+        }
+    }
 }

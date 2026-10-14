@@ -130,6 +130,22 @@ struct Tool: Identifiable, Codable, Hashable {
         return ["aluminum", "aluminium", "brass", "non-ferrous", "nonferrous"]
             .contains { lowerName.contains($0) }
     }
+
+    /// The preset to use for this stock: the one named after the material (or the closest
+    /// family, e.g. "Plastic" for acrylic). A tool with a single preset, such as Fusion's
+    /// "Default Preset", uses it whatever it is called. Otherwise `nil`, rather than a guess.
+    func preset(for stock: StockMaterialType) -> ToolPreset? {
+        func key(_ text: String) -> String {
+            text.lowercased().filter { $0.isLetter || $0.isNumber }
+        }
+
+        for candidate in stock.presetNameCandidates {
+            if let match = presets.first(where: { key($0.name) == candidate }) {
+                return match
+            }
+        }
+        return presets.count == 1 ? presets.first : nil
+    }
 }
 
 enum ToolType: String, Codable, CaseIterable, Hashable {

@@ -10,6 +10,10 @@ import SwiftUI
 struct ToolPicker: View {
     @Binding var tool: Tool
 
+    /// Called after the user picks a tool (from the recent list or the library),
+    /// not when `tool` is changed from outside.
+    var onToolPicked: ((Tool) -> Void)?
+
     @EnvironmentObject var appModel: AppModel
 
     var body: some View {
@@ -67,6 +71,7 @@ struct ToolPicker: View {
     private func select(_ candidate: Tool) {
         tool = candidate
         appModel.noteToolUsed(candidate)
+        onToolPicked?(candidate)
     }
 
     private func title(for candidate: Tool) -> String {

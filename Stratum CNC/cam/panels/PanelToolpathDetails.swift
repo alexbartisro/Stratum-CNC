@@ -2,6 +2,14 @@
 //  PanelToolpathDetails.swift
 //  Stratum CNC
 //
+//  Created by Cristian Baluta on 14.10.2026.
+//
+
+
+//
+//  PanelToolpathDetails.swift
+//  Stratum CNC
+//
 //  Created by Cristian Baluta on 24.08.2026.
 //
 
@@ -9,6 +17,9 @@ import SwiftUI
 
 struct PanelToolpathDetails: View {
     @Binding var toolpath: ToolpathData
+
+    /// The stock being cut, used to choose the tool's preset when a tool is picked.
+    var stockMaterial: StockMaterialType = .aluminum
 
     /// Every other toolpath's current name, so the auto-generated name for this
     /// one (see `operationKindBinding`) picks a number that isn't already taken.
@@ -32,6 +43,9 @@ struct PanelToolpathDetails: View {
     /// is too large to sit inline without pushing everything else off screen.
     @State private var isExpanded = true
 
+    /// What the last tool pick did to the cutting values, shown under the tool.
+    @State private var presetNote: String?
+
     var body: some View {
         GroupBox("TOOLPATH PARAMS") {
             VStack(alignment: .leading, spacing: 16) {
@@ -49,6 +63,7 @@ struct PanelToolpathDetails: View {
                 rowFooter
             }
             .padding(16)
+            .onChange(of: toolpath.id) { _, _ in presetNote = nil }
             .overlay {
                 // Marks which toolpath the canvas clicks are going to
                 if isPicking {
@@ -137,12 +152,31 @@ struct PanelToolpathDetails: View {
     @ViewBuilder
     private var rowTool: some View {
         VStack(alignment: .leading, spacing: 8) {
-            ToolPicker(tool: $toolpath.tool)
+            ToolPicker(tool: $toolpath.tool, onToolPicked: applyPreset(of:))
+            if let presetNote {
+                Text(presetNote)
+                    .font(.system(size: 11))
+                    .foregroundStyle(.secondary)
+            }
             Divider()
             HStack(spacing: 8) {
                 IntField(title: "SPINDLE SPEED", value: $toolpath.spindleRPM, suffix: "RPM")
                 NumberField(title: "FEED RATE", value: $toolpath.feedRate, suffix: "mm/min")
             }
+        }
+    }
+
+    /// Fills spindle speed, feeds, stepdown and ramp angle from the picked tool's
+    /// preset for the current stock. Only runs on an explicit pick, so opening a
+    /// toolpath never overwrites its values.
+    private func applyPreset(of tool: Tool) {
+        if let preset = tool.preset(for: stockMaterial) {
+            toolpath.apply(preset)
+            presetNote = "Applied the \"\(preset.name)\" preset"
+        } else if tool.presets.isEmpty {
+            presetNote = "This tool has no presets; values unchanged"
+        } else {
+            presetNote = "No preset for \(stockMaterial.displayName); values unchanged"
         }
     }
 

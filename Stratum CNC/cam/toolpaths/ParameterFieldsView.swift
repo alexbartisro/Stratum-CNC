@@ -16,9 +16,9 @@ import StratumCAM
 struct ParameterFieldsView: View {
     let fields: [SC.ParameterField]
 
-    /// Kept for callers that still pass it (e.g. `OperationOptionsView`'s compact/expanded
-    /// toggle for its own dedicated pickers) -- no longer changes how `ChoiceControl`
-    /// renders, since every choice field is now the native pull-down menu at all times.
+    /// Compact/expanded toggle. It only changes the cut-direction choice, which is drawn by
+    /// `DirectionPicker` (glyph button + popover when compact, glyph tiles laid out inline
+    /// when expanded); every other choice stays the native pull-down menu in both modes.
     var expanded: Bool = false
 
     /// Field ids the app doesn't offer (yet). Matched at every nesting depth.
@@ -33,7 +33,9 @@ struct ParameterFieldsView: View {
                 switch block {
                 case .leaves(_, let leaves):
                     // Simple values flow side by side, wrapping when the panel is narrow.
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 120), spacing: 8, alignment: .top)],
+                    // Cells are top-leading, not top-centred: a control that hugs its content
+                    // (the direction button) would otherwise float in the middle of a wide cell.
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 120), spacing: 8, alignment: .topLeading)],
                               alignment: .leading,
                               spacing: 8) {
                         ForEach(leaves) { leaf in
@@ -88,9 +90,11 @@ struct ParameterFieldsView: View {
 
     private func isLeaf(_ field: SC.ParameterField) -> Bool {
         switch field {
-            case .double, .int, .bool, .choice:
-                // The picker is compact like every other simple field now, so it
-                // always flows in the wrapping grid alongside them.
+            case .choice(let f):
+                // Expanded, the direction tiles need their full width, so that choice gets
+                // a block of its own instead of a cell in the wrapping grid.
+                return !(expanded && f.isCutDirection)
+            case .double, .int, .bool:
                 return true
             default:
                 return false
@@ -115,6 +119,11 @@ struct ParameterFieldsView: View {
             case .bool(let f):
                 ToggleField(title: f.label.uppercased(),
                             isOn: Binding(get: { f.value }, set: { f.onChange($0) }))
+            case .choice(let f) where f.isCutDirection:
+                // Climb / conventional: same glyph picker as the contour side.
+                DirectionPicker(direction: Binding(get: { f.cutDirection },
+                                                   set: { f.onChange($0.fieldID) }),
+                                expanded: expanded)
             case .choice(let f):
                 ChoiceControl(title: f.label.uppercased(),
                               options: f.options,
@@ -247,10 +256,37 @@ struct ParameterFieldsView: View {
     }
 }
 
+// MARK: - Cut direction
+
+private extension SC.ParameterField.ChoiceField {
+
+    /// True for the climb / conventional choice built by `SC.cutDirectionChoice`. Matched on
+    /// its options rather than its id, so every operation's direction field -- contour,
+    /// pocket, facing, counterbore, chamfer -- gets the glyph picker, while thread
+    /// handedness and spiral direction keep the plain menu.
+    var isCutDirection: Bool {
+        options.map(\.id) == [SC.CutDirection.climb.rawValue, SC.CutDirection.conventional.rawValue]
+    }
+
+    var cutDirection: CutDirectionOption {
+        selectedId == SC.CutDirection.conventional.rawValue ? .conventional : .climb
+    }
+}
+
+private extension CutDirectionOption {
+    var fieldID: String {
+        switch self {
+            case .climb:        return SC.CutDirection.climb.rawValue
+            case .conventional: return SC.CutDirection.conventional.rawValue
+        }
+    }
+}
+
 // MARK: - Choice
 
 /// A titled choice between string-identified options, styled as a native macOS pull-down
-/// menu at all times (same look as `ToolPicker`'s) -- never as a row of pills.
+/// menu at all times (same look as `ToolPicker`'s) -- never as a row of pills. The cut
+/// direction is the exception: see `DirectionPicker`.
 struct ChoiceControl: View {
     let title: String
     let options: [SC.ParameterField.ChoiceField.Option]

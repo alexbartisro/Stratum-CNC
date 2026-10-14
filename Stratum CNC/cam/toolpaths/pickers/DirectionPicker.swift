@@ -32,7 +32,7 @@ struct DirectionPicker: View {
                 } label: {
                     HStack(spacing: 5) {
                         DirectionGlyph(direction: direction)
-                            .frame(width: 18, height: 14)
+                            .frame(width: 34, height: 20)
 
                         Text(direction.rawValue)
                             .fontWeight(.semibold)
@@ -54,6 +54,7 @@ struct DirectionPicker: View {
                 .help(direction.selectionHint)
                 .popover(isPresented: $isPresented, arrowEdge: .bottom) {
                     DirectionGridPicker(direction: $direction, isPresented: $isPresented)
+                        .padding(24)
                 }
             }
         }
@@ -61,28 +62,24 @@ struct DirectionPicker: View {
 }
 
 /// The tooltip-style popover content: both directions, laid out as a row of
-/// glyph + label tiles instead of `Menu`'s single vertical list.
+/// glyph + label tiles instead of `Menu`'s single vertical list. Same layout and
+/// tile styling as `ContourGridPicker`.
 private struct DirectionGridPicker: View {
     @Binding var direction: CutDirectionOption
     @Binding var isPresented: Bool
 
-    private let columns = [
-        GridItem(.flexible(), spacing: 6),
-        GridItem(.flexible(), spacing: 6)
-    ]
-    private let tileSize = CGSize(width: 70, height: 56)
+    private let tileSize = CGSize(width: 96, height: 66)
 
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 6) {
+        HStack(spacing: 6) {
             ForEach(CutDirectionOption.allCases, id: \.self) { option in
-                tile(for: option)
+                expandedButton(for: option)
             }
+            Spacer()
         }
-        .padding(10)
-        .frame(width: CGFloat(columns.count) * tileSize.width + CGFloat(columns.count - 1) * 6 + 20)
     }
 
-    private func tile(for option: CutDirectionOption) -> some View {
+    private func expandedButton(for option: CutDirectionOption) -> some View {
         let isSelected = option == direction
 
         return Button {
@@ -91,7 +88,7 @@ private struct DirectionGridPicker: View {
         } label: {
             VStack(spacing: 4) {
                 DirectionGlyph(direction: option, tint: isSelected ? Color.accentColor : .secondary)
-                    .frame(width: 30, height: 22)
+                    .frame(width: 56, height: 36)
 
                 Text(option.rawValue)
                     .font(.system(size: 10, weight: isSelected ? .semibold : .regular))
@@ -100,71 +97,111 @@ private struct DirectionGridPicker: View {
                     .minimumScaleFactor(0.75)
             }
             .frame(width: tileSize.width, height: tileSize.height)
-            .background(isSelected ? Color.accentColor.opacity(0.15) : Color.clear)
-            .foregroundStyle(isSelected ? Color.accentColor : .primary)
-            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .background(isSelected ? Color.accentColor.opacity(0.15) : Color.clear)
+        .foregroundStyle(isSelected ? Color.accentColor : .primary)
+        .overlay(
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+        )
         .help(option.selectionHint)
     }
 }
 
-/// A small drawing of the cutter orbiting the part boundary: the arrowed loop runs
-/// clockwise for climb (the cutter's rotation and its travel agree at the edge) and
-/// counter-clockwise for conventional (they oppose). Same boundary convention as
-/// `ContourTypeGlyph` / `PatternGlyph`.
+/// A small cut diagram: the tool (circle) against a wall of material (the shaded strip),
+/// with its spin arrow inside and a travel arrow underneath.
+///
+/// The spindle always turns clockwise, so the tooth at the wall moves to the right. Climb
+/// feeds the same way (travel arrow points right, the cutter's rotation and its travel
+/// agree at the edge); conventional feeds against it (arrow points left). That is also the
+/// clockwise / counter-clockwise loop of the cut around a pocket, same convention as before.
+/// Drawn in a fixed 44x28 design space and scaled to whatever frame it's given.
 private struct DirectionGlyph: View {
     let direction: CutDirectionOption
     var tint: Color = .primary
 
-    private let partInset: CGFloat = 2
+    private let designSize = CGSize(width: 44, height: 28)
+    private var isClimb: Bool { direction == .climb }
 
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 2)
-                .inset(by: partInset)
-                .stroke(Color.secondary.opacity(0.5), lineWidth: 1.1)
+        Canvas { context, size in
+            let scale = min(size.width / designSize.width, size.height / designSize.height)
+            context.translateBy(x: (size.width - designSize.width * scale) / 2,
+                                y: (size.height - designSize.height * scale) / 2)
+            context.scaleBy(x: scale, y: scale)
 
-            GeometryReader { proxy in
-                orbitPath(in: proxy.size)
-                    .stroke(tint, style: StrokeStyle(lineWidth: 1.15, lineCap: .round, lineJoin: .round))
-            }
+            let line = StrokeStyle(lineWidth: 1.5, lineCap: .round, lineJoin: .round)
+            let wallY: CGFloat = 5
+            let radius: CGFloat = 6.5
+            let center = CGPoint(x: designSize.width / 2, y: wallY + radius)
+
+            // Material, with its edge where the tool cuts.
+            context.fill(Path(roundedRect: CGRect(x: 1, y: 0, width: designSize.width - 2, height: wallY),
+                              cornerRadius: 1),
+                         with: .color(Color.secondary.opacity(0.25)))
+            var wall = Path()
+            wall.move(to: CGPoint(x: 1, y: wallY))
+            wall.addLine(to: CGPoint(x: designSize.width - 1, y: wallY))
+            context.stroke(wall, with: .color(Color.secondary.opacity(0.7)), style: line)
+
+            // The tool, resting on the wall, with its centre marked.
+            context.stroke(Path(ellipseIn: CGRect(x: center.x - radius, y: center.y - radius,
+                                                  width: radius * 2, height: radius * 2)),
+                           with: .color(tint), style: line)
+            context.fill(Path(ellipseIn: CGRect(x: center.x - 1, y: center.y - 1, width: 2, height: 2)),
+                         with: .color(tint))
+
+            // Spindle rotation: a clockwise arc inside the tool.
+            context.stroke(spinArrow(center: center, radius: radius * 0.58), with: .color(tint.opacity(0.8)),
+                           style: StrokeStyle(lineWidth: 1.1, lineCap: .round, lineJoin: .round))
+
+            // Travel of the tool along the wall.
+            context.stroke(travelArrow(y: 23.5), with: .color(tint), style: line)
         }
     }
 
-    private var isClimb: Bool { direction == .climb }
-
-    /// Three-quarters of a circle plus a small arrowhead at the open end, so the
-    /// direction of travel reads at a glance even at icon size.
-    private func orbitPath(in size: CGSize) -> Path {
-        let rect = CGRect(origin: .zero, size: size).insetBy(dx: partInset + 2, dy: partInset + 2)
-        let center = CGPoint(x: rect.midX, y: rect.midY)
-        let radius = min(rect.width, rect.height) / 2
-        guard radius > 0 else { return Path() }
-
-        let startAngle: CGFloat = -.pi / 2
-        let sweep: CGFloat = 1.55 * .pi
-        let endAngle = isClimb ? startAngle + sweep : startAngle - sweep
+    /// Roughly three-quarters of a circle running clockwise (angles grow clockwise in a
+    /// y-down space), with a small arrowhead tangent to its open end.
+    private func spinArrow(center: CGPoint, radius: CGFloat) -> Path {
+        let start: CGFloat = -.pi * 0.85
+        let end: CGFloat = start + 1.45 * .pi
+        let steps = 24
 
         var path = Path()
-        path.addArc(center: center, radius: radius,
-                    startAngle: .radians(startAngle), endAngle: .radians(endAngle),
-                    clockwise: !isClimb)
+        for i in 0...steps {
+            let angle = start + (end - start) * CGFloat(i) / CGFloat(steps)
+            let point = CGPoint(x: center.x + radius * cos(angle), y: center.y + radius * sin(angle))
+            if i == 0 { path.move(to: point) } else { path.addLine(to: point) }
+        }
 
-        // Arrowhead, tangent to the circle at the arc's open end.
-        let tip = CGPoint(x: center.x + radius * cos(endAngle), y: center.y + radius * sin(endAngle))
-        let travel = endAngle + (isClimb ? .pi / 2 : -.pi / 2)
-        let wingSpan: CGFloat = 3.2
-        let wingBack: CGFloat = 4.2
-        let base = CGPoint(x: tip.x - wingBack * cos(travel), y: tip.y - wingBack * sin(travel))
+        let tip = CGPoint(x: center.x + radius * cos(end), y: center.y + radius * sin(end))
+        let travel = end + .pi / 2
+        let back: CGFloat = 2.4
+        let span: CGFloat = 1.8
+        let base = CGPoint(x: tip.x - back * cos(travel), y: tip.y - back * sin(travel))
         let normal = travel + .pi / 2
-        let wing1 = CGPoint(x: base.x + wingSpan * cos(normal), y: base.y + wingSpan * sin(normal))
-        let wing2 = CGPoint(x: base.x - wingSpan * cos(normal), y: base.y - wingSpan * sin(normal))
-
-        path.move(to: wing1)
+        path.move(to: CGPoint(x: base.x + span * cos(normal), y: base.y + span * sin(normal)))
         path.addLine(to: tip)
-        path.addLine(to: wing2)
+        path.addLine(to: CGPoint(x: base.x - span * cos(normal), y: base.y - span * sin(normal)))
+        return path
+    }
 
+    /// A horizontal arrow, pointing right for climb and left for conventional.
+    private func travelArrow(y: CGFloat) -> Path {
+        let left: CGFloat = 7
+        let right: CGFloat = designSize.width - 7
+        let sign: CGFloat = isClimb ? 1 : -1
+        let tail = isClimb ? left : right
+        let tip = isClimb ? right : left
+
+        var path = Path()
+        path.move(to: CGPoint(x: tail, y: y))
+        path.addLine(to: CGPoint(x: tip, y: y))
+        path.move(to: CGPoint(x: tip - sign * 3.6, y: y - 3))
+        path.addLine(to: CGPoint(x: tip, y: y))
+        path.addLine(to: CGPoint(x: tip - sign * 3.6, y: y + 3))
         return path
     }
 }

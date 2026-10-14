@@ -2,14 +2,6 @@
 //  ToolPreset.swift
 //  Stratum CNC
 //
-//  Created by Cristian Baluta on 14.10.2026.
-//
-
-
-//
-//  ToolPreset.swift
-//  Stratum CNC
-//
 //  A named set of cutting values for a tool, normally one per material.
 //  Modelled after the presets in a Fusion 360 tool library.
 //
@@ -49,11 +41,10 @@ struct ToolPreset: Identifiable, Codable, Hashable {
     var retractFeedRate: Double?
 
     // Engagement
-    /// Depth per pass in mm (from the original Makera tables).
+    /// Depth per pass in mm. Comes from the Makera tables, or from Fusion's `stepdown` on import.
     var depthOfCut: Double?
-    /// Depth per pass in mm (from Fusion's `stepdown`).
-    var stepDown: Double?
-    var useStepDown: Bool?
+    /// Whether the depth per pass is applied (Fusion's `use-stepdown`).
+    var useDepthOfCut: Bool?
     /// Sideways distance between passes, mm.
     var stepOver: Double?
     var useStepOver: Bool?
@@ -80,8 +71,7 @@ struct ToolPreset: Identifiable, Codable, Hashable {
         transitionFeedRate: Double? = nil,
         retractFeedRate: Double? = nil,
         depthOfCut: Double? = nil,
-        stepDown: Double? = nil,
-        useStepDown: Bool? = nil,
+        useDepthOfCut: Bool? = nil,
         stepOver: Double? = nil,
         useStepOver: Bool? = nil,
         rampAngle: Double? = nil,
@@ -103,8 +93,7 @@ struct ToolPreset: Identifiable, Codable, Hashable {
         self.transitionFeedRate = transitionFeedRate
         self.retractFeedRate = retractFeedRate
         self.depthOfCut = depthOfCut
-        self.stepDown = stepDown
-        self.useStepDown = useStepDown
+        self.useDepthOfCut = useDepthOfCut
         self.stepOver = stepOver
         self.useStepOver = useStepOver
         self.rampAngle = rampAngle

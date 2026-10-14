@@ -17,7 +17,6 @@ struct ToolParametersMatrix: View {
         GridItem(.flexible(), alignment: .trailing),
         GridItem(.flexible(), alignment: .trailing),
         GridItem(.flexible(), alignment: .trailing),
-        GridItem(.flexible(), alignment: .trailing),
         GridItem(.flexible(), alignment: .trailing)
     ]
 
@@ -38,7 +37,6 @@ struct ToolParametersMatrix: View {
                 headerCell("Feed Rate")
                 headerCell("Plunge Feed")
                 headerCell("Depth of Cut")
-                headerCell("Step Down")
                 headerCell("Ramp Angle")
 
                 // Rows
@@ -69,7 +67,6 @@ struct ToolParametersMatrix: View {
         numberField(preset.feedRate, onDelete: delete)
         numberField(preset.plungeFeedRate, onDelete: delete)
         numberField(preset.depthOfCut, onDelete: delete)
-        numberField(preset.stepDown, onDelete: delete)
         numberField(preset.rampAngle, onDelete: delete)
     }
 

@@ -155,8 +155,9 @@ enum FusionToolsImporter {
                 leadOutFeedRate: scaled(p.vFLeadOut, scale: scale),
                 transitionFeedRate: scaled(p.vFTransition, scale: scale),
                 retractFeedRate: scaled(p.vFRetract, scale: scale),
-                stepDown: scaled(p.stepdown, scale: scale, decimals: 3),
-                useStepDown: p.useStepdown,
+                // Fusion's stepdown is our depth of cut.
+                depthOfCut: scaled(p.stepdown, scale: scale, decimals: 3),
+                useDepthOfCut: p.useStepdown,
                 stepOver: scaled(p.stepover, scale: scale, decimals: 3),
                 useStepOver: p.useStepover,
                 rampAngle: scaled(p.rampAngle, decimals: 2),
@@ -250,8 +251,8 @@ private struct FusionStartValues: Decodable {
 /// - `v_f_transition`  feed when moving between cuts at the same depth
 /// - `v_f_retract`     feed for retract moves
 /// - `ramp-angle`      entry angle when ramping, degrees
-/// - `stepdown`        depth per pass, in the tool's length unit
-/// - `use-stepdown`    whether the preset's stepdown is applied
+/// - `stepdown`        depth per pass, in the tool's length unit (imported as `depthOfCut`)
+/// - `use-stepdown`    whether the preset's stepdown is applied (imported as `useDepthOfCut`)
 /// - `stepover`        sideways distance between passes, in the tool's length unit
 /// - `use-stepover`    whether the preset's stepover is applied
 /// - `tool-coolant`    coolant mode: "flood", "mist", "disabled", …

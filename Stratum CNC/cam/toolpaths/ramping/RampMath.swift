@@ -21,10 +21,17 @@ enum RampMath {
         return l * tan(a * .pi / 180)
     }
 
-    /// Rough number of helix turns needed to plunge — steeper angle, fewer turns.
-    static func helixTurns(angle: Double) -> Int {
-        let a = clampedAngle(angle, min: 2, max: 90)
-        return min(max(Int((90 / a).rounded()), 1), 8)
+    /// Depth gained per full revolution of a constant-radius helix of the
+    /// given `diameter` at `angle` (circumference × tan(angle)).
+    static func helixDepthPerTurn(angle: Double, diameter: Double) -> Double {
+        let a = clampedAngle(angle)
+        let d = max(diameter, 0.1)
+        return .pi * d * tan(a * .pi / 180)
+    }
+
+    /// Turns (fractional) a helix needs to reach `stepdown`.
+    static func helixTurnsNeeded(angle: Double, diameter: Double, stepdown: Double) -> Double {
+        max(stepdown, 0.01) / helixDepthPerTurn(angle: angle, diameter: diameter)
     }
 
     /// Rough number of zig-zag passes across a nominal channel, driven by angle and length.

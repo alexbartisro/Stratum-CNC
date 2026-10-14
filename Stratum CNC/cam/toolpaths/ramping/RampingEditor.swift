@@ -170,8 +170,8 @@ struct RampingEditor: View {
                 return String(format: "Needs ≥ %.1f mm at this angle to reach stepdown", RampMath.linearRequiredLength(angle: ramping.angle, stepdown: stepdown))
             }
         case .helix:
-            let turns = RampMath.helixTurns(angle: ramping.angle)
-            return "≈ \(turns) turn\(turns == 1 ? "" : "s") to reach depth"
+            let turns = RampMath.helixTurnsNeeded(angle: ramping.angle, diameter: ramping.length, stepdown: stepdown)
+            return String(format: "%.1f turns to reach the %.2f mm stepdown", turns, stepdown)
         case .none:
             return ""
         }

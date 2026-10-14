@@ -71,6 +71,7 @@ struct HelixProfileView: View {
         let surfaceY: CGFloat
         let stepdownY: CGFloat
         let reachesStepdown: Bool
+        let turnsNeeded: Double
         let leftX: CGFloat
         let rightX: CGFloat
     }
@@ -96,14 +97,8 @@ struct HelixProfileView: View {
         let innerRadiusPx = outerRadiusPx * innerRadiusFraction
 
         // --- Real-world (mm) depth-per-turn, independent of pixel scale ---
-        let angleRadians = RampMath.clampedAngle(angle) * .pi / 180
-        let outerRadiusMM = length / 2
-        let innerRadiusMM = outerRadiusMM * Double(innerRadiusFraction)
-        let averageRadiusMM = (outerRadiusMM + innerRadiusMM) / 2
-        let circumferenceMM = 2 * .pi * max(averageRadiusMM, 0.01)
-        let depthPerTurnMM = circumferenceMM * tan(angleRadians)
-
-        let turnsNeeded = depthPerTurnMM > 0.0001 ? stepdown / depthPerTurnMM : .infinity
+        let depthPerTurnMM = RampMath.helixDepthPerTurn(angle: angle, diameter: length)
+        let turnsNeeded = RampMath.helixTurnsNeeded(angle: angle, diameter: length, stepdown: stepdown)
         let reachesStepdown = turnsNeeded <= maxDrawnTurns
         let drawnTurns = min(turnsNeeded, maxDrawnTurns)
 
@@ -146,6 +141,7 @@ struct HelixProfileView: View {
             surfaceY: surfaceY,
             stepdownY: stepdownY,
             reachesStepdown: reachesStepdown,
+            turnsNeeded: turnsNeeded,
             leftX: center - outerRadiusPx,
             rightX: center + outerRadiusPx
         )
@@ -255,61 +251,16 @@ struct HelixProfileView: View {
             with: .color(rampColor)
         )
 
-        // Diameter dimension line, underneath the profile.
-        let dimensionY = min(layout.stepdownY + 28, size.height - 14)
-
-        context.stroke(
-            Path { p in
-                p.move(to: CGPoint(x: layout.leftX, y: dimensionY))
-                p.addLine(to: CGPoint(x: layout.rightX, y: dimensionY))
-
-                // Left extension.
-                p.move(to: CGPoint(x: layout.leftX, y: layout.stepdownY))
-                p.addLine(to: CGPoint(x: layout.leftX, y: dimensionY))
-
-                // Right extension.
-                p.move(to: CGPoint(x: layout.rightX, y: layout.stepdownY))
-                p.addLine(to: CGPoint(x: layout.rightX, y: dimensionY))
-            },
-            with: .color(.secondary.opacity(0.7)),
-            style: StrokeStyle(lineWidth: 1, dash: [3, 3])
-        )
-
-        context.fill(
-            arrowhead(
-                at: CGPoint(x: layout.leftX, y: dimensionY),
-                direction: CGVector(dx: 1, dy: 0),
-                length: 6,
-                width: 4
-            ),
-            with: .color(.secondary.opacity(0.8))
-        )
-
-        context.fill(
-            arrowhead(
-                at: CGPoint(x: layout.rightX, y: dimensionY),
-                direction: CGVector(dx: -1, dy: 0),
-                length: 6,
-                width: 4
-            ),
-            with: .color(.secondary.opacity(0.8))
-        )
-
-        // Diameter label.
-        let label = String(format: "⌀%.2f mm", length)
+        // Calculated number of turns needed to reach the stepdown.
+        let turnsText = String(format: "%.1f", layout.turnsNeeded)
+        let label = "\(turnsText) turn\(turnsText == "1.0" ? "" : "s") to reach stepdown"
         let text = Text(label)
             .font(.caption.monospacedDigit())
-            .foregroundColor(.secondary)
-
-        let resolvedText = context.resolve(text)
-        let textSize = resolvedText.measure(in: CGSize(width: 120, height: 30))
+            .foregroundColor(layout.reachesStepdown ? .secondary : .orange)
 
         context.draw(
-            resolvedText,
-            at: CGPoint(
-                x: (layout.leftX + layout.rightX) / 2,
-                y: dimensionY - textSize.height / 2 - 5
-            ),
+            context.resolve(text),
+            at: CGPoint(x: size.width / 2, y: size.height - 16),
             anchor: .center
         )
     }

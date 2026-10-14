@@ -11,7 +11,10 @@ struct HelixTopView: View {
     let angle: Double
     let length: Double
     var direction: HelixDirection = .outsideIn
-    private let cycleDuration: Double = 3.0
+    private let cycleDuration: Double = 7.0
+    /// Fixed turn count for the icon: it is illustrative only, so it does not
+    /// follow the angle or length values.
+    private let turns = 3
     /// Reference diameter (mm) that fills the available drawing area — same
     /// convention as the linear and zig-zag views, so `length` visibly
     /// changes the spiral size instead of being ignored.
@@ -46,7 +49,6 @@ struct HelixTopView: View {
         let center = CGPoint(x: size.width / 2, y: size.height / 2)
         let outerRadius = outerRadius(in: size)
         let innerRadius = outerRadius * 0.55
-        let turns = RampMath.helixTurns(angle: angle)
         let pointsPerTurn = 40
         let totalPoints = turns * pointsPerTurn
         // Start/end radius flip with direction; `t` still runs 0 → 1 as the
@@ -87,13 +89,13 @@ struct HelixTopView: View {
             Path(ellipseIn: CGRect(x: center.x - 2, y: center.y - 2, width: 4, height: 4)),
             with: .color(.secondary)
         )
-        // Arrow at the very start of the spiral, showing entry direction.
-        if points.count > 2 {
-            let start = points[0]
-            let startDirection = CGVector(dx: points[2].x - points[0].x, dy: points[2].y - points[0].y)
+        // Arrow at the end of the spiral, pointing along the direction of travel.
+        if points.count > 3 {
+            let last = points[points.count - 1]
+            let before = points[points.count - 3]
             context.fill(
-                arrowhead(at: start, direction: CGVector(dx: -startDirection.dx, dy: -startDirection.dy)),
-                with: .color(.accentColor.opacity(0.6))
+                arrowhead(at: last, direction: CGVector(dx: last.x - before.x, dy: last.y - before.y)),
+                with: .color(.accentColor.opacity(0.8))
             )
         }
         // Animated tool position.

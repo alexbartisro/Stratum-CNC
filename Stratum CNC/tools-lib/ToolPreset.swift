@@ -99,15 +99,4 @@ struct ToolPreset: Identifiable, Codable, Hashable {
         self.rampAngle = rampAngle
         self.coolant = coolant
     }
-
-    /// Converts an entry of the old `[material: parameters]` dictionary.
-    init(legacyMaterialKey key: String, parameters: ToolCuttingParameters) {
-        self.init(
-            name: ToolMaterial(rawValue: key)?.displayName ?? key,
-            spindleRPM: parameters.spindleRPM,
-            feedRate: parameters.feedRate,
-            plungeFeedRate: parameters.plungeFeedRate,
-            depthOfCut: parameters.depthOfCut
-        )
-    }
 }

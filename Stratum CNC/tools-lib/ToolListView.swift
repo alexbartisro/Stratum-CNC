@@ -66,6 +66,7 @@ struct ToolListView: View {
 
     @Binding var selectedToolID: Tool.ID?
     @Binding var inStockOnly: Bool
+    @Binding var metalOnly: Bool
     let onDuplicate: (Tool) -> Void
     let onDelete: (Tool) -> Void
 
@@ -115,14 +116,18 @@ struct ToolListView: View {
                 ContentUnavailableView(
                     "No Tools",
                     systemImage: "tray",
-                    description: Text("No tools have a quantity set.")
+                    description: Text("No tools match the current filters.")
                 )
             }
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
             VStack(spacing: 0) {
                 Divider()
-                Toggle("In stock only", isOn: $inStockOnly)
+                HStack(spacing: 16) {
+                    Toggle("In stock only", isOn: $inStockOnly)
+                    Toggle("Metal only", isOn: $metalOnly)
+                        .help("Tools whose presets, name or group point to metal cutting")
+                }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
                     .frame(maxWidth: .infinity, alignment: .leading)

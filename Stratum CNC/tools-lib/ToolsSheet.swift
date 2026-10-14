@@ -18,12 +18,15 @@ struct ToolsSheet: View {
     @State private var selectedToolID: Tool.ID?
     @State private var toolPendingDeletion: Tool?
     @State private var inStockOnly = false
+    @State private var metalOnly = false
     @State private var isImporting = false
     @State private var importMessage: String?
 
     /// Tools shown in the list, after applying the in-stock filter.
     private var visibleTools: [Tool] {
-        inStockOnly ? store.tools.filter { $0.quantity > 0 } : store.tools
+        store.tools.filter { tool in
+            (!inStockOnly || tool.quantity > 0) && (!metalOnly || tool.isForMetal)
+        }
     }
 
     @Environment(\.dismiss) private var dismiss
@@ -37,6 +40,7 @@ struct ToolsSheet: View {
                     tools: visibleTools,
                     selectedToolID: $selectedToolID,
                     inStockOnly: $inStockOnly,
+                    metalOnly: $metalOnly,
                     onDuplicate: duplicateTool,
                     onDelete: { toolPendingDeletion = $0 }
                 )
@@ -71,12 +75,8 @@ struct ToolsSheet: View {
             }
             .navigationTitle("Tools")
             .onAppear(perform: selectFirstIfNeeded)
-            .onChange(of: inStockOnly) { _ in
-                let visible = visibleTools
-                if !visible.contains(where: { $0.id == selectedToolID }) {
-                    selectedToolID = visible.groupedByGroup.first?.tools.first?.id
-                }
-            }
+            .onChange(of: inStockOnly) { _ in reselectIfHidden() }
+            .onChange(of: metalOnly) { _ in reselectIfHidden() }
             .confirmationDialog(
                 "Delete \"\(toolPendingDeletion?.name ?? "")\"?",
                 isPresented: Binding(
@@ -175,6 +175,14 @@ struct ToolsSheet: View {
             importMessage = message
         } catch {
             importMessage = error.localizedDescription
+        }
+    }
+
+    /// Keeps the selection on something visible after a filter changes.
+    private func reselectIfHidden() {
+        let visible = visibleTools
+        if !visible.contains(where: { $0.id == selectedToolID }) {
+            selectedToolID = visible.groupedByGroup.first?.tools.first?.id
         }
     }
 

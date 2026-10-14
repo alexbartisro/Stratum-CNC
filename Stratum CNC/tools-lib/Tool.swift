@@ -76,15 +76,7 @@ struct Tool: Identifiable, Codable, Hashable {
         quantity = try c.decodeIfPresent(Int.self, forKey: .quantity) ?? 0
         link = try c.decodeIfPresent(String.self, forKey: .link)
         tipAngle = try c.decodeIfPresent(Double.self, forKey: .tipAngle)
-        if let presets = try c.decodeIfPresent([ToolPreset].self, forKey: .presets) {
-            self.presets = presets
-        } else {
-            // Libraries saved before presets existed stored `parameters` keyed by material.
-            let legacy = try decoder.container(keyedBy: LegacyCodingKeys.self)
-            let byMaterial = try legacy.decodeIfPresent([String: ToolCuttingParameters].self,
-                                                        forKey: .parameters) ?? [:]
-            presets = byMaterial.map { ToolPreset(legacyMaterialKey: $0.key, parameters: $0.value) }
-        }
+        presets = try c.decodeIfPresent([ToolPreset].self, forKey: .presets) ?? []
     }
 
     private enum LegacyCodingKeys: String, CodingKey {
@@ -107,6 +99,36 @@ struct Tool: Identifiable, Codable, Hashable {
         let lengthString = String(format: "%.3g", length ?? -1)
 
         return "\(shankDiameter)×\(toolDiameter)×\(lengthString) - \(type.displayName)"
+    }
+
+    /// Best-effort guess whether the tool is meant for cutting metal.
+    ///
+    /// There is no "workpiece material" field on a tool (Fusion's `BMC` is the tool's own
+    /// material, e.g. carbide), so this looks for hints in what the tool says about itself:
+    /// - a preset named after a metal (aluminum, brass, steel). Copper is left out on purpose:
+    ///   it is also the PCB board material, so a copper preset doesn't imply a metal tool;
+    /// - the name or group mentioning metal, but not "non metal" / "non-metal";
+    /// - the name mentioning aluminum, brass or non-ferrous, as in "Aluminum Cutting".
+    var isForMetal: Bool {
+        let metalPresets: Set<String> = ["aluminum", "aluminium", "brass", "steel"]
+        if presets.contains(where: { metalPresets.contains($0.name.lowercased()) }) {
+            return true
+        }
+
+        func mentionsMetal(_ text: String) -> Bool {
+            var text = text.lowercased()
+            for negated in ["non metal", "non-metal", "nonmetal"] {
+                text = text.replacingOccurrences(of: negated, with: "")
+            }
+            return text.contains("metal")
+        }
+        if mentionsMetal(name) || mentionsMetal(group ?? "") {
+            return true
+        }
+
+        let lowerName = name.lowercased()
+        return ["aluminum", "aluminium", "brass", "non-ferrous", "nonferrous"]
+            .contains { lowerName.contains($0) }
     }
 }
 
@@ -140,43 +162,4 @@ enum ToolType: String, Codable, CaseIterable, Hashable {
             "Solder Mask Remover"
         }
     }
-}
-
-enum ToolMaterial: String, Codable, CaseIterable, Hashable {
-    case aluminum
-    case brass
-    case carbonFiber
-    case copper
-    case hardwood
-    case pcb
-    case plastic
-    case softwood
-
-    var displayName: String {
-        switch self {
-        case .aluminum:
-            "Aluminum"
-        case .brass:
-            "Brass"
-        case .carbonFiber:
-            "Carbon Fiber"
-        case .copper:
-            "Copper"
-        case .hardwood:
-            "Hardwood"
-        case .pcb:
-            "PCB"
-        case .plastic:
-            "Plastic"
-        case .softwood:
-            "Softwood"
-        }
-    }
-}
-
-struct ToolCuttingParameters: Codable, Hashable {
-    var spindleRPM: Int?
-    var feedRate: Double?
-    var plungeFeedRate: Double?
-    var depthOfCut: Double?
 }

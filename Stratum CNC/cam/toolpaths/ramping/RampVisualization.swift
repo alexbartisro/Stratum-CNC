@@ -14,13 +14,6 @@ enum RampGeometry {
     static let detailSize: CGFloat = 320
 }
 
-/// How a linear ramp finishes before the main toolpath continues.
-enum LinearRampReturnMode: String, CaseIterable, Identifiable {
-    case advance = "Continue forward"
-    case retrace = "Return to start"
-    var id: String { rawValue }
-}
-
 /// Spiral direction for a helix ramp.
 enum HelixDirection: String, CaseIterable, Identifiable {
     case outsideIn = "Outside → in"
@@ -41,7 +34,6 @@ struct RampVisualization: View {
     let length: Double
     var stepdown: Double = 1
     var mode: RampVisualizationMode
-    var linearReturnMode: LinearRampReturnMode = .retrace
     var helixDirection: HelixDirection = .outsideIn
 
     var body: some View {
@@ -58,8 +50,7 @@ struct RampVisualization: View {
                         LinearRampProfileView(
                             angle: angle,
                             length: length,
-                            stepdown: stepdown,
-                            returnMode: linearReturnMode
+                            stepdown: stepdown
                         )
                 }
             case .helix:

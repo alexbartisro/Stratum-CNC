@@ -12,7 +12,6 @@ struct RampTypeCard: View {
     let angle: Double
     let length: Double
     let stepdown: Double
-    let linearReturnMode: LinearRampReturnMode
     let helixDirection: HelixDirection
     let isSelected: Bool
 
@@ -28,7 +27,6 @@ struct RampTypeCard: View {
                     length: length,
                     stepdown: stepdown,
                     mode: .topPreview,
-                    linearReturnMode: linearReturnMode,
                     helixDirection: helixDirection
                 )
                 .padding(10)

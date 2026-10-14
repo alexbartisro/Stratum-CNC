@@ -17,7 +17,6 @@ struct RampingEditor: View {
     private var dismiss
     // See the note at the top of this file — move these onto RampingSettings
     // once you're ready to persist them.
-    @State private var linearReturnMode: LinearRampReturnMode = .retrace
     @State private var helixDirection: HelixDirection = .outsideIn
 
     var body: some View {
@@ -28,7 +27,6 @@ struct RampingEditor: View {
                     angle: ramping.angle,
                     length: ramping.length,
                     stepdown: stepdown,
-                    linearReturnMode: linearReturnMode,
                     helixDirection: helixDirection
                 )
                 .frame(maxWidth: .infinity)
@@ -44,7 +42,6 @@ struct RampingEditor: View {
                     length: ramping.length,
                     stepdown: stepdown,
                     mode: .profileDetail,
-                    linearReturnMode: linearReturnMode,
                     helixDirection: helixDirection
                 )
                 .frame(height: RampGeometry.detailSize)
@@ -54,15 +51,6 @@ struct RampingEditor: View {
                         .fill(Color(.rampCardBackground))
                 )
                 .animation(.easeInOut(duration: 0.2), value: ramping.type)
-
-                if ramping.type == .linear {
-                    Picker("Return path", selection: $linearReturnMode) {
-                        ForEach(LinearRampReturnMode.allCases) { mode in
-                            Text(mode.rawValue).tag(mode)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                }
 
                 if ramping.type == .helix {
                     Picker("Spiral direction", selection: $helixDirection) {
@@ -157,15 +145,8 @@ struct RampingEditor: View {
             return "The tool plunges vertically."
         case .linear:
             let result = RampMath.linearRampOutcome(angle: ramping.angle, length: ramping.length, stepdown: stepdown)
-            let stageText: String
-            switch linearReturnMode {
-            case .advance:
-                stageText = "continues forward into the cut"
-            case .retrace:
-                stageText = "retraces back to the start point"
-            }
             if result.reachesStepdown {
-                return "The tool descends at \(String(format: "%.1f", ramping.angle))° to reach the \(String(format: "%.2f", stepdown)) mm stepdown, then \(stageText). The required distance is calculated automatically."
+                return "The tool descends at \(String(format: "%.1f", ramping.angle))° over half of the ramp distance, then returns to the start point descending the rest of the way, reaching the \(String(format: "%.2f", stepdown)) mm stepdown. The distance is calculated automatically."
             } else {
                 return "⚠️ At this angle, \(String(format: "%.1f", ramping.length)) mm of ramp length only reaches \(String(format: "%.2f", result.depth)) mm — short of the \(String(format: "%.2f", stepdown)) mm stepdown. Increase length or use a shallower angle."
             }

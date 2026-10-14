@@ -7,11 +7,15 @@
 
 import SwiftUI
 
+/// Side profile of a linear ramp.
+///
+/// The ramp distance is derived from the angle and the stepdown. The tool
+/// starts at z0, ramps down over the first half of that distance, then comes
+/// back to the start point along the same slope, finishing at the stepdown z.
 struct LinearRampProfileView: View {
     let angle: Double
     let length: Double
     let stepdown: Double
-    var returnMode: LinearRampReturnMode = .retrace
     private let cycleDuration: Double = 2.8
 
     var body: some View {
@@ -35,8 +39,10 @@ struct LinearRampProfileView: View {
     }
 
     private struct Layout {
+        /// start (z0) → turnaround (half distance, half depth) → end (start x, full depth)
         let points: [CGPoint]
         let stepdownY: CGFloat
+        let halfDistance: Double
         let reachesStepdown: Bool
     }
 
@@ -54,72 +60,31 @@ struct LinearRampProfileView: View {
             stepdown: stepdown
         )
 
-        let angleRadians = RampMath.clampedAngle(angle) * .pi / 180
-        let slope = tan(angleRadians)
+        // The tool only travels half of the ramp distance away from the start.
+        let halfDistance = result.usedLength / 2
+        let halfDepth = result.depth / 2
+        let fullDepth = result.depth
 
-        // The ramp should occupy almost the entire width.
-        let rampWidth = availableWidth
+        // One pixels-per-mm factor for both axes keeps the drawn slope equal
+        // to the real angle. Fit to the width, or to the height when steep.
+        let tallest = max(fullDepth, stepdown, 0.01)
+        let k = min(
+            availableWidth / CGFloat(max(halfDistance, 0.01)),
+            availableHeight / CGFloat(tallest)
+        )
 
-        // Calculate the depth that this horizontal distance would produce
-        // at the real angle.
-        let geometricDepth = rampWidth * slope
-
-        // Scale the entire profile uniformly when the requested angle would
-        // otherwise extend beyond the available vertical space.
-        let scale = geometricDepth > availableHeight
-            ? availableHeight / geometricDepth
-            : 1.0
-
-        let finalRampWidth = rampWidth * scale
-        let finalDepth = geometricDepth * scale
-
-        // Keep the ramp centered horizontally.
-        let startX = (size.width - finalRampWidth) / 2
+        let rampWidth = CGFloat(halfDistance) * k
+        let startX = (size.width - rampWidth) / 2
         let surfaceY = topMargin
 
-        let rampEndX = startX + finalRampWidth
-        let rampEndY = surfaceY + finalDepth
-
-        // The visual ramp represents the requested physical angle.
-        let rampEnd = CGPoint(
-            x: rampEndX,
-            y: rampEndY
-        )
-
-        let start = CGPoint(
-            x: startX,
-            y: surfaceY
-        )
-
-        let stageTwo: CGPoint
-
-        if result.reachesStepdown {
-            switch returnMode {
-            case .advance:
-                stageTwo = CGPoint(
-                    x: size.width - marginX,
-                    y: rampEndY
-                )
-
-            case .retrace:
-                stageTwo = CGPoint(
-                    x: startX,
-                    y: rampEndY
-                )
-            }
-        } else {
-            stageTwo = rampEnd
-        }
-
-        // Stepdown line is positioned using the same vertical scale as
-        // the ramp, so it remains geometrically consistent.
-        let depthScale = finalDepth / max(result.depth, 0.01)
-
-        let stepdownY = surfaceY + CGFloat(stepdown) * depthScale
+        let start = CGPoint(x: startX, y: surfaceY)
+        let turn = CGPoint(x: startX + rampWidth, y: surfaceY + CGFloat(halfDepth) * k)
+        let end = CGPoint(x: startX, y: surfaceY + CGFloat(fullDepth) * k)
 
         return Layout(
-            points: [start, rampEnd, stageTwo],
-            stepdownY: stepdownY,
+            points: [start, turn, end],
+            stepdownY: surfaceY + CGFloat(stepdown) * k,
+            halfDistance: halfDistance,
             reachesStepdown: result.reachesStepdown
         )
     }
@@ -134,8 +99,8 @@ struct LinearRampProfileView: View {
         guard points.count == 3 else { return }
 
         let start = points[0]
-        let rampEnd = points[1]
-        let stageTwo = points[2]
+        let turn = points[1]
+        let end = points[2]
 
         let surfaceY = start.y
         let rampColor: Color = layout.reachesStepdown ? .accentColor : .orange
@@ -163,7 +128,7 @@ struct LinearRampProfileView: View {
             lineWidth: 1
         )
 
-        // Maximum allowed stepdown.
+        // Stepdown level.
         context.stroke(
             Path { p in
                 p.move(to: CGPoint(x: 0, y: layout.stepdownY))
@@ -176,84 +141,39 @@ struct LinearRampProfileView: View {
             )
         )
 
-        if layout.reachesStepdown {
-            // Stage 2: movement at full depth.
-            context.stroke(
-                Path { p in
-                    p.move(to: rampEnd)
-                    p.addLine(to: stageTwo)
-                },
-                with: .color(.accentColor.opacity(0.45)),
-                style: StrokeStyle(
-                    lineWidth: 2,
-                    lineCap: .round,
-                    dash: [5, 3]
-                )
-            )
-
-            let direction = CGVector(
-                dx: stageTwo.x - rampEnd.x,
-                dy: stageTwo.y - rampEnd.y
-            )
-
-            if direction.dx != 0 || direction.dy != 0 {
-                context.fill(
-                    arrowhead(
-                        at: stageTwo,
-                        direction: direction
-                    ),
-                    with: .color(.accentColor.opacity(0.7))
-                )
-            }
-        } else {
-            // The available ramp length is insufficient to reach stepdown.
-            // Show where the ramp would need to continue.
-            let angleRadians = RampMath.clampedAngle(angle) * .pi / 180
-            let remainingWidth = min(
-                36,
-                size.width * 0.15
-            )
-
-            let verticalScale = (
-                layout.stepdownY - surfaceY
-            ) / CGFloat(max(stepdown, 0.01))
-
-            let horizontalScale = (
-                rampEnd.x - start.x
-            ) / CGFloat(max(length, 0.1))
-
-            let ghostEnd = CGPoint(
-                x: rampEnd.x + remainingWidth,
-                y: rampEnd.y
-                    + remainingWidth
-                    * CGFloat(tan(angleRadians))
-                    * (verticalScale / horizontalScale)
-            )
-
-            context.stroke(
-                Path { p in
-                    p.move(to: rampEnd)
-                    p.addLine(to: ghostEnd)
-                },
-                with: .color(.orange.opacity(0.5)),
-                style: StrokeStyle(
-                    lineWidth: 1.5,
-                    dash: [2, 3]
-                )
-            )
-        }
-
-        // Main ramp.
+        // Leg 1: z0 → half distance, half of the stepdown.
         context.stroke(
             Path { p in
                 p.move(to: start)
-                p.addLine(to: rampEnd)
+                p.addLine(to: turn)
             },
             with: .color(rampColor),
             style: StrokeStyle(
                 lineWidth: 3,
                 lineCap: .round
             )
+        )
+
+        // Leg 2: back to the start point, finishing at the stepdown z.
+        context.stroke(
+            Path { p in
+                p.move(to: turn)
+                p.addLine(to: end)
+            },
+            with: .color(rampColor.opacity(0.6)),
+            style: StrokeStyle(
+                lineWidth: 3,
+                lineCap: .round,
+                dash: [6, 4]
+            )
+        )
+
+        context.fill(
+            arrowhead(
+                at: end,
+                direction: CGVector(dx: end.x - turn.x, dy: end.y - turn.y)
+            ),
+            with: .color(rampColor.opacity(0.8))
         )
 
         // Entry marker.
@@ -287,49 +207,32 @@ struct LinearRampProfileView: View {
             with: .color(rampColor)
         )
 
-        // Calculated horizontal ramp distance.
-        let horizontalDistance = RampMath.linearRequiredLength(
-            angle: angle,
-            stepdown: stepdown
-        )
-
+        // Horizontal extent of the ramp (half of the full ramp distance).
         let dimensionY = min(
-            rampEnd.y + 28,
+            max(turn.y, end.y) + 28,
             size.height - 14
         )
 
-        // Dimension line.
         context.stroke(
             Path { p in
                 p.move(to: CGPoint(x: start.x, y: dimensionY))
-                p.addLine(to: CGPoint(x: rampEnd.x, y: dimensionY))
+                p.addLine(to: CGPoint(x: turn.x, y: dimensionY))
 
                 // Left extension.
-                p.move(to: CGPoint(x: start.x, y: rampEnd.y))
+                p.move(to: CGPoint(x: start.x, y: end.y))
                 p.addLine(to: CGPoint(x: start.x, y: dimensionY))
 
                 // Right extension.
-                p.move(to: CGPoint(x: rampEnd.x, y: rampEnd.y))
-                p.addLine(to: CGPoint(x: rampEnd.x, y: dimensionY))
+                p.move(to: CGPoint(x: turn.x, y: turn.y))
+                p.addLine(to: CGPoint(x: turn.x, y: dimensionY))
             },
             with: .color(.secondary.opacity(0.7)),
             style: StrokeStyle(lineWidth: 1, dash: [3, 3])
         )
 
-        // Dimension arrows.
         context.fill(
             arrowhead(
                 at: CGPoint(x: start.x, y: dimensionY),
-                direction: CGVector(dx: 1, dy: 0),
-                length: 6,
-                width: 4
-            ),
-            with: .color(.secondary.opacity(0.8))
-        )
-
-        context.fill(
-            arrowhead(
-                at: CGPoint(x: rampEnd.x, y: dimensionY),
                 direction: CGVector(dx: -1, dy: 0),
                 length: 6,
                 width: 4
@@ -337,8 +240,17 @@ struct LinearRampProfileView: View {
             with: .color(.secondary.opacity(0.8))
         )
 
-        // Distance label.
-        let label = String(format: "%.2f mm", horizontalDistance)
+        context.fill(
+            arrowhead(
+                at: CGPoint(x: turn.x, y: dimensionY),
+                direction: CGVector(dx: 1, dy: 0),
+                length: 6,
+                width: 4
+            ),
+            with: .color(.secondary.opacity(0.8))
+        )
+
+        let label = String(format: "%.2f mm", layout.halfDistance)
         let text = Text(label)
             .font(.caption.monospacedDigit())
             .foregroundColor(.secondary)
@@ -349,28 +261,10 @@ struct LinearRampProfileView: View {
         context.draw(
             resolvedText,
             at: CGPoint(
-                x: (start.x + rampEnd.x) / 2,
+                x: (start.x + turn.x) / 2,
                 y: dimensionY - textSize.height / 2 - 5
             ),
             anchor: .center
-        )
-
-        // Animated tool position.
-        let dot2 = point(
-            along: points,
-            phase: phase
-        )
-
-        context.fill(
-            Path(
-                ellipseIn: CGRect(
-                    x: dot2.x - 5,
-                    y: dot2.y - 5,
-                    width: 10,
-                    height: 10
-                )
-            ),
-            with: .color(rampColor)
         )
     }
 }

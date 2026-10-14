@@ -14,7 +14,6 @@ struct RampTypeSelector: View {
     var angle: Double
     var length: Double
     var stepdown: Double
-    var linearReturnMode: LinearRampReturnMode = .retrace
     var helixDirection: HelixDirection = .outsideIn
 
     private let selectable: [RampType] = [.none, .linear, .helix]
@@ -27,7 +26,6 @@ struct RampTypeSelector: View {
                     angle: angle,
                     length: length,
                     stepdown: stepdown,
-                    linearReturnMode: linearReturnMode,
                     helixDirection: helixDirection,
                     isSelected: type == candidate
                 )

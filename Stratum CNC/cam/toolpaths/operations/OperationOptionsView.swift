@@ -102,8 +102,9 @@ struct OperationOptionsView: View {
         .popover(isPresented: $showRampEditor, attachmentAnchor: .rect(.bounds), arrowEdge: .leading) {
             // A slot steps down by its own depth-per-pass, not by the general stepdown.
             RampingEditor(ramping: $toolpath.ramping,
-                          stepdown: kind == .slotting ? toolpath.operation.slotDepthPerPass : toolpath.stepDown)
-                .frame(width: 600)
+                          stepdown: kind == .slotting ? toolpath.operation.slotDepthPerPass : toolpath.stepDown,
+                          toolDiameter: Double(toolpath.tool.toolDiameter))
+                .frame(width: 400)
         }
     }
 

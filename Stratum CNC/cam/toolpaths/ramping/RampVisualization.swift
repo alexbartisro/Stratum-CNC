@@ -7,18 +7,17 @@
 
 import SwiftUI
 
-// MARK: - Layout constants
-
 enum RampGeometry {
     static let previewSize: CGFloat = 108
     static let detailSize: CGFloat = 320
 }
 
-/// Spiral direction for a helix ramp.
 enum HelixDirection: String, CaseIterable, Identifiable {
     case outsideIn = "Outside → in"
     case insideOut = "Inside → out"
-    var id: String { rawValue }
+    var id: String {
+        rawValue
+    }
 }
 
 // MARK: - Visualization mode
@@ -34,43 +33,21 @@ struct RampVisualization: View {
     let length: Double
     var stepdown: Double = 1
     var mode: RampVisualizationMode
-    var helixDirection: HelixDirection = .outsideIn
+    var helixDirection: HelixDirection = .insideOut
 
     var body: some View {
         switch type {
             case .linear:
                 switch mode {
-                    case .topPreview:
-                        LinearRampTopView(
-                            angle: angle,
-                            length: length,
-                            stepdown: stepdown
-                        )
-                    case .profileDetail:
-                        LinearRampProfileView(
-                            angle: angle,
-                            length: length,
-                            stepdown: stepdown
-                        )
+                    case .topPreview:       LinearRampTopView(angle: angle, length: length, stepdown: stepdown)
+                    case .profileDetail:    LinearRampProfileView(angle: angle, length: length, stepdown: stepdown)
                 }
             case .helix:
                 switch mode {
-                    case .topPreview:
-                        HelixTopView(
-                            angle: angle,
-                            length: length,
-                            direction: helixDirection
-                        )
-                    case .profileDetail:
-                        HelixProfileView(
-                            angle: angle,
-                            length: length,
-                            stepdown: stepdown,
-                            direction: helixDirection
-                        )
+                    case .topPreview:       HelixTopView(direction: helixDirection)
+                    case .profileDetail:    HelixProfileView(angle: angle, length: length, stepdown: stepdown, direction: helixDirection)
                 }
-            case .none:
-                Text("None")
+            case .none:                     Text("None")
         }
     }
 }

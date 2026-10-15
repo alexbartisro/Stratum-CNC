@@ -21,6 +21,13 @@ enum RampMath {
         return l * tan(a * .pi / 180)
     }
 
+    /// Diameter of the helix's circular path. It is not user-editable: it
+    /// follows the tool diameter. This is the single place to change if the
+    /// helix should be wider or narrower relative to the tool.
+    static func helixDiameter(toolDiameter: Double) -> Double {
+        max(toolDiameter, 0.1)
+    }
+
     /// Depth gained per full revolution of a constant-radius helix of the
     /// given `diameter` at `angle` (circumference × tan(angle)).
     static func helixDepthPerTurn(angle: Double, diameter: Double) -> Double {

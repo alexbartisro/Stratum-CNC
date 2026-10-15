@@ -25,16 +25,14 @@ import SwiftUI
 /// bounded by two vertical guides (the diameter), sloping downward.
 struct HelixProfileView: View {
     let angle: Double
-    /// Diameter, mm — same convention as `HelixTopView.length`.
+    /// Helix diameter, mm. Derived from the tool diameter (see `RampMath.helixDiameter`).
     let length: Double
     let stepdown: Double
     var direction: HelixDirection = .outsideIn
     private let cycleDuration: Double = 3.0
 
-    /// Same convention as `HelixTopView`: a reference diameter that fills
-    /// the drawing area, so `length` still visibly changes the spiral size.
-    private let referenceLength: Double = 30
-    private let minSizeFraction: CGFloat = 0.35
+    /// The drawn spiral has a fixed width; `length` only drives the turn count.
+    private let widthFraction: CGFloat = 0.85
 
     /// How the inner radius relates to the outer radius — kept identical to
     /// `HelixTopView` so the two views describe the same physical motion.
@@ -76,12 +74,9 @@ struct HelixProfileView: View {
         let rightX: CGFloat
     }
 
-    /// Pixel radius of the circular sweep, scaled by `length` the same way
-    /// `HelixTopView` scales its spiral, so the two views stay consistent.
+    /// Pixel radius of the circular sweep (fixed, independent of the settings).
     private func motionRadius(availableWidth: CGFloat) -> CGFloat {
-        let maxRadius = availableWidth / 2
-        let sizeFraction = min(max(CGFloat(length / referenceLength), minSizeFraction), 1.0)
-        return maxRadius * sizeFraction
+        availableWidth / 2 * widthFraction
     }
 
     private func makeLayout(in size: CGSize) -> Layout {

@@ -296,7 +296,7 @@ private extension ToolpathGenerator {
     internal static func makeOperation(from toolpath: ToolpathData) -> SC.MachiningOperation {
         let options = toolpath.operation
         let direction = makeDirection(from: options.direction)
-        let entry = makeEntry(from: toolpath.ramping)
+        let entry = makeEntry(from: toolpath.ramping, toolDiameter: Double(toolpath.tool.toolDiameter))
 
         switch options.kind {
 
@@ -391,7 +391,7 @@ private extension ToolpathGenerator {
         }
     }
 
-    static func makeEntry(from ramping: RampingSettings) -> SC.EntryStrategy {
+    static func makeEntry(from ramping: RampingSettings, toolDiameter: Double) -> SC.EntryStrategy {
         guard ramping.enabled else {
             return .plunge
         }
@@ -403,9 +403,9 @@ private extension ToolpathGenerator {
             // (see RampingEditor), so only the angle goes to the library.
             return .ramp(angleDegrees: ramping.angle)
         case .helix:
-            // For a helix the app's "ramp length" is the spiral's diameter
-            // (see HelixTopView), the library wants a radius.
-            return .helix(radius: max(ramping.length, 0.1) / 2, rampAngleDegrees: ramping.angle)
+            // The helix diameter follows the tool diameter (see RampMath.helixDiameter);
+            // the library wants a radius.
+            return .helix(radius: RampMath.helixDiameter(toolDiameter: toolDiameter) / 2, rampAngleDegrees: ramping.angle)
         }
     }
 

@@ -8,26 +8,17 @@
 import SwiftUI
 
 struct HelixTopView: View {
-    let angle: Double
-    let length: Double
     var direction: HelixDirection = .outsideIn
-    private let cycleDuration: Double = 7.0
+    private let cycleDuration: Double = 2.0
     /// Fixed turn count for the icon: it is illustrative only, so it does not
-    /// follow the angle or length values.
-    private let turns = 3
-    /// Reference diameter (mm) that fills the available drawing area — same
-    /// convention as the linear and zig-zag views, so `length` visibly
-    /// changes the spiral size instead of being ignored.
-    private let referenceLength: Double = 30
-    /// Raised from 0.35 so small diameters still fill most of the frame —
-    /// previously the spiral could shrink to just over a third of the
-    /// available space, leaving a lot of dead canvas around it.
-    private let minSizeFraction: CGFloat = 0.7
+    /// follow the angle or any other value.
+    private let turns = 1.2
 
     var body: some View {
         GeometryReader { geo in
             let size = geo.size
             let points = spiralPoints(in: size)
+            
             TimelineView(.animation) { timeline in
                 let currentPhase = phase(for: timeline.date, cycleDuration: cycleDuration)
                 Canvas { context, _ in
@@ -37,37 +28,36 @@ struct HelixTopView: View {
         }
     }
 
-    /// Outer spiral radius, scaled by `length` relative to `referenceLength`
-    /// (capped at the available canvas radius either way).
+    /// Outer spiral radius: fixed, the icon does not depend on the settings.
     private func outerRadius(in size: CGSize) -> CGFloat {
-        let maxRadius = min(size.width, size.height) / 2 - 2
-        let sizeFraction = min(max(CGFloat(length / referenceLength), minSizeFraction), 1.0)
-        return maxRadius * sizeFraction
+        (min(size.width, size.height) / 2 - 2) * 0.85
     }
 
     private func spiralPoints(in size: CGSize) -> [CGPoint] {
         let center = CGPoint(x: size.width / 2, y: size.height / 2)
         let outerRadius = outerRadius(in: size)
-        let innerRadius = outerRadius * 0.55
+        let innerRadius = outerRadius * 0.3
         let pointsPerTurn = 40
-        let totalPoints = turns * pointsPerTurn
+        let totalPoints = Int(turns) * pointsPerTurn
         // Start/end radius flip with direction; `t` still runs 0 → 1 as the
         // cut progresses, so the depth-fade in `draw` stays correct either way.
         let startRadius = direction == .outsideIn ? outerRadius : innerRadius
         let endRadius = direction == .outsideIn ? innerRadius : outerRadius
+
         return (0...totalPoints).map { i in
             let t = CGFloat(i) / CGFloat(totalPoints)
             let radius = startRadius + (endRadius - startRadius) * t
             let theta = t * CGFloat(turns) * 2 * .pi
-            return CGPoint(
-                x: center.x + radius * cos(theta),
-                y: center.y + radius * sin(theta)
-            )
+
+            return CGPoint(x: center.x + radius * cos(theta),
+                           y: center.y + radius * sin(theta))
         }
     }
 
     private func draw(context: inout GraphicsContext, size: CGSize, points: [CGPoint], phase: CGFloat) {
-        guard points.count > 1 else { return }
+        guard points.count > 1 else {
+            return
+        }
         let center = CGPoint(x: size.width / 2, y: size.height / 2)
         let outerRadius = outerRadius(in: size)
         // Pocket / bore outline.

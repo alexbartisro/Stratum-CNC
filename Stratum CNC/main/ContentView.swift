@@ -46,5 +46,6 @@ struct ContentView: View {
         // presented in their own hierarchy on macOS, so they re-assert it
         // above rather than relying on inheriting it from here.
         .preferredColorScheme(appModel.isDarkMode ? .dark : .light)
+        .tint(.purple)
     }
 }

@@ -61,6 +61,7 @@ struct PanelToolpathDetails: View {
                 rowSafeZ
                 Divider().background(.orange.opacity(0.5))
                 rowFooter
+                generationStatus
             }
             .padding(16)
             .onChange(of: toolpath.id) { _, _ in presetNote = nil }
@@ -211,28 +212,25 @@ struct PanelToolpathDetails: View {
             if !toolpath.targets.isEmpty {
                 Divider()
                     .frame(height: 20)
-                HStack(spacing: 8) {
-                    generationStatus
-                    Spacer(minLength: 8)
-                    Button {
-                        onGenerate()
-                    } label: {
-                        if isGenerating {
-                            HStack(spacing: 6) {
-                                ProgressView()
-                                    .controlSize(.small)
-                                Text("Generating…")
-                                    .font(.system(size: 12, weight: .medium))
-                            }
-                        } else {
-                            Label("Generate", systemImage: "wand.and.stars")
+
+                Button {
+                    onGenerate()
+                } label: {
+                    if isGenerating {
+                        HStack(spacing: 6) {
+                            ProgressView()
+                                .controlSize(.small)
+                            Text("Generating…")
                                 .font(.system(size: 12, weight: .medium))
                         }
+                    } else {
+                        Label("Generate", systemImage: "wand.and.stars")
+                            .font(.system(size: 12, weight: .medium))
                     }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(isGenerating)
-                    .help("Generate the toolpaths for the selected shapes")
                 }
+                .buttonStyle(.borderedProminent)
+                .disabled(isGenerating)
+                .help("Generate the toolpaths for the selected shapes")
             }
         }
         .frame(height: 36)
@@ -245,16 +243,17 @@ struct PanelToolpathDetails: View {
                 Label(message, systemImage: "exclamationmark.triangle.fill")
                     .foregroundStyle(.red)
                     .font(.system(size: 11))
-                    .lineLimit(1)
+                    .multilineTextAlignment(.trailing)
             } else if !generation.isCurrent(for: toolpath) {
                 Label("Outdated...", systemImage: "arrow.triangle.2.circlepath")
                     .foregroundStyle(.orange)
                     .font(.system(size: 11))
+                    .multilineTextAlignment(.trailing)
             } else {
                 Label(successText(for: generation), systemImage: "checkmark.circle.fill")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.green)
                     .font(.system(size: 11))
-                    .lineLimit(1)
+                    .multilineTextAlignment(.trailing)
             }
         }
     }

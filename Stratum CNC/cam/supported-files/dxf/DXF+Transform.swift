@@ -146,8 +146,68 @@ extension SC.Contour {
 
     // `reversed` (the chaining direction) and `isClosed` are properties of the
     // chain, not of the geometry, so they survive any point transform unchanged.
-    private func mapEntities(_ transform: (DXF.Entity) -> DXF.Entity) -> SC.Contour {
-        SC.Contour(entities: entities.map { SC.Contour.Chained(entity: transform($0.entity), reversed: $0.reversed) },
-                   isClosed: isClosed)
+    private func mapEntities(_ transform: (SC.Geometry) -> SC.Geometry) -> SC.Contour {
+        SC.Contour(entities: entities.map { SC.Contour.Chained(geometry: transform($0.geometry), reversed: $0.reversed) },
+                   isClosed: isClosed,
+                   islands: islands.map { $0.mapEntities(transform) })
+    }
+}
+
+extension SIMD2 where Scalar == Double {
+    var cg: CGPoint {
+        CGPoint(x: x, y: y)
+    }
+}
+
+extension CGPoint {
+    var simd: SIMD2<Double> {
+        SIMD2(Double(x), Double(y))
+    }
+}
+
+extension SC.Geometry {
+
+    /// Pure origin shift, no scale or rotation.
+    func translated(dx: CGFloat, dy: CGFloat) -> SC.Geometry {
+        resolved(
+            worldPoint: { CGPoint(x: $0.x + dx, y: $0.y + dy) },
+            worldVector: { $0 },
+            scale: 1,
+            rotationDegrees: 0
+        )
+    }
+
+    /// Geometry counterpart of `DXF.Entity.resolved`.
+    func resolved(worldPoint: (CGPoint) -> CGPoint,
+                  worldVector: (CGPoint) -> CGPoint,
+                  scale: CGFloat,
+                  rotationDegrees: CGFloat) -> SC.Geometry {
+        switch self {
+        case let .line(a, b):
+            return .line(a: worldPoint(a.cg).simd, b: worldPoint(b.cg).simd)
+
+        case let .circle(center, radius):
+            return .circle(center: worldPoint(center.cg).simd, radius: radius * Double(scale))
+
+        case let .arc(center, radius, startDeg, endDeg):
+            return .arc(center: worldPoint(center.cg).simd,
+                        radius: radius * Double(scale),
+                        startDeg: startDeg + Double(rotationDegrees),
+                        endDeg: endDeg + Double(rotationDegrees))
+
+        case let .ellipse(center, majorAxis, ratio, startParam, endParam):
+            return .ellipse(center: worldPoint(center.cg).simd,
+                            majorAxis: worldVector(majorAxis.cg).simd,
+                            ratio: ratio,
+                            startParam: startParam,
+                            endParam: endParam)
+
+        case let .point(at):
+            return .point(at: worldPoint(at.cg).simd)
+
+        case let .polyline(vertices, closed):
+            return .polyline(vertices: vertices.map { SC.Geometry.Vertex(worldPoint($0.point.cg).simd, bulge: $0.bulge) },
+                             closed: closed)
+        }
     }
 }

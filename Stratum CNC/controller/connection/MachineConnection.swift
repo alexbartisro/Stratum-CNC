@@ -543,6 +543,7 @@ final class MachineConnection: ObservableObject {
             return
         }
         let frame = MakeraFraming.buildFrame(ptype: ptype, payload: payload)
+        nonisolated(unsafe) let completion = completion
         connection.send(content: frame, completion: .contentProcessed { error in
             Task { @MainActor in completion(error) }
         })
@@ -566,6 +567,7 @@ final class MachineConnection: ObservableObject {
             completion(MachineConnectionError.notReady)
             return
         }
+        nonisolated(unsafe) let completion = completion
         connection.send(content: bytes, completion: .contentProcessed { error in
             Task { @MainActor in completion(error) }
         })

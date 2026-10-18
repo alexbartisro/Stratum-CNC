@@ -12,6 +12,7 @@
 //  offer it:
 //   - the entry strategy: it lives in `ToolpathData.ramping`, edited by the ramping editor
 //   - contour lead-in / lead-out / holding tabs, and the slot clearing pattern: not stored yet
+//   - `.concentric` pocket pattern: the app has no matching `PocketPattern` yet
 //   - `.adaptive` pocket pattern: the engine still stops with `fatalError` on it
 //
 
@@ -63,7 +64,7 @@ extension ToolpathData {
                         operation.pocketPattern = .trochoidal
                         // The app keeps the loop pitch as a percentage of the tool radius.
                         operation.pocketTrochoidalPitch = settings.radialEngagement * 100
-                    case .adaptive:
+                    case .concentric, .adaptive:
                         break
                 }
 

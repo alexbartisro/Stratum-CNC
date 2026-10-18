@@ -39,7 +39,7 @@ class DXFImporter: Importer {
 
             let path = STBezierPath()
             for (index, chained) in contour.entities.enumerated() {
-                chained.entity.appendTo(path, isFirst: index == 0, reversed: chained.reversed)
+                chained.geometry.appendTo(path, isFirst: index == 0, reversed: chained.reversed)
             }
             if contour.isClosed {
                 path.close()
@@ -398,6 +398,84 @@ extension DXF.Entity {
                 bulge = 0
             }
             return DXF.PolyVertex(vertices[originalIndex].point, bulge: bulge)
+        }
+    }
+}
+
+extension SC.Geometry {
+
+    /// Geometry counterpart of `DXF.Entity.appendTo`.
+    func appendTo(_ path: STBezierPath, isFirst: Bool, reversed: Bool) {
+
+        switch self {
+        case let .line(a, b):
+            let start = reversed ? b.cg : a.cg
+            let end = reversed ? a.cg : b.cg
+            if isFirst { path.move(to: start) }
+            path.line(to: end)
+
+        case let .circle(center, radius):
+            path.append(STBezierPath(ovalIn: NSRect(
+                x: center.x - radius, y: center.y - radius,
+                width: radius * 2, height: radius * 2
+            )))
+
+        case let .arc(center, radius, startDeg, endDeg):
+            let start = CGFloat(startDeg)
+            var end = CGFloat(endDeg)
+            while end < start { end += 360 }
+
+            let startPoint = CGPoint(x: center.x + radius * cos(startDeg * .pi / 180),
+                                     y: center.y + radius * sin(startDeg * .pi / 180))
+            let endPoint = CGPoint(x: center.x + radius * cos(Double(end) * .pi / 180),
+                                   y: center.y + radius * sin(Double(end) * .pi / 180))
+
+            if reversed {
+                if isFirst { path.move(to: endPoint) }
+                path.appendArc(withCenter: center.cg, radius: radius,
+                               startAngle: end, endAngle: start, clockwise: true)
+            } else {
+                if isFirst { path.move(to: startPoint) }
+                path.appendArc(withCenter: center.cg, radius: radius,
+                               startAngle: start, endAngle: end, clockwise: false)
+            }
+
+        case let .ellipse(center, majorAxis, ratio, startParam, endParam):
+            path.append(ellipsePath(center: DXF.Point(center.x, center.y),
+                                    majorAxis: DXF.Point(majorAxis.x, majorAxis.y),
+                                    ratio: ratio,
+                                    startParam: startParam,
+                                    endParam: endParam))
+
+        case let .point(at):
+            let size = 1.0
+            path.move(to: CGPoint(x: at.x - size, y: at.y))
+            path.line(to: CGPoint(x: at.x + size, y: at.y))
+            path.move(to: CGPoint(x: at.x, y: at.y - size))
+            path.line(to: CGPoint(x: at.x, y: at.y + size))
+
+        case let .polyline(vertices, closed):
+            let ordered = reversed ? Self.reversedVertices(vertices, closed: closed) : vertices
+            let dxfVertices = ordered.map { DXF.PolyVertex(DXF.Point($0.point.x, $0.point.y), bulge: $0.bulge) }
+            appendPolyline(vertices: dxfVertices, closed: closed, isFirst: isFirst, to: path)
+        }
+    }
+
+    private static func reversedVertices(_ vertices: [Vertex], closed: Bool) -> [Vertex] {
+        let n = vertices.count
+        guard n > 1 else { return vertices }
+        return (0..<n).map { i in
+            let originalIndex = n - 1 - i
+            let bulgeSourceIndex = originalIndex - 1
+            let bulge: Double
+            if bulgeSourceIndex >= 0 {
+                bulge = -vertices[bulgeSourceIndex].bulge
+            } else if closed {
+                bulge = -vertices[n - 1].bulge
+            } else {
+                bulge = 0
+            }
+            return Vertex(vertices[originalIndex].point, bulge: bulge)
         }
     }
 }

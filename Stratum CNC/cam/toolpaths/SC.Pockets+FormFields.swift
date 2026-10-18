@@ -41,11 +41,16 @@ extension SC.PocketClearingPattern {
                            onChange: @escaping (SC.PocketClearingPattern) -> Void) -> SC.ParameterField {
 
         let currentSpiral: SC.SpiralDirection = { if case .spiral(let d) = self { return d } else { return .outsideIn } }()
+        let currentConcentric: SC.SpiralDirection = { if case .concentric(let d) = self { return d } else { return .outsideIn } }()
         let currentTrochoidal: SC.TrochoidalSettings = { if case .trochoidal(let s) = self { return s } else { return .init(radialEngagement: 0.3, loopRadius: 1.0) } }()
         let currentAdaptive: SC.AdaptiveSettings = { if case .adaptive(let s) = self { return s } else { return .init(optimalLoad: 1.0) } }()
 
         let cases: [SC.ParameterField.VariantField.Case] = [
             .init(id: "offset", label: "Offset", fields: []),
+            .init(id: "concentric", label: "Concentric", fields: [
+                .choice(SC.spiralDirectionChoice(id: "\(id).concentric.direction", current: currentConcentric,
+                                                  onChange: { onChange(.concentric(direction: $0)) }))
+            ]),
             .init(id: "raster", label: "Raster", fields: []),
             .init(id: "spiral", label: "Spiral", fields: [
                 .choice(SC.spiralDirectionChoice(id: "\(id).spiral.direction", current: currentSpiral,
@@ -60,6 +65,7 @@ extension SC.PocketClearingPattern {
         let selectedId: String
         switch self {
             case .offset: selectedId = "offset"
+            case .concentric: selectedId = "concentric"
             case .raster: selectedId = "raster"
             case .spiral: selectedId = "spiral"
             case .trochoidal: selectedId = "trochoidal"
@@ -69,6 +75,7 @@ extension SC.PocketClearingPattern {
         return .variant(.init(id: id, label: label, cases: cases, selectedId: selectedId, onSelect: { newCaseId in
             switch newCaseId {
                 case "offset": onChange(.offset)
+                case "concentric": onChange(.concentric(direction: .outsideIn))
                 case "raster": onChange(.raster)
                 case "spiral": onChange(.spiral(direction: .outsideIn))
                 case "trochoidal": onChange(.trochoidal(settings: .init(radialEngagement: 0.3, loopRadius: 1.0)))

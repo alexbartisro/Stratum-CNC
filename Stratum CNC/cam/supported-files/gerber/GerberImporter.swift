@@ -40,7 +40,7 @@ final class GerberImporter: Importer {
                 let path = STBezierPath()
 
                 for (index, chained) in contour.entities.enumerated() {
-                    chained.entity.appendTo(path, isFirst: index == 0, reversed: chained.reversed)
+                    chained.geometry.appendTo(path, isFirst: index == 0, reversed: chained.reversed)
                 }
 
                 if contour.isClosed {

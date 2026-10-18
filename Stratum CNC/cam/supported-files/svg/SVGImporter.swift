@@ -201,8 +201,8 @@ private struct DXFPathConverter {
     /// Must run *before* `currentPoint`/`subpathStartPoint` are updated by the
     /// next `moveTo`, since it reads them to detect an implicitly closed subpath.
     private mutating func finishSubpath() {
-        let chain = entities[subpathFirstEntity...].map {
-            SC.Contour.Chained(entity: $0, reversed: false)
+        let chain = entities[subpathFirstEntity...].compactMap { entity in
+            SC.Geometry(dxf: entity).map { SC.Contour.Chained(geometry: $0, reversed: false) }
         }
 
         if !chain.isEmpty {

@@ -19,10 +19,11 @@ final class D2_Object {
     let entities: [DXF.Entity]
 
     /// Machinable contours, index-aligned with `paths`: `contours[i]` is the
-    /// geometry behind `paths[i]`, in the same local frame. Usually one
-    /// contour per path; an SVG path made of several subpaths yields one per
-    /// subpath. This is what a `PathSelection.pathIndex` resolves to when
-    /// generating toolpaths — read it via `machineContours(forPathAt:)`.
+    /// geometry behind `paths[i]`, in the same local frame. The importers
+    /// currently emit exactly one contour per path (SVG splits every subpath
+    /// into its own path), but the type allows several. This is what a
+    /// `PathSelection.pathIndex` resolves to when generating toolpaths — read
+    /// it via `machineContours(forPathAt:)`.
     let contours: [[SC.Contour]]
 
     /// Original imported dimensions.

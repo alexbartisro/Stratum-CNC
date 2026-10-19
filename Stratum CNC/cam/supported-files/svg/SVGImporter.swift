@@ -49,15 +49,33 @@ class SVGImporter: Importer {
         bezierPaths = bezierPaths.map { $0.pathWithFlippedY(inHeight: svg.viewBox.height) }
         #endif
 
+        // One path per subpath, like the DXF and Gerber importers (one path per
+        // contour). A single SVG <path> can hold many subpaths — the outline
+        // and the cut-outs of a shape, the rings of an "O" — and keeping them
+        // in one `paths[i]` made them select and pick as a single unit.
+        // Split after the Y-flip so the pieces keep the flipped orientation.
+        // To machine an outline together with its holes, pick them all.
+        var paths: [STBezierPath] = []
+        // Index-aligned with `paths` — see D2_Object.contours
+        var contours: [[SC.Contour]] = []
+        for subpath in bezierPaths.flatMap({ $0.subpaths() }) {
+            let subpathContours = subpath.dxfContours()
+            // Nothing machinable (e.g. a zero-length segment): skip it so
+            // `paths` and `contours` stay aligned and nothing selectable is empty.
+            guard !subpathContours.isEmpty else {
+                continue
+            }
+            paths.append(subpath)
+            contours.append(subpathContours)
+        }
+
         // Derive entities from the final, already-flipped paths so `entities`
         // describes the exact same orientation as `paths` — computing them
         // beforehand (from pre-flip geometry) would leave entities mirrored
         // vertically relative to what's actually drawn.
-        let entities = bezierPaths.flatMap { $0.dxfEntities() }
-        // Index-aligned with `bezierPaths` — see D2_Object.contours
-        let contours = bezierPaths.map { $0.dxfContours() }
+        let entities = paths.flatMap { $0.dxfEntities() }
 
-        return factory.makeObject(name: url.lastPathComponent, paths: bezierPaths, entities: entities, contours: contours)
+        return factory.makeObject(name: url.lastPathComponent, paths: paths, entities: entities, contours: contours)
     }
 }
 

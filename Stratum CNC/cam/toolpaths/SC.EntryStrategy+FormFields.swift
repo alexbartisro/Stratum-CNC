@@ -21,8 +21,8 @@ extension SC.EntryStrategy {
 
         // Ranges taken from the doc comments on EntryStrategy itself.
         let rampAngle: Double = { if case .ramp(let a) = self { return a } else { return 2.0 } }()
-        let helixRadius: Double = { if case .helix(let r, _) = self { return r } else { return 1.0 } }()
-        let helixAngle: Double = { if case .helix(_, let a) = self { return a } else { return 2.0 } }()
+        let helixRadius: Double = { if case .helix(_) = self { return 1.0 } else { return 1.0 } }()
+        let helixAngle: Double = { if case .helix(let a) = self { return a } else { return 2.0 } }()
         let openEndStepover: Double = { if case .fromOpenEnd(let s) = self { return s } else { return 0.4 } }()
 
         let cases: [SC.ParameterField.VariantField.Case] = [
@@ -37,10 +37,10 @@ extension SC.EntryStrategy {
             .init(id: "helix", label: "Helix", fields: [
                 .double(.init(id: "\(id).helix.radius", label: "Helix Radius", unit: "mm",
                               range: 0.1...20.0, value: helixRadius,
-                              onChange: { onChange(.helix(radius: $0, rampAngleDegrees: helixAngle)) })),
+                              onChange: { _ in onChange(.helix(rampAngleDegrees: helixAngle)) })),
                 .double(.init(id: "\(id).helix.angle", label: "Ramp Angle", unit: "°",
                               range: 1.5...3.0, value: helixAngle,
-                              onChange: { onChange(.helix(radius: helixRadius, rampAngleDegrees: $0)) }))
+                              onChange: { onChange(.helix(rampAngleDegrees: $0)) }))
             ]),
 
             .init(id: "fromOpenEnd", label: "From Open End", fields: [
@@ -62,7 +62,7 @@ extension SC.EntryStrategy {
             switch newCaseId {
                 case "plunge": onChange(.plunge)
                 case "ramp": onChange(.ramp(angleDegrees: 2.0))
-                case "helix": onChange(.helix(radius: 1.0, rampAngleDegrees: 2.0))
+                case "helix": onChange(.helix(rampAngleDegrees: 2.0))
                 case "fromOpenEnd": onChange(.fromOpenEnd(stepoverPercentage: 0.4))
                 default: break
             }

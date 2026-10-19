@@ -388,8 +388,8 @@ private extension ToolpathGenerator {
 
     static func makeDirection(from direction: CutDirectionOption) -> SC.CutDirection {
         switch direction {
-        case .climb:        return .climb
-        case .conventional: return .conventional
+            case .climb:        return .climb
+            case .conventional: return .conventional
         }
     }
 
@@ -398,16 +398,12 @@ private extension ToolpathGenerator {
             return .plunge
         }
         switch ramping.type {
-        case .none:
-            return .plunge
-        case .linear:
-            // The ramp length follows from the angle and the stepdown
-            // (see RampingEditor), so only the angle goes to the library.
-            return .ramp(angleDegrees: ramping.angle)
-        case .helix:
-            // The helix diameter follows the tool diameter (see RampMath.helixDiameter);
-            // the library wants a radius.
-            return .helix(radius: RampMath.helixDiameter(toolDiameter: toolDiameter) / 2, rampAngleDegrees: ramping.angle)
+            case .none:
+                return .plunge
+            case .linear:
+                return .ramp(angleDegrees: ramping.angle)
+            case .helix:
+                return .helix(rampAngleDegrees: ramping.angle)
         }
     }
 

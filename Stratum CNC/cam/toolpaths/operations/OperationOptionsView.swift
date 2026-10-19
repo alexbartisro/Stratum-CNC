@@ -123,7 +123,7 @@ struct OperationOptionsView: View {
     @ViewBuilder
     private var patternDetail: some View {
         switch toolpath.operation.pocketPattern {
-            case .spiral:
+            case .spiral, .concentric:
                 EnumMenuPicker(title: "SPIRAL DIRECTION", selection: $toolpath.operation.pocketSpiral, expanded: expanded)
             case .trochoidal:
                 NumberField(title: "LOOP PITCH", value: $toolpath.operation.pocketTrochoidalPitch, suffix: "% radius")

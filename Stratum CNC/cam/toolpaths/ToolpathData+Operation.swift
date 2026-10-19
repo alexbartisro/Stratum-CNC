@@ -64,7 +64,11 @@ extension ToolpathData {
                         operation.pocketPattern = .trochoidal
                         // The app keeps the loop pitch as a percentage of the tool radius.
                         operation.pocketTrochoidalPitch = settings.radialEngagement * 100
-                    case .concentric, .adaptive:
+                    case .concentric(let spiralDirection):
+                        operation.pocketPattern = .concentric
+                        operation.pocketSpiral = spiralDirection == .insideOut ? .insideOut : .outsideIn
+                    case .adaptive:
+                        fatalError("not implemented")
                         break
                 }
 

@@ -69,6 +69,7 @@ private struct PatternGridPicker: View {
         GridItem(.flexible(), spacing: 6),
         GridItem(.flexible(), spacing: 6),
         GridItem(.flexible(), spacing: 6),
+        GridItem(.flexible(), spacing: 6),
         GridItem(.flexible(), spacing: 6)
     ]
     private let tileSize = CGSize(width: 70, height: 56)
@@ -139,6 +140,7 @@ private struct PatternGlyph: View {
             case .raster:     return rasterPath(in: rect)
             case .spiral:     return spiralPath(in: rect)
             case .trochoidal: return trochoidalPath(in: rect)
+            case .concentric: return spiralPath(in: rect)
         }
     }
 
@@ -149,7 +151,9 @@ private struct PatternGlyph: View {
         let step = min(rect.width, rect.height) / CGFloat(ringCount * 2 + 1)
         for i in 1...ringCount {
             let r = rect.insetBy(dx: CGFloat(i) * step, dy: CGFloat(i) * step)
-            guard r.width > 1, r.height > 1 else { continue }
+            guard r.width > 1, r.height > 1 else {
+                continue
+            }
             path.addRoundedRect(in: r, cornerSize: CGSize(width: 1.5, height: 1.5))
         }
         return path
@@ -159,8 +163,11 @@ private struct PatternGlyph: View {
     private func rasterPath(in rect: CGRect) -> Path {
         var path = Path()
         let lineCount = 4
-        guard lineCount > 1 else { return path }
+        guard lineCount > 1 else {
+            return path
+        }
         let step = rect.height / CGFloat(lineCount - 1)
+
         for i in 0..<lineCount {
             let y = rect.minY + CGFloat(i) * step
             if i.isMultiple(of: 2) {
@@ -181,6 +188,7 @@ private struct PatternGlyph: View {
         let maxRadius = min(rect.width, rect.height) / 2
         let turns: CGFloat = 2.25
         let segments = 48
+
         for i in 0...segments {
             let t = CGFloat(i) / CGFloat(segments)
             let angle = t * turns * 2 * .pi
@@ -207,10 +215,13 @@ private struct PatternGlyph: View {
         let loopCount = 3
         let loopRadius = rect.height * 0.42
         let spacing = rect.width / CGFloat(loopCount)
+
         for i in 0..<loopCount {
             let cx = rect.minX + spacing * (CGFloat(i) + 0.5)
-            let loopRect = CGRect(x: cx - loopRadius, y: y - loopRadius,
-                                   width: loopRadius * 2, height: loopRadius * 2)
+            let loopRect = CGRect(x: cx - loopRadius,
+                                  y: y - loopRadius,
+                                  width: loopRadius * 2,
+                                  height: loopRadius * 2)
             path.addEllipse(in: loopRect)
         }
         return path
@@ -224,6 +235,7 @@ private extension PocketPattern {
             case .raster:     return "Clears with straight back-and-forth passes."
             case .spiral:     return "Clears with a continuous, tightening spiral."
             case .trochoidal: return "Clears with small looping passes, easing tool load in slots and tight corners."
+            case .concentric: return "Clears with rings that expand outward."
         }
     }
 }

@@ -357,9 +357,9 @@ private extension ToolpathGenerator {
         case .chamfer:
             let side: SC.CutSide
             switch options.chamferSide {
-            case .outside:   side = .outside
-            case .inside:    side = .inside
-            case .onContour: side = .onContour
+                case .outside:   side = .outside
+                case .inside:    side = .inside
+                case .onContour: side = .onContour
             }
             let params = SC.ChamferParams(width: options.chamferWidth,
                                           depth: options.chamferUsesDepth ? options.chamferDepth : nil,
@@ -371,16 +371,18 @@ private extension ToolpathGenerator {
 
     static func makePocketPattern(from options: OperationSettings) -> SC.PocketClearingPattern {
         switch options.pocketPattern {
-        case .offset:
-            return .offset
-        case .raster:
-            return .raster
-        case .spiral:
-            return .spiral(direction: options.pocketSpiral == .outsideIn ? .outsideIn : .insideOut)
-        case .trochoidal:
-            // `radialEngagement` is a fraction of the tool radius; the pocket ignores `loopRadius`.
-            return .trochoidal(settings: SC.TrochoidalSettings(radialEngagement: options.pocketTrochoidalPitch / 100,
-                                                               loopRadius: 0))
+            case .offset:
+                return .offset
+            case .raster:
+                return .raster
+            case .spiral:
+                return .spiral(direction: options.pocketSpiral == .outsideIn ? .outsideIn : .insideOut)
+            case .trochoidal:
+                // `radialEngagement` is a fraction of the tool radius; the pocket ignores `loopRadius`.
+                return .trochoidal(settings: SC.TrochoidalSettings(radialEngagement: options.pocketTrochoidalPitch / 100,
+                                                                   loopRadius: 0))
+            case .concentric:
+                return .concentric(direction: options.pocketSpiral == .outsideIn ? .outsideIn : .insideOut)
         }
     }
 

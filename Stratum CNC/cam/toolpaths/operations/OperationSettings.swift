@@ -149,6 +149,7 @@ enum PocketPattern: String, CaseIterable, Codable, Hashable {
     case raster = "Raster"
     case spiral = "Spiral"
     case trochoidal = "Trochoidal"
+    case concentric = "Concentric"
 }
 
 enum SpiralOrder: String, CaseIterable, Codable, Hashable {
@@ -183,7 +184,7 @@ struct OperationSettings: Codable, Hashable {
 
     // Pocket
     var pocketPattern: PocketPattern = .offset
-    var pocketSpiral: SpiralOrder = .outsideIn
+    var pocketSpiral: SpiralOrder = .outsideIn// TODO: reuse model from stratum cam
     /// Trochoidal forward pitch per loop, as a percentage of the tool radius.
     var pocketTrochoidalPitch: Double = 50
 

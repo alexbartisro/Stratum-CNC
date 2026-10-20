@@ -102,7 +102,13 @@ struct ControllerView: View {
                 CanvasSection(scene: model.scene, gCodeModel: gCodeModel,
                               camModel: camModel, connection: model.connection,
                               isStockVisible: stockVisibleBinding,
-                              isShowingCanvasControlsSettings: $isShowingCanvasControlsSettings)
+                              isShowingCanvasControlsSettings: $isShowingCanvasControlsSettings,
+                              onReloadFromCAM: {
+                                  gCodeModel.generateGCode(from: camModel.toolpaths,
+                                                           generations: camModel.generations,
+                                                           stock: camModel.selectedStockMaterial)
+                              },
+                              onImportFile: { model.isGCodeImporterPresented = true })
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(16)
                     .padding(.trailing, -16)
@@ -414,6 +420,8 @@ private struct CanvasSection: View {
     let connection: MachineConnection
     let isStockVisible: Binding<Bool>
     @Binding var isShowingCanvasControlsSettings: Bool
+    let onReloadFromCAM: () -> Void
+    let onImportFile: () -> Void
 
     /// So the 3D viewport's background follows the app-wide day/night
     /// switch (see `ContentView`) instead of always being the renderer's
@@ -569,6 +577,34 @@ private struct CanvasSection: View {
                     scene.updateToolPosition(point)
                 }
             )
+            .overlay(alignment: .topLeading) {
+                HStack(spacing: 4) {
+                    Button(action: onReloadFromCAM) {
+                        if gCodeModel.isGeneratingFromCAM {
+                            ProgressView().controlSize(.small)
+                        } else {
+                            Image(systemName: "arrow.triangle.2.circlepath")
+                        }
+                    }
+                    .help("Reload from CAM")
+                    .disabled(gCodeModel.isGeneratingFromCAM || gCodeModel.document.isLoading)
+
+                    Divider().frame(height: 18)
+
+                    Button(action: onImportFile) {
+                        Image(systemName: "folder")
+                    }
+                    .help("Import from file")
+                    .disabled(gCodeModel.document.isLoading)
+                }
+                .buttonStyle(.plain)
+                .padding(.horizontal, 8)
+                .padding(2)
+                .frame(height: 28)
+                .background(.gray)
+                .cornerRadius(8)
+                .padding(8)
+            }
             .overlay(alignment: .topTrailing) {
                 VStack(alignment: .trailing, spacing: 6) {
                     HStack {

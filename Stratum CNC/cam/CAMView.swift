@@ -83,6 +83,7 @@ struct CAMView: View {
 //                        Spacer()
 //                    }
                     Spacer()
+                    ScrollView(.vertical, showsIndicators: true) {
                     VStack(alignment: .trailing, spacing: 16) {
                         PanelStockMaterial(stock: $camModel.selectedStockMaterial,
                                            isStockVisible: stockVisibleBinding,
@@ -108,6 +109,8 @@ struct CAMView: View {
                         }
                     }
                     .padding(16)
+                    }
+                    .fixedSize(horizontal: true, vertical: false)
                     .frame(maxHeight: .infinity, alignment: .top)
                 }
             }

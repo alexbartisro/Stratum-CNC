@@ -110,12 +110,7 @@ struct ControllerView: View {
 
             // Right panels with g-
             VStack(spacing: 16) {
-                VStack(alignment: .leading, spacing: 12) {
-                    PanelCoordinate(model: model)
-                    PanelProbe(model: model)
-                    PanelATC(model: model)
-                }
-                .frame(maxWidth: .infinity)
+                toolpathParamsPanels
 
                 GroupBox(label:
                     HStack(alignment: .top, spacing: 8) {
@@ -156,7 +151,6 @@ struct ControllerView: View {
                                 onStop: model.stopJob)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-
             }
             .frame(width: 300)
             .padding(16)
@@ -171,24 +165,7 @@ struct ControllerView: View {
 
             // Right panel with controller and console
             VStack(spacing: 16) {
-                PanelPosition(connection: model.connection)
-                    .frame(maxWidth: .infinity)
-
-                HStack(alignment: .top)  {
-                    PanelSpindle(model: model)
-                    PanelMachine(model: model)
-                }
-                .frame(maxWidth: .infinity)
-
-                PanelAccessories(model: model)
-                    .frame(maxWidth: .infinity)
-
-                PanelJog(joystick: joystickStore,
-                         holdFeed: $model.holdJogFeed,
-                         onJog: { model.jog($0) },
-                         onHold: { direction, pressed in model.holdJog(direction, pressed: pressed) },
-                         onStopHold: { model.stopHoldJog() })
-                .frame(height: 235)
+                controlPanels
 
                 GroupBox(label: Text("MDI CONSOLE")) {
                     TerminalView(model: model, connection: model.connection)
@@ -301,6 +278,40 @@ struct ControllerView: View {
                 case .failure(let error):
                     gCodeModel.document.lastError = error.localizedDescription
             }
+        }
+    }
+
+    // MARK: - Panels
+
+    private var toolpathParamsPanels: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            PanelCoordinate(model: model)
+            PanelProbe(model: model)
+            PanelATC(model: model)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    private var controlPanels: some View {
+        VStack(spacing: 16) {
+            PanelPosition(connection: model.connection)
+                .frame(maxWidth: .infinity)
+
+            HStack(alignment: .top)  {
+                PanelSpindle(model: model)
+                PanelMachine(model: model)
+            }
+            .frame(maxWidth: .infinity)
+
+            PanelAccessories(model: model)
+                .frame(maxWidth: .infinity)
+
+            PanelJog(joystick: joystickStore,
+                     holdFeed: $model.holdJogFeed,
+                     onJog: { model.jog($0) },
+                     onHold: { direction, pressed in model.holdJog(direction, pressed: pressed) },
+                     onStopHold: { model.stopHoldJog() })
+            .frame(height: 235)
         }
     }
 

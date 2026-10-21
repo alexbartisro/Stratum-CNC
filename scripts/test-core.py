@@ -6,6 +6,8 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [
+    'metal-canvas/HeightmapGrid.swift',
+    'metal-canvas/ToolFootprint.swift',
     'controller/gcode/GCodeUploader.swift',
     'controller/connection/MakeraWireProtocol.swift',
     'controller/gcode/GCodeJobRunner.swift',

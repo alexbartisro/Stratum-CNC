@@ -3,6 +3,19 @@ import Testing
 @testable import Stratum_CNC
 
 struct ProjectPersistenceTests {
+    @Test @MainActor func explicitSaveFlushesPendingMetadata() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let project = Project(name: "Metadata test")
+        let paths = try ProjectPaths(project: project, documentsDirectory: root)
+        try FileManager.default.createDirectory(at: paths.assetsDirectory, withIntermediateDirectories: true)
+        let model = ProjectModel(project: project, paths: paths)
+        model.projectData.isStockVisible = false
+        try model.save()
+        let reopened = ProjectModel(project: project, paths: paths)
+        #expect(reopened.projectData.isStockVisible == false)
+    }
+
     @Test @MainActor func restoresEditedToolpathsOnReopen() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: root) }

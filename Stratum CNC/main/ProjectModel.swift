@@ -56,7 +56,7 @@ class ProjectModel: ObservableObject {
     @Published var project: Project
     @Published var projectData: ProjectData {
         didSet {
-            print("project data changed to: \(projectData)")
+            saveMetadataTrigger.send(())
         }
     }
     @Published var toolpaths: [ToolpathData]?
@@ -118,7 +118,6 @@ class ProjectModel: ObservableObject {
 //        }
         camModel.onStockChanged = { [weak self] stock in
             self?.projectData.stock = stock
-            self?.saveMetadataTrigger.send(())
         }
 
         loadProjectData()
@@ -136,11 +135,10 @@ class ProjectModel: ObservableObject {
         // a chance to apply it.
         camModel.onObjectsChanged = { [weak self] objects in
             self?.updateAssetTransforms(from: objects)
-            self?.saveMetadataTrigger.send(())
         }
 
         saveMetadataTrigger
-            .debounce(for: .milliseconds(5000), scheduler: DispatchQueue.main)
+            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
             .sink { [weak self] in
                 try? self?.saveProjectMetadata()
             }
@@ -212,6 +210,13 @@ class ProjectModel: ObservableObject {
                                                       rotation: object.rotationDegrees)
         }
         projectData.assets = assets
+    }
+
+    /// Flush pending edits before closing or quitting; debounce alone can lose
+    /// the final edit when this model is released before its timer fires.
+    func save() throws {
+        try saveProjectMetadata()
+        try saveToolpaths()
     }
 
     private func saveProjectMetadata() throws {

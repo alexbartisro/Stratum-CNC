@@ -28,7 +28,7 @@ struct Stratum_CNC_App: App {
             }
             CommandGroup(after: .saveItem) {
                 Button("Save") {
-                    // Add your save logic here
+                    model.projectsStore.saveActiveProject()
                 }
                 .keyboardShortcut("S", modifiers: .command)
             }

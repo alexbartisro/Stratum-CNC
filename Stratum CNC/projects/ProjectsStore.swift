@@ -57,6 +57,7 @@ final class ProjectsStore: ObservableObject {
     }
 
     func open(_ project: Project) {
+        guard saveActiveProject() else { return }
         guard let paths = try? ProjectPaths(project: project) else {
             return
         }
@@ -65,6 +66,7 @@ final class ProjectsStore: ObservableObject {
     }
 
     func openZombieProject() {
+        guard saveActiveProject() else { return }
         // TODO: on second open, it does not load the previous data because project.json is recreated
         let project: Project = (try? createProject(name: "Untitled", isZombie: true)) ?? Project(name: "Untitled")
         guard let paths = try? ProjectPaths(project: project) else {
@@ -75,9 +77,20 @@ final class ProjectsStore: ObservableObject {
     }
 
     func close() {
-        // If project is unsaved, save it or ask if to save it
+        guard saveActiveProject() else { return }
         activeProject = nil
         activeProjectModel = nil
+    }
+
+    @discardableResult
+    func saveActiveProject() -> Bool {
+        do {
+            try activeProjectModel?.save()
+            return true
+        } catch {
+            print("Failed to save project: \(error)")
+            return false
+        }
     }
 
     // MARK: - Creation

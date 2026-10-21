@@ -6,6 +6,14 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [
+    'controller/gcode/GCodeParser.swift',
+    'controller/gcode/GCodeBounds.swift',
+    'controller/gcode/GCodeHeader.swift',
+    'controller/gcode/ToolSpec.swift',
+    'controller/gcode/MakeraHeaderParser.swift',
+    'controller/gcode/FusionHeaderParser.swift',
+    'controller/gcode/MakeraCAMHeaderParser.swift',
+
     'controller/connection/MakeraFraming.swift',
     'stocks-lib/StocksStore.swift',
     'stocks-lib/StockLibrary.swift',

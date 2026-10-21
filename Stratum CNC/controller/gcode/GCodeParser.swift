@@ -323,7 +323,9 @@ final class GCodeParser {
             values[0x59] != nil ||
             values[0x5A] != nil
 
-        guard hasXYZ else {
+        let hasArcCenter = values[0x49] != nil || values[0x4A] != nil
+        let isArc = state.motion == .clockwiseArc || state.motion == .counterClockwiseArc
+        guard hasXYZ || (isArc && hasArcCenter) else {
             return
         }
 
@@ -451,8 +453,7 @@ final class GCodeParser {
                            lineNumber: Int,
                            segments: inout [ToolpathSegment]) {
 
-        guard let iValue = values[0x49],
-              let jValue = values[0x4A] else {
+        guard values[0x49] != nil || values[0x4A] != nil else {
 
             // If the arc cannot be resolved, safely fall back to a straight
             // line rather than generating invalid geometry.
@@ -464,9 +465,10 @@ final class GCodeParser {
             return
         }
 
+        // Omitted center components are zero; an omitted endpoint closes a circle.
         let center = SIMD2<Double>(
-            start.x + iValue * scale,
-            start.y + jValue * scale
+            start.x + (values[0x49] ?? 0) * scale,
+            start.y + (values[0x4A] ?? 0) * scale
         )
 
         let startVector = SIMD2<Double>(

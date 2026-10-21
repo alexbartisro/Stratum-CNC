@@ -2,6 +2,22 @@ import Testing
 @testable import Stratum_CNC
 
 struct GerberImportTests {
+    @Test func interpolationCommandsKeepCoordinatesOnTheSameBlock() throws {
+        let result = GerberParser.parseFile("""
+            %FSLAX24Y24*%
+            %MOMM*%
+            X0Y0D02*
+            G01X10000Y20000D01*
+            """, name: "outline.gm1")
+        #expect(result.entities.count == 1)
+        guard case let .line(a, b, _, _) = try #require(result.entities.first) else {
+            Issue.record("Expected an outline segment")
+            return
+        }
+        #expect(a.x == 0 && a.y == 0)
+        #expect(b.x == 1 && b.y == 2)
+    }
+
     @Test func drillFilesProduceHoleGeometry() throws {
         let result = GerberParser.parseFile("""
             M48

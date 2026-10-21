@@ -3,6 +3,24 @@ import Testing
 @testable import Stratum_CNC
 
 struct GCodeUploaderRegressionTests {
+    @Test(arguments: [MakeraWireProtocol.makera, .smoothie])
+    @MainActor func finalAcknowledgementCanArriveBeforeSendCompletion(wire: MakeraWireProtocol) {
+        let uploader = GCodeUploader()
+        var completedPaths: [String] = []
+        uploader.onCompleted = { completedPaths.append($0) }
+        uploader.configure(sendLine: { _ in }, sendRawBytes: { bytes, completion in
+            if bytes == Data([0x04]) { uploader.handleMachineLine("Done saving file.") }
+            completion(nil)
+        }, sendFrame: { type, _, completion in
+            if type == MakeraFraming.ptypeFileEnd { uploader.handleMachineLine("ok") }
+            completion(nil)
+        }, wireProtocol: { wire })
+        uploader.upload(fileName: "job.nc", contents: Data("G1 X1".utf8))
+        uploader.handleMachineLine("ready")
+        #expect(uploader.state == .completed(remotePath: "/sd/gcodes/job.nc"))
+        #expect(completedPaths == ["/sd/gcodes/job.nc"])
+    }
+
     @Test(arguments: [false, true])
     @MainActor func transferErrorsNeverCompleteTheUpload(finishSending: Bool) {
         let uploader = GCodeUploader()

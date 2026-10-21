@@ -245,13 +245,13 @@ final class GCodeUploader: ObservableObject {
                 self.reset(to: .failed("Upload failed: \(error.localizedDescription)"))
                 return
             }
+            self.state = .verifying
             self.sendFrame?(MakeraFraming.ptypeFileEnd, Data()) { [weak self] error in
                 guard let self, self.transferID == transferID else { return }
                 if let error {
                     self.reset(to: .failed("Upload failed: \(error.localizedDescription)"))
                     return
                 }
-                self.state = .verifying
             }
         }
     }
@@ -282,13 +282,13 @@ final class GCodeUploader: ObservableObject {
         let transferID = self.transferID
         // 0x04 = Ctrl-D, Smoothieware's documented end-of-upload terminator
         // ("send control-D or control-Z to finish").
+        state = .verifying
         sendRawBytes?(Data([0x04])) { [weak self] error in
             guard let self, self.transferID == transferID else { return }
             if let error {
                 self.reset(to: .failed("Upload failed: \(error.localizedDescription)"))
                 return
             }
-            self.state = .verifying
         }
     }
 

@@ -6,6 +6,8 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [
+    'controller/gcode/GCodeToolpathAnalyzer.swift',
+    'controller/gcode/GCodeToolpath.swift',
     'tools-lib/FusionToolsImporter.swift',
     'tools-lib/Tool.swift',
     'tools-lib/ToolPreset.swift',

@@ -176,16 +176,22 @@ class ProjectModel: ObservableObject {
     }
 
     func importAsset(from url: URL) throws -> AssetData {
-        // 1. Move asset from original location to assets folder in the project
-        let assetDestination = paths.assetsDirectory.appendingPathComponent(url.lastPathComponent)
-        if FileManager.default.fileExists(atPath: assetDestination.path) {
-            try? FileManager.default.removeItem(at: assetDestination)
+        // Keep existing imports intact, even when a different source has the
+        // same basename. A failed copy must not create a metadata entry.
+        let fileManager = FileManager.default
+        var assetDestination = paths.assetsDirectory.appendingPathComponent(url.lastPathComponent)
+        var suffix = 2
+        while fileManager.fileExists(atPath: assetDestination.path) {
+            let stem = url.deletingPathExtension().lastPathComponent
+            let ext = url.pathExtension.isEmpty ? "" : "." + url.pathExtension
+            assetDestination = paths.assetsDirectory.appendingPathComponent("\(stem) (\(suffix))\(ext)")
+            suffix += 1
         }
-        try? FileManager.default.copyItem(at: url, to: assetDestination)
+        try fileManager.copyItem(at: url, to: assetDestination)
 
         // 2. Add asset to json
         var assets = projectData.assets ?? []
-        let asset = AssetData(name: url.lastPathComponent, transform: nil)
+        let asset = AssetData(name: assetDestination.lastPathComponent, transform: nil)
         assets.append(asset)
         projectData.assets = assets
         try saveProjectMetadata()

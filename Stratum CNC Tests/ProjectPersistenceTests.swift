@@ -3,6 +3,29 @@ import Testing
 @testable import Stratum_CNC
 
 struct ProjectPersistenceTests {
+    @Test @MainActor func scratchProjectSurvivesReopenWithoutChangingNamedUntitled() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = ProjectsStore(documentsDirectory: root)
+        let named = try store.createProject(name: "Untitled")
+        store.open(named)
+        let namedPaths = try #require(store.activeProjectModel?.paths)
+        store.close()
+        let original = try Data(contentsOf: namedPaths.projectMetadata)
+        store.openZombieProject()
+        let scratch = try #require(store.activeProjectModel)
+        #expect(scratch.paths.projectDirectory != namedPaths.projectDirectory)
+        scratch.projectData.isStockVisible = false
+        scratch.camModel.addToolpath()
+        store.close()
+        store.openZombieProject()
+        #expect(store.activeProjectModel?.projectData.isStockVisible == false)
+        #expect(store.activeProjectModel?.camModel.toolpaths.count == 1)
+        #expect(try Data(contentsOf: namedPaths.projectMetadata) == original)
+        #expect(store.projects == [named])
+        store.close()
+    }
+
     @Test @MainActor func preservesShapeReferencesAndDeletedObjectsAcrossReopen() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: root) }

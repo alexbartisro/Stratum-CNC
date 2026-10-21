@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 import CryptoKit
 
 /// Uploads a whole G-code program to the machine's SD card so the firmware
@@ -89,6 +90,7 @@ final class GCodeUploader: ObservableObject {
     private var pendingContents = Data()
     private var pendingRemotePath = ""
     private var bytesSent = 0
+    private var transferID = UUID()
     private var armTimeoutTask: Task<Void, Never>?
 
     /// Wires this uploader to a live connection without depending on
@@ -123,6 +125,7 @@ final class GCodeUploader: ObservableObject {
         pendingRemotePath = remoteDirectory.hasSuffix("/")
             ? remoteDirectory + safeName
             : remoteDirectory + "/" + safeName
+        transferID = UUID()
         pendingContents = contents
         bytesSent = 0
         state = .arming
@@ -188,13 +191,14 @@ final class GCodeUploader: ObservableObject {
     // MARK: - Transfer
 
     private func beginTransfer(wireProtocol: MakeraWireProtocol) {
+        let transferID = self.transferID
         guard state == .arming else { return }
         state = .transferring(bytesSent: 0, totalBytes: pendingContents.count)
 
         switch wireProtocol {
         case .makera:
             sendFrame?(MakeraFraming.ptypeFileStart, MakeraFraming.FileTransfer.fileStartPayload(fileSize: pendingContents.count)) { [weak self] error in
-                guard let self else { return }
+                guard let self, self.transferID == transferID else { return }
                 if let error {
                     self.reset(to: .failed("Upload failed: \(error.localizedDescription)"))
                     return
@@ -207,6 +211,7 @@ final class GCodeUploader: ObservableObject {
     }
 
     private func sendNextFrameChunk() {
+        let transferID = self.transferID
         guard case .transferring = state else { return }
         guard bytesSent < pendingContents.count else {
             finishFrameTransfer()
@@ -216,7 +221,7 @@ final class GCodeUploader: ObservableObject {
         let chunk = pendingContents.subdata(in: bytesSent..<end)
 
         sendFrame?(MakeraFraming.ptypeFileData, chunk) { [weak self] error in
-            guard let self else { return }
+            guard let self, self.transferID == transferID else { return }
             if let error {
                 self.reset(to: .failed("Upload failed: \(error.localizedDescription)"))
                 return
@@ -228,17 +233,18 @@ final class GCodeUploader: ObservableObject {
     }
 
     private func finishFrameTransfer() {
+        let transferID = self.transferID
         let digest = Insecure.MD5.hash(data: pendingContents)
         let hex = digest.map { String(format: "%02x", $0) }.joined()
 
         sendFrame?(MakeraFraming.ptypeFileMD5, MakeraFraming.FileTransfer.fileMD5Payload(hexDigest: hex)) { [weak self] error in
-            guard let self else { return }
+            guard let self, self.transferID == transferID else { return }
             if let error {
                 self.reset(to: .failed("Upload failed: \(error.localizedDescription)"))
                 return
             }
             self.sendFrame?(MakeraFraming.ptypeFileEnd, Data()) { [weak self] error in
-                guard let self else { return }
+                guard let self, self.transferID == transferID else { return }
                 if let error {
                     self.reset(to: .failed("Upload failed: \(error.localizedDescription)"))
                     return
@@ -249,6 +255,7 @@ final class GCodeUploader: ObservableObject {
     }
 
     private func sendNextRawChunk() {
+        let transferID = self.transferID
         guard case .transferring = state else { return }
         guard bytesSent < pendingContents.count else {
             finishRawTransfer()
@@ -258,7 +265,7 @@ final class GCodeUploader: ObservableObject {
         let chunk = pendingContents.subdata(in: bytesSent..<end)
 
         sendRawBytes?(chunk) { [weak self] error in
-            guard let self else { return }
+            guard let self, self.transferID == transferID else { return }
             if let error {
                 self.reset(to: .failed("Upload failed: \(error.localizedDescription)"))
                 return
@@ -270,10 +277,11 @@ final class GCodeUploader: ObservableObject {
     }
 
     private func finishRawTransfer() {
+        let transferID = self.transferID
         // 0x04 = Ctrl-D, Smoothieware's documented end-of-upload terminator
         // ("send control-D or control-Z to finish").
         sendRawBytes?(Data([0x04])) { [weak self] error in
-            guard let self else { return }
+            guard let self, self.transferID == transferID else { return }
             if let error {
                 self.reset(to: .failed("Upload failed: \(error.localizedDescription)"))
                 return
@@ -283,6 +291,7 @@ final class GCodeUploader: ObservableObject {
     }
 
     private func reset(to finalState: State) {
+        transferID = UUID()
         armTimeoutTask?.cancel()
         armTimeoutTask = nil
         pendingContents = Data()

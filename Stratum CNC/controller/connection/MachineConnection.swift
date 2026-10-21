@@ -188,14 +188,6 @@ struct MakeraMachineStatus: Equatable {
     }
 }
 
-/// Which wire protocol the connected machine actually speaks.
-/// Officially detected, not assumed — see Carvera_Controller's
-/// carveracontroller/protocols/detector.py for the reference implementation.
-enum MakeraWireProtocol: String {
-    case smoothie = "Smoothie (plain text)"
-    case makera = "Makera (framed binary)"
-}
-
 /// Single-byte realtime controls. Unlike a G-code/console line these aren't
 /// queued behind whatever the machine is doing — the firmware acts on them
 /// the moment the byte arrives, which is the whole point for holding or

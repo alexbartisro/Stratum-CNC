@@ -2,6 +2,19 @@ import Testing
 @testable import Stratum_CNC
 
 struct GCodeJobRunnerRegressionTests {
+    @Test @MainActor func leadingCommentsDoNotDiscardMotionCommands() {
+        let runner = GCodeJobRunner()
+        var sent: [String] = []
+        runner.configure { sent.append($0) }
+        runner.start(lines: ["(comment only)", "; comment", "(move) G1 X1 ; cut", "G1 (next) X2"])
+        #expect(sent == ["G1 X1"])
+        runner.handleMachineLine("ok")
+        #expect(sent == ["G1 X1", "G1  X2"])
+        runner.handleMachineLine("ok")
+        #expect(runner.state == .completed)
+        #expect(runner.totalLines == 2)
+    }
+
     @Test @MainActor func unrelatedTextDoesNotAcknowledgeCommands() {
         let runner = GCodeJobRunner()
         var sent: [String] = []

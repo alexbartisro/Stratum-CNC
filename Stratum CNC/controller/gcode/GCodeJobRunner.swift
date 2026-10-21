@@ -74,8 +74,8 @@ final class GCodeJobRunner: ObservableObject {
         guard !isActive else { return }
 
         let cleaned = lines
-            .map { $0.trimmingCharacters(in: .whitespaces) }
-            .filter { !$0.isEmpty && !$0.hasPrefix(";") && !$0.hasPrefix("(") }
+            .map(Self.removingComments)
+            .filter { !$0.isEmpty }
 
         guard !cleaned.isEmpty else { return }
 
@@ -88,6 +88,18 @@ final class GCodeJobRunner: ObservableObject {
     }
 
     /// Stops queuing further lines. Resume with `resume()`.
+    private static func removingComments(_ line: String) -> String {
+        var depth = 0
+        var result = ""
+        for character in line {
+            if character == ";", depth == 0 { break }
+            if character == "(" { depth += 1; continue }
+            if character == ")", depth > 0 { depth -= 1; continue }
+            if depth == 0 { result.append(character) }
+        }
+        return result.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
     func pause() {
         guard state == .running else { return }
         state = .paused

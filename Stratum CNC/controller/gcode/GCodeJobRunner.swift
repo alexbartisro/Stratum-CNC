@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 /// Streams a sequence of lines to the machine, one at a time, only
 /// advancing once the previous line has been acknowledged.
@@ -52,6 +53,7 @@ final class GCodeJobRunner: ObservableObject {
     /// Called once the last line has been acknowledged (state becomes
     /// `.completed`). Not called for `stop()` — an abort isn't a completion.
     var onFinish: (() -> Void)?
+    var onFailure: (() -> Void)?
 
     /// True from the moment a line is sent until the machine acknowledges
     /// it. Tracked separately from `state` because a feed-hold can pause
@@ -116,6 +118,14 @@ final class GCodeJobRunner: ObservableObject {
     /// accept them.
     func handleMachineLine(_ line: String) {
         guard isActive else { return }
+        let response = line.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        if response.hasPrefix("error") || response.hasPrefix("alarm") {
+            queue.removeAll()
+            awaitingAck = false
+            state = .failed(line)
+            onFailure?()
+            return
+        }
         guard line.localizedCaseInsensitiveContains("ok") else { return }
         // Record the ack even while paused, so `resume()` knows whether
         // there's still a line in flight to wait for.

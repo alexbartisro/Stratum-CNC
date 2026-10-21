@@ -6,6 +6,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [
+    'controller/gcode/GCodeJobRunner.swift',
     'controller/gcode/GCodeParser.swift',
     'controller/gcode/GCodeBounds.swift',
     'controller/gcode/GCodeHeader.swift',

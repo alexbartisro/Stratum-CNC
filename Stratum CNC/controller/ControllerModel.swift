@@ -218,6 +218,9 @@ class ControllerModel: ObservableObject {
         jobRunner.onFinish = { [weak self] in
             self?.levelingFinished()
         }
+        jobRunner.onFailure = { [weak self] in
+            self?.pendingPlayPath = nil
+        }
         connection.onLine = { [weak self] line in
             self?.jobRunner.handleMachineLine(line)
             self?.uploader.handleMachineLine(line)

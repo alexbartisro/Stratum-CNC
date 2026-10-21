@@ -34,7 +34,9 @@ class CAMModel: ObservableObject {
     let canvasZoomModel = CanvasZoomModel()
 
     // ---- TEMPORARY TOOLPATH EDITING ----
-    @Published var toolpaths: [ToolpathData] = []
+    @Published var toolpaths: [ToolpathData] = [] {
+        didSet { onToolpathsChanged?(toolpaths) }
+    }
 
     /// The toolpath whose settings are open in the right-hand panel; nil closes the panel.
     /// Shape picking follows it: while a toolpath is open the canvas is in picking

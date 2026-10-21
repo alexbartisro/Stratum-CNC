@@ -121,12 +121,12 @@ class ProjectModel: ObservableObject {
             self?.saveMetadataTrigger.send(())
         }
 
+        loadProjectData()
+
         camModel.onToolpathsChanged = { [weak self] toolpaths in
             self?.toolpaths = toolpaths
             try? self?.saveToolpaths()
         }
-
-        loadProjectData()
 
         // Wired up only after the initial load/restore above has finished:
         // loadProjectData() itself calls camModel.loadAndParseFileAt for
@@ -174,6 +174,7 @@ class ProjectModel: ObservableObject {
             toolpaths = []
         }
         self.toolpaths = toolpaths
+        camModel.toolpaths = toolpaths
     }
 
     func importAsset(from url: URL) throws -> AssetData {

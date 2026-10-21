@@ -135,7 +135,7 @@ enum FusionToolsImporter {
         }
         func rpm(_ value: Double?) -> Int? {
             guard let value, value > 0 else { return nil }
-            return Int(value.rounded())
+            return Int(exactly: value.rounded())
         }
 
         return (f.startValues?.presets ?? []).map { p in

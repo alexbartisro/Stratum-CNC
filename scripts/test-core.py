@@ -14,6 +14,10 @@ SOURCES = [
     'controller/gcode/GCodeToolpath.swift',
     'tools-lib/FusionToolsImporter.swift',
     'tools-lib/Tool.swift',
+    'tools-lib/ToolsStore.swift',
+    'tools-lib/ToolLibrary.swift',
+    'tools-lib/LaserMaterialPreset.swift',
+    'tools-lib/ThreadMillingPreset.swift',
     'tools-lib/ToolPreset.swift',
 
     'metal-canvas/HeightmapGrid.swift',

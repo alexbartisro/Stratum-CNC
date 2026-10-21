@@ -6,6 +6,8 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [
+    'projects/Project.swift',
+    'projects/ProjectPaths.swift',
     'cam/supported-files/gerber/ArchiveEntryPath.swift',
     'controller/gcode/NCFileDocument.swift',
     'controller/gcode/GCodeToolpathAnalyzer.swift',

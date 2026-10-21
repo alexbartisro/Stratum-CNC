@@ -7,6 +7,12 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [
     'controller/connection/MakeraFraming.swift',
+    'stocks-lib/StocksStore.swift',
+    'stocks-lib/StockLibrary.swift',
+    'stocks-lib/StockMaterial.swift',
+    'stocks-lib/StockMaterialType.swift',
+    'stocks-lib/StockGeometry.swift',
+
 ]
 
 with tempfile.TemporaryDirectory(prefix='stratum-core-') as directory:

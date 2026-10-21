@@ -3,6 +3,30 @@ import Testing
 @testable import Stratum_CNC
 
 struct MachineConnectionTests {
+    @Test @MainActor func stoppedRunCannotStartAReplacementWithTheSameFilename() async throws {
+        let keys = ["autoZBeforeRun", "lastUploadedRemotePath"]
+        let oldValues = keys.map { UserDefaults.standard.object(forKey: $0) }
+        defer {
+            for (key, value) in zip(keys, oldValues) { UserDefaults.standard.set(value, forKey: key) }
+        }
+        let model = ControllerModel()
+        model.autoZBeforeRun = true
+        model.connection.connect(to: .mock)
+        defer { model.connection.disconnect() }
+        // Acknowledge the first pre-run macro without a hardware connection.
+        model.jobRunner.configure { _ in }
+        model.uploader.onCompleted?("/sd/gcodes/same.nc")
+        for _ in 0..<model.jobRunner.totalLines { model.jobRunner.handleMachineLine("ok") }
+        try await Task.sleep(for: .milliseconds(20))
+        model.stopJob()
+        model.uploader.onCompleted?("/sd/gcodes/same.nc")
+        model.connection.clearLogs()
+        // The replacement macro is deliberately still waiting for its first acknowledgement.
+        try await Task.sleep(for: .milliseconds(1100))
+        #expect(model.jobRunner.isActive)
+        #expect(!model.connection.rawLog.contains(where: { $0.hasPrefix("> play ") }))
+    }
+
     @Test @MainActor func zeroingMockWorkCoordinatesDoesNotMoveTheMachine() throws {
         let simulator = MockMachineSimulator()
         simulator.handle(command: "G1 X10 Y20 Z30", reply: { _ in })

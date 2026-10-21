@@ -68,6 +68,15 @@ private struct Tracker {
         var wordX: Double?, wordY: Double?, wordZ: Double?
         var wordI: Double?, wordJ: Double?
 
+        // Modal settings apply to the entire block, regardless of word order.
+        for (letter, value) in words where letter == "G" {
+            switch value {
+            case 20: scale = 25.4
+            case 21: scale = 1.0
+            default: break
+            }
+        }
+
         for (letter, value) in words {
             switch letter {
                 case "G":

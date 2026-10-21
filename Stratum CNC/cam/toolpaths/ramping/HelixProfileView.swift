@@ -142,13 +142,14 @@ struct HelixProfileView: View {
         )
     }
 
-    private func draw(
-        context: inout GraphicsContext,
-        size: CGSize,
-        layout: Layout,
-        phase: CGFloat
-    ) {
-        guard layout.points.count > 1 else { return }
+    private func draw(context: inout GraphicsContext,
+                      size: CGSize,
+                      layout: Layout,
+                      phase: CGFloat) {
+
+        guard layout.points.count > 1 else {
+            return
+        }
 
         let surfaceY = layout.surfaceY
         let rampColor: Color = layout.reachesStepdown ? .accentColor : .orange
@@ -161,10 +162,7 @@ struct HelixProfileView: View {
         material.addLine(to: CGPoint(x: 0, y: size.height))
         material.closeSubpath()
 
-        context.fill(
-            material,
-            with: .color(.brown.opacity(0.18))
-        )
+        context.fill(material, with: .color(.brown.opacity(0.18)))
 
         // Stock surface.
         context.stroke(
@@ -183,10 +181,7 @@ struct HelixProfileView: View {
                 p.addLine(to: CGPoint(x: size.width, y: layout.stepdownY))
             },
             with: .color(.secondary.opacity(0.5)),
-            style: StrokeStyle(
-                lineWidth: 1,
-                dash: [3, 3]
-            )
+            style: StrokeStyle(lineWidth: 1, dash: [3, 3])
         )
 
         // Diameter guides — the two extremes the circular motion sweeps

@@ -93,17 +93,19 @@ extension SC.SlotClearingPattern {
     /// `.spiral`, since neither makes sense for a linear slot -- so this is
     /// its own switch rather than a filtered reuse of the pocket one.
     public func formField(id: String = "pattern",
-                           label: String = "Clearing Pattern",
-                           onChange: @escaping (SC.SlotClearingPattern) -> Void) -> SC.ParameterField {
+                          label: String = "Clearing Pattern",
+                          onChange: @escaping (SC.SlotClearingPattern) -> Void) -> SC.ParameterField {
 
         let currentTrochoidal: SC.TrochoidalSettings = { if case .trochoidal(let s) = self { return s } else { return .init(radialEngagement: 0.3, loopRadius: 1.0) } }()
         let currentAdaptive: SC.AdaptiveSettings = { if case .adaptive(let s) = self { return s } else { return .init(optimalLoad: 1.0) } }()
 
         let cases: [SC.ParameterField.VariantField.Case] = [
             .init(id: "raster", label: "Raster", fields: []),
-            .init(id: "trochoidal", label: "Trochoidal",
+            .init(id: "trochoidal",
+                  label: "Trochoidal",
                   fields: currentTrochoidal.formFields(idPrefix: "\(id).trochoidal") { onChange(.trochoidal(settings: $0)) }),
-            .init(id: "adaptive", label: "Adaptive",
+            .init(id: "adaptive",
+                  label: "Adaptive",
                   fields: currentAdaptive.formFields(idPrefix: "\(id).adaptive") { onChange(.adaptive(settings: $0)) })
         ]
 

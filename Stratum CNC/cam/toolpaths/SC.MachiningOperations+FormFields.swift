@@ -108,35 +108,68 @@ extension SC.MachiningOperation {
                         label: "Holding Tabs",
                         items: tabs.map { tab in
                             .init(id: tab.id.uuidString, fields: [
-                                .double(.init(id: "contour.tabs.\(tab.id).position", label: "Position", unit: "ratio (0-1)",
-                                              range: 0.0...1.0, value: tab.positionRatio, onChange: { newValue in
-                                    var newTabs = tabs
-                                    if let idx = newTabs.firstIndex(where: { $0.id == tab.id }) { newTabs[idx].positionRatio = newValue }
-                                    onChange(.contour(side: side, direction: direction, entry: entry, leadIn: leadIn, leadOut: leadOut, tabs: newTabs))
+                                .double(.init(id: "contour.tabs.\(tab.id).position",
+                                              label: "Position",
+                                              unit: "ratio (0-1)",
+                                              range: 0.0...1.0,
+                                              value: tab.positionRatio,
+                                              onChange: { newValue in
+                                                  var newTabs = tabs
+                                                  if let idx = newTabs.firstIndex(where: { $0.id == tab.id }) {
+                                                      newTabs[idx].positionRatio = newValue
+                                                  }
+                                                  onChange(.contour(side: side,
+                                                                    direction: direction,
+                                                                    entry: entry,
+                                                                    leadIn: leadIn,
+                                                                    leadOut: leadOut,
+                                                                    tabs: newTabs))
                                 })),
-                                .double(.init(id: "contour.tabs.\(tab.id).width", label: "Width", unit: "mm",
-                                              range: 1.0...20.0, value: tab.width, onChange: { newValue in
-                                    var newTabs = tabs
-                                    if let idx = newTabs.firstIndex(where: { $0.id == tab.id }) { newTabs[idx].width = newValue }
-                                    onChange(.contour(side: side, direction: direction, entry: entry, leadIn: leadIn, leadOut: leadOut, tabs: newTabs))
-                                })),
-                                .double(.init(id: "contour.tabs.\(tab.id).height", label: "Height", unit: "mm",
-                                              range: 0.1...10.0, value: tab.height, onChange: { newValue in
-                                    var newTabs = tabs
-                                    if let idx = newTabs.firstIndex(where: { $0.id == tab.id }) { newTabs[idx].height = newValue }
-                                    onChange(.contour(side: side, direction: direction, entry: entry, leadIn: leadIn, leadOut: leadOut, tabs: newTabs))
-                                }))
+                                .double(.init(id: "contour.tabs.\(tab.id).width",
+                                              label: "Width",
+                                              unit: "mm",
+                                              range: 1.0...20.0,
+                                              value: tab.width,
+                                              onChange: { newValue in
+                                                  var newTabs = tabs
+                                                  if let idx = newTabs.firstIndex(where: { $0.id == tab.id }) {
+                                                      newTabs[idx].width = newValue
+                                                  }
+                                                  onChange(.contour(side: side, direction: direction, entry: entry, leadIn: leadIn, leadOut: leadOut, tabs: newTabs))
+                                              })),
+                                .double(.init(id: "contour.tabs.\(tab.id).height",
+                                              label: "Height",
+                                              unit: "mm",
+                                              range: 0.1...10.0,
+                                              value: tab.height,
+                                              onChange: { newValue in
+                                                  var newTabs = tabs
+                                                  if let idx = newTabs.firstIndex(where: { $0.id == tab.id }) {
+                                                      newTabs[idx].height = newValue
+                                                  }
+                                                  onChange(.contour(side: side, direction: direction, entry: entry, leadIn: leadIn, leadOut: leadOut, tabs: newTabs))
+                                              }))
                             ])
                         },
                         onAdd: {
                             var newTabs = tabs
                             newTabs.append(SC.HoldingTab(positionRatio: 0.5))
-                            onChange(.contour(side: side, direction: direction, entry: entry, leadIn: leadIn, leadOut: leadOut, tabs: newTabs))
+                            onChange(.contour(side: side,
+                                              direction: direction,
+                                              entry: entry,
+                                              leadIn: leadIn,
+                                              leadOut: leadOut,
+                                              tabs: newTabs))
                         },
                         onRemove: { tabId in
                             var newTabs = tabs
                             newTabs.removeAll { $0.id.uuidString == tabId }
-                            onChange(.contour(side: side, direction: direction, entry: entry, leadIn: leadIn, leadOut: leadOut, tabs: newTabs))
+                            onChange(.contour(side: side,
+                                              direction: direction,
+                                              entry: entry,
+                                              leadIn: leadIn,
+                                              leadOut: leadOut,
+                                              tabs: newTabs))
                         }
                     ))
                 ]
@@ -152,31 +185,49 @@ extension SC.MachiningOperation {
 
             case .drilling(let peckDepth):
                 return [
-                    .optionalDouble(.init(id: "drilling.peckDepth", label: "Peck Depth", unit: "mm",
-                                  range: 0.05...20.0, defaultValueWhenEnabled: 1.0, value: peckDepth, onChange: {
+                    .optionalDouble(.init(id: "drilling.peckDepth",
+                                          label: "Peck Depth",
+                                          unit: "mm",
+                                          range: 0.05...20.0,
+                                          defaultValueWhenEnabled: 1.0,
+                                          value: peckDepth,
+                                          onChange: {
                         onChange(.drilling(peckDepth: $0))
                     }))
                 ]
 
             case .chamfer(let params):
                 return [
-                    .group(.init(id: "chamfer.params", label: "Chamfer",
+                    .group(.init(id: "chamfer.params",
+                                 label: "Chamfer",
                                  fields: params.formFields(idPrefix: "chamfer.params", onChange: { onChange(.chamfer(params: $0)) })))
                 ]
 
             case .boring(let targetDiameter, let dwellTime, let shiftRetract):
                 return [
-                    .double(.init(id: "boring.targetDiameter", label: "Target Diameter", unit: "mm",
-                                  range: 0.5...200.0, value: targetDiameter, onChange: {
-                        onChange(.boring(targetDiameter: $0, dwellTime: dwellTime, shiftRetract: shiftRetract))
-                    })),
-                    .optionalDouble(.init(id: "boring.dwellTime", label: "Dwell Time", unit: "s",
-                                  range: 0.1...10.0, defaultValueWhenEnabled: 1.0, value: dwellTime, onChange: {
-                        onChange(.boring(targetDiameter: targetDiameter, dwellTime: $0, shiftRetract: shiftRetract))
-                    })),
-                    .bool(.init(id: "boring.shiftRetract", label: "Shift Before Retract", value: shiftRetract, onChange: {
-                        onChange(.boring(targetDiameter: targetDiameter, dwellTime: dwellTime, shiftRetract: $0))
-                    }))
+                    .double(.init(id: "boring.targetDiameter",
+                                  label: "Target Diameter",
+                                  unit: "mm",
+                                  range: 0.5...200.0,
+                                  value: targetDiameter,
+                                  onChange: {
+                                      onChange(.boring(targetDiameter: $0, dwellTime: dwellTime, shiftRetract: shiftRetract))
+                                  })),
+                    .optionalDouble(.init(id: "boring.dwellTime",
+                                          label: "Dwell Time",
+                                          unit: "s",
+                                          range: 0.1...10.0,
+                                          defaultValueWhenEnabled: 1.0,
+                                          value: dwellTime,
+                                          onChange: {
+                                              onChange(.boring(targetDiameter: targetDiameter, dwellTime: $0, shiftRetract: shiftRetract))
+                                          })),
+                    .bool(.init(id: "boring.shiftRetract",
+                                label: "Shift Before Retract",
+                                value: shiftRetract,
+                                onChange: {
+                                    onChange(.boring(targetDiameter: targetDiameter, dwellTime: dwellTime, shiftRetract: $0))
+                                }))
                 ]
 
             case .counterbore(let diameter, let depth, let direction, let entry):
@@ -185,11 +236,17 @@ extension SC.MachiningOperation {
                                   range: 1.0...100.0, value: diameter, onChange: {
                         onChange(.counterbore(diameter: $0, depth: depth, direction: direction, entry: entry))
                     })),
-                    .double(.init(id: "counterbore.depth", label: "Depth", unit: "mm",
-                                  range: 0.1...50.0, value: depth, onChange: {
+                    .double(.init(id: "counterbore.depth",
+                                  label: "Depth",
+                                  unit: "mm",
+                                  range: 0.1...50.0,
+                                  value: depth,
+                                  onChange: {
                         onChange(.counterbore(diameter: diameter, depth: $0, direction: direction, entry: entry))
                     })),
-                    .choice(SC.cutDirectionChoice(id: "counterbore.direction", current: direction, onChange: {
+                    .choice(SC.cutDirectionChoice(id: "counterbore.direction",
+                                                  current: direction,
+                                                  onChange: {
                         onChange(.counterbore(diameter: diameter, depth: depth, direction: $0, entry: entry))
                     })),
                     entry.formField(onChange: {
@@ -199,10 +256,7 @@ extension SC.MachiningOperation {
         }
     }
 
-    /// Display name for the operation case itself, for a picker that lets the
-    /// user choose *which* operation to configure before `formFields` renders
-    /// its parameters. Seeds each case with the same defaults used by
-    /// `formFields`'s own `onSelect` closures where applicable.
+    /// Display name for the operation
     public var displayName: String {
         switch self {
             case .facing: return "Facing"

@@ -16,9 +16,9 @@ import StratumCAM
 extension SC {
 
     static func cutDirectionChoice(id: String,
-                                    label: String = "Direction",
-                                    current: CutDirection,
-                                    onChange: @escaping (CutDirection) -> Void) -> ParameterField.ChoiceField {
+                                   label: String = "Direction",
+                                   current: CutDirection,
+                                   onChange: @escaping (CutDirection) -> Void) -> ParameterField.ChoiceField {
         .init(id: id,
               label: label,
               options: [.init(id: CutDirection.climb.rawValue, label: "Climb"),
@@ -58,8 +58,8 @@ extension SC {
                                        onChange: @escaping (SpiralDirection) -> Void) -> ParameterField.ChoiceField {
         .init(id: id,
               label: label,
-              options: [.init(id: SpiralDirection.outsideIn.rawValue, label: "Outside → In"),
-                        .init(id: SpiralDirection.insideOut.rawValue, label: "Inside → Out")],
+              options: [.init(id: SpiralDirection.insideOut.rawValue, label: "Inside → Out"),
+                        .init(id: SpiralDirection.outsideIn.rawValue, label: "Outside → In")],
               selectedId: current.rawValue,
               onChange: { onChange(SpiralDirection(rawValue: $0) ?? current) })
     }

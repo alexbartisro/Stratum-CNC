@@ -346,14 +346,14 @@ class CAMModel: ObservableObject {
             .compactMap { generations[$0.id]?.previewPath }
 
         switch paths.count {
-        case 0:
-            canvasState.setToolpathsPath(nil)
-        case 1:
-            canvasState.setToolpathsPath(paths[0])
-        default:
-            let combined = CGMutablePath()
-            paths.forEach { combined.addPath($0) }
-            canvasState.setToolpathsPath(combined)
+            case 0:
+                canvasState.setToolpathsPath(nil)
+            case 1:
+                canvasState.setToolpathsPath(paths[0])
+            default:
+                let combined = CGMutablePath()
+                paths.forEach { combined.addPath($0) }
+                canvasState.setToolpathsPath(combined)
         }
     }
 
@@ -434,7 +434,9 @@ class CAMModel: ObservableObject {
 
     /// Call this on init or when the NSView moves to a new screen
     func updateTrueToLifeScale(for screen: NSScreen?) {
-        guard let screen = screen else { return }
+        guard let screen = screen else {
+            return
+        }
 
         let deviceDescription = screen.deviceDescription
         guard let displayID = deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")] as? CGDirectDisplayID,

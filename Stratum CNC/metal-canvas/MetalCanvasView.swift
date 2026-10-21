@@ -492,37 +492,42 @@ struct MetalCanvasView: NSViewRepresentable {
             } else {
                 trigger = .scroll
             }
+
             let action = CanvasInputSettings.shared.action(for: trigger)
+
             switch action {
-            case .zoom:
-                if event.hasPreciseScrollingDeltas {
-                    // Trackpad two-finger swipe: fine deltas, smooth continuous zoom.
-                    performSmoothZoom(deltaY: Float(event.scrollingDeltaY))
-                } else {
-                    // Standard mouse wheel: one notch at a time, stepped zoom.
-                    performSteppedZoom(deltaY: Float(event.scrollingDeltaY))
-                }
-            case .zoomToCursor:
-                performCursorZoom(event: event)
-            case .orbit:
-                // Locked 2D (CAM) never orbits — see the same guard and
-                // doc comment in `handlePan` above.
-                guard parent.interactionMode == .free3D else {
+                case .zoom:
+                    if event.hasPreciseScrollingDeltas {
+                        // Trackpad two-finger swipe: fine deltas, smooth continuous zoom.
+                        performSmoothZoom(deltaY: Float(event.scrollingDeltaY))
+                    } else {
+                        // Standard mouse wheel: one notch at a time, stepped zoom.
+                        performSteppedZoom(deltaY: Float(event.scrollingDeltaY))
+                    }
+
+                case .zoomToCursor:
+                    performCursorZoom(event: event)
+
+                case .orbit:
+                    guard parent.interactionMode == .free3D else {
+                        break
+                    }
+                    performOrbit(translation: scrollTranslation(event))
+
+                case .pan:
+                    performPan(translation: scrollTranslation(event))
+
+                case .snapToFace:
+                    // Snapping to a standard view (front/back/left/right) would
+                    // tip Locked 2D off the top-down view it's pinned to — same
+                    // reasoning as `.orbit` above.
+                    guard parent.interactionMode == .free3D else {
+                        break
+                    }
+                    performViewSnap(event)
+
+                case .none:
                     break
-                }
-                performOrbit(translation: scrollTranslation(event))
-            case .pan:
-                performPan(translation: scrollTranslation(event))
-            case .snapToFace:
-                // Snapping to a standard view (front/back/left/right) would
-                // tip Locked 2D off the top-down view it's pinned to — same
-                // reasoning as `.orbit` above.
-                guard parent.interactionMode == .free3D else {
-                    break
-                }
-                performViewSnap(event)
-            case .none:
-                break
             }
             metalView?.draw()
         }

@@ -236,10 +236,7 @@ private struct DXFPathConverter {
         subpathExplicitlyClosed = false
     }
 
-    private mutating func appendLine(
-        from start: CGPoint,
-        to end: CGPoint
-    ) {
+    private mutating func appendLine(from start: CGPoint, to end: CGPoint) {
         guard distance(start, end) > 1e-9 else {
             return
         }
@@ -263,12 +260,11 @@ private struct DXFPathConverter {
 
 private extension DXFPathConverter {
 
-    mutating func appendFlattenedQuadratic(
-        from p0: CGPoint,
-        control p1: CGPoint,
-        to p2: CGPoint,
-        tolerance: Double = 0.01
-    ) {
+    mutating func appendFlattenedQuadratic(from p0: CGPoint,
+                                           control p1: CGPoint,
+                                           to p2: CGPoint,
+                                           tolerance: Double = 0.01) {
+
         let steps = quadraticStepCount(from: p0, control: p1, to: p2, tolerance: tolerance)
 
         var previous = p0
@@ -296,13 +292,12 @@ private extension DXFPathConverter {
         }
     }
 
-    mutating func appendFlattenedCubic(
-        from p0: CGPoint,
-        control1 p1: CGPoint,
-        control2 p2: CGPoint,
-        to p3: CGPoint,
-        tolerance: Double = 0.01
-    ) {
+    mutating func appendFlattenedCubic(from p0: CGPoint,
+                                       control1 p1: CGPoint,
+                                       control2 p2: CGPoint,
+                                       to p3: CGPoint,
+                                       tolerance: Double = 0.01) {
+        
         let steps = bezierStepCount(
             from: p0,
             control1: p1,
@@ -338,12 +333,10 @@ private extension DXFPathConverter {
     }
 }
 
-private func quadraticPoint(
-    p0: CGPoint,
-    p1: CGPoint,
-    p2: CGPoint,
-    t: Double
-) -> CGPoint {
+private func quadraticPoint(p0: CGPoint,
+                            p1: CGPoint,
+                            p2: CGPoint,
+                            t: Double) -> CGPoint {
     let u = 1.0 - t
 
     return CGPoint(

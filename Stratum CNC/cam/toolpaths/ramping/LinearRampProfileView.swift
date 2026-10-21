@@ -27,12 +27,10 @@ struct LinearRampProfileView: View {
                 let currentPhase = phase(for: timeline.date, cycleDuration: cycleDuration)
 
                 Canvas { context, _ in
-                    draw(
-                        context: &context,
-                        size: size,
-                        layout: layout,
-                        phase: currentPhase
-                    )
+                    draw(context: &context,
+                         size: size,
+                         layout: layout,
+                         phase: currentPhase)
                 }
             }
         }
@@ -54,11 +52,9 @@ struct LinearRampProfileView: View {
         let availableWidth = size.width - marginX * 2
         let availableHeight = size.height - topMargin - bottomMargin
 
-        let result = RampMath.linearRampOutcome(
-            angle: angle,
-            length: length,
-            stepdown: stepdown
-        )
+        let result = RampMath.linearRampOutcome(angle: angle,
+                                                length: length,
+                                                stepdown: stepdown)
 
         // The tool only travels half of the ramp distance away from the start.
         let halfDistance = result.usedLength / 2
@@ -81,22 +77,21 @@ struct LinearRampProfileView: View {
         let turn = CGPoint(x: startX + rampWidth, y: surfaceY + CGFloat(halfDepth) * k)
         let end = CGPoint(x: startX, y: surfaceY + CGFloat(fullDepth) * k)
 
-        return Layout(
-            points: [start, turn, end],
-            stepdownY: surfaceY + CGFloat(stepdown) * k,
-            halfDistance: halfDistance,
-            reachesStepdown: result.reachesStepdown
-        )
+        return Layout(points: [start, turn, end],
+                      stepdownY: surfaceY + CGFloat(stepdown) * k,
+                      halfDistance: halfDistance,
+                      reachesStepdown: result.reachesStepdown)
     }
 
-    private func draw(
-        context: inout GraphicsContext,
-        size: CGSize,
-        layout: Layout,
-        phase: CGFloat
-    ) {
+    private func draw(context: inout GraphicsContext,
+                      size: CGSize,
+                      layout: Layout,
+                      phase: CGFloat) {
+
         let points = layout.points
-        guard points.count == 3 else { return }
+        guard points.count == 3 else {
+            return
+        }
 
         let start = points[0]
         let turn = points[1]
@@ -113,10 +108,7 @@ struct LinearRampProfileView: View {
         material.addLine(to: CGPoint(x: 0, y: size.height))
         material.closeSubpath()
 
-        context.fill(
-            material,
-            with: .color(.brown.opacity(0.18))
-        )
+        context.fill(material, with: .color(.brown.opacity(0.18)))
 
         // Stock surface.
         context.stroke(
@@ -135,10 +127,7 @@ struct LinearRampProfileView: View {
                 p.addLine(to: CGPoint(x: size.width, y: layout.stepdownY))
             },
             with: .color(.secondary.opacity(0.5)),
-            style: StrokeStyle(
-                lineWidth: 1,
-                dash: [3, 3]
-            )
+            style: StrokeStyle(lineWidth: 1, dash: [3, 3])
         )
 
         // Leg 1: z0 → half distance, half of the stepdown.
@@ -148,10 +137,7 @@ struct LinearRampProfileView: View {
                 p.addLine(to: turn)
             },
             with: .color(rampColor),
-            style: StrokeStyle(
-                lineWidth: 3,
-                lineCap: .round
-            )
+            style: StrokeStyle(lineWidth: 3, lineCap: .round)
         )
 
         // Leg 2: back to the start point, finishing at the stepdown z.
@@ -161,11 +147,7 @@ struct LinearRampProfileView: View {
                 p.addLine(to: end)
             },
             with: .color(rampColor.opacity(0.6)),
-            style: StrokeStyle(
-                lineWidth: 3,
-                lineCap: .round,
-                dash: [6, 4]
-            )
+            style: StrokeStyle(lineWidth: 3, lineCap: .round, dash: [6, 4])
         )
 
         context.fill(

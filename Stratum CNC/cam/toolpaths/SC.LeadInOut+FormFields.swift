@@ -21,18 +21,34 @@ extension SC.LeadInOut {
         let currentArcSweep: Double = { if case .arc(_, let s) = style { return s } else { return 90.0 } }()
 
         let styleCases: [SC.ParameterField.VariantField.Case] = [
-            .init(id: "linear", label: "Linear", fields: [
-                .double(.init(id: "\(idPrefix).style.length", label: "Length", unit: "mm",
-                              range: 0.1...20.0, value: currentLength,
-                              onChange: { onChange(.init(style: .linear(length: $0), feedRate: feedRate)) }))
-            ]),
+            .init(id: "linear",
+                  label: "Linear",
+                  fields: [
+                    .double(.init(id: "\(idPrefix).style.length",
+                                  label: "Length",
+                                  unit: "mm",
+                                  range: 0.1...20.0, value: currentLength,
+                                  onChange: {
+                                      onChange(.init(style: .linear(length: $0), feedRate: feedRate))
+                                  }))
+                  ]),
             .init(id: "arc", label: "Arc", fields: [
-                .double(.init(id: "\(idPrefix).style.radius", label: "Radius", unit: "mm",
-                              range: 0.1...20.0, value: currentArcRadius,
-                              onChange: { onChange(.init(style: .arc(radius: $0, sweepAngleDegrees: currentArcSweep), feedRate: feedRate)) })),
-                .double(.init(id: "\(idPrefix).style.sweep", label: "Sweep Angle", unit: "°",
-                              range: 1.0...180.0, value: currentArcSweep,
-                              onChange: { onChange(.init(style: .arc(radius: currentArcRadius, sweepAngleDegrees: $0), feedRate: feedRate)) }))
+                .double(.init(id: "\(idPrefix).style.radius",
+                              label: "Radius",
+                              unit: "mm",
+                              range: 0.1...20.0,
+                              value: currentArcRadius,
+                              onChange: {
+                                  onChange(.init(style: .arc(radius: $0, sweepAngleDegrees: currentArcSweep), feedRate: feedRate))
+                              })),
+                .double(.init(id: "\(idPrefix).style.sweep",
+                              label: "Sweep Angle",
+                              unit: "°",
+                              range: 1.0...180.0,
+                              value: currentArcSweep,
+                              onChange: {
+                                  onChange(.init(style: .arc(radius: currentArcRadius, sweepAngleDegrees: $0), feedRate: feedRate))
+                              }))
             ])
         ]
 

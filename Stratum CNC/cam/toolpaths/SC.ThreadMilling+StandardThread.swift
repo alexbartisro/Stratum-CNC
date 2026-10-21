@@ -66,8 +66,7 @@ extension SC {
                                       onSelect: @escaping (StandardThread) -> Void) -> ParameterField.ChoiceField {
         .init(id: id,
               label: label,
-              options: [.init(id: customThreadId, label: "Custom")]
-                + standardThreads.map { .init(id: $0.id, label: $0.designation) },
+              options: [.init(id: customThreadId, label: "Custom")] + standardThreads.map { .init(id: $0.id, label: $0.designation) },
               selectedId: matchingStandardThreadId(diameter: diameter, pitch: pitch),
               onChange: { selectedId in
                   guard let thread = standardThreads.first(where: { $0.id == selectedId }) else { return }

@@ -58,11 +58,6 @@ struct ToolpathData: Identifiable, Codable, Hashable {
 // Kept in an extension so the compiler-generated memberwise init survives.
 extension ToolpathData {
 
-    /// Projects saved before multi-shape support stored one optional `target`.
-    private enum LegacyKeys: String, CodingKey {
-        case target
-    }
-
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id = try c.decode(UUID.self, forKey: .id)
@@ -85,13 +80,6 @@ extension ToolpathData {
 
         // Projects saved before operations existed were all contours.
         operation = try c.decodeIfPresent(OperationSettings.self, forKey: .operation) ?? OperationSettings()
-
-        if targets.isEmpty {
-            let legacy = try decoder.container(keyedBy: LegacyKeys.self)
-            if let old = try legacy.decodeIfPresent(PathSelection.self, forKey: .target) {
-                targets = [old]
-            }
-        }
     }
 }
 

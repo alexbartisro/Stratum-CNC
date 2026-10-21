@@ -6,6 +6,10 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [
+    'tools-lib/FusionToolsImporter.swift',
+    'tools-lib/Tool.swift',
+    'tools-lib/ToolPreset.swift',
+
     'metal-canvas/HeightmapGrid.swift',
     'metal-canvas/ToolFootprint.swift',
     'controller/gcode/GCodeUploader.swift',

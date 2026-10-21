@@ -192,8 +192,8 @@ final class GCodeParser {
 
         let bytes = Array(text.utf8)
         var values: [UInt8: Double] = [:]
-        var gCommands: [Int] = []
-        var mCommands: [Int] = []
+        var gCommands: [Double] = []
+        var mCommands: [Double] = []
         var index = 0
 
         while index < bytes.count {
@@ -221,7 +221,7 @@ final class GCodeParser {
             if upper == 0x47 { // G
                 index += 1
                 if let number = parseNumber(bytes, index: &index) {
-                    gCommands.append(Int(number))
+                    gCommands.append(number)
                 }
                 continue
             }
@@ -230,7 +230,7 @@ final class GCodeParser {
             if upper == 0x4D { // M
                 index += 1
                 if let number = parseNumber(bytes, index: &index) {
-                    mCommands.append(Int(number))
+                    mCommands.append(number)
                 }
                 continue
             }
@@ -381,7 +381,7 @@ final class GCodeParser {
 
     // MARK: G commands
 
-    private func applyGCommand(_ g: Int, state: inout GCodeState) {
+    private func applyGCommand(_ g: Double, state: inout GCodeState) {
         switch g {
             case 0:
                 state.motion = .rapid

@@ -163,22 +163,24 @@ final class GCodeUploader: ObservableObject {
     /// `GCodeJobRunner.handleMachineLine`.
     func handleMachineLine(_ line: String) {
         let lower = line.lowercased()
+        // A failure can arrive while data is still being sent. It must win
+        // over success words in messages such as "error: file not saved".
+        if isActive && (lower.contains("cancel") || lower.contains("error")
+                        || lower.contains("mismatch") || lower.contains("fail")
+                        || lower.contains("not found")) {
+            reset(to: .failed(line))
+            return
+        }
 
         switch state {
         case .arming:
             guard let wireProtocol = currentWireProtocol?() else { return }
             armTimeoutTask?.cancel()
-            if lower.contains("error") || lower.contains("not found") || lower.contains("fail") {
-                reset(to: .failed(line))
-            } else {
-                beginTransfer(wireProtocol: wireProtocol)
-            }
+            beginTransfer(wireProtocol: wireProtocol)
 
         case .verifying:
             if lower.contains("done") || lower.contains("ok") || lower.contains("saved") {
                 reset(to: .completed(remotePath: pendingRemotePath))
-            } else if lower.contains("cancel") || lower.contains("error") || lower.contains("mismatch") || lower.contains("fail") {
-                reset(to: .failed(line))
             }
             // Anything else (an unrelated status echo, say) is ignored —
             // stay in `.verifying` until something recognisable arrives.

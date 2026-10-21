@@ -3,6 +3,22 @@ import Testing
 @testable import Stratum_CNC
 
 struct GCodeUploaderRegressionTests {
+    @Test(arguments: [false, true])
+    @MainActor func transferErrorsNeverCompleteTheUpload(finishSending: Bool) {
+        let uploader = GCodeUploader()
+        var completed = false
+        uploader.onCompleted = { _ in completed = true }
+        uploader.configure(sendLine: { _ in },
+                           sendRawBytes: { _, completion in if finishSending { completion(nil) } },
+                           sendFrame: { _, _, completion in if finishSending { completion(nil) } },
+                           wireProtocol: { .makera })
+        uploader.upload(fileName: "job.nc", contents: Data("G1 X1".utf8))
+        uploader.handleMachineLine("ready")
+        uploader.handleMachineLine("error: file not saved")
+        #expect(uploader.state == .failed("error: file not saved"))
+        #expect(!completed)
+    }
+
     @Test(arguments: [MakeraWireProtocol.makera, .smoothie])
     @MainActor func cancelledTransferCannotResumeFromLateCallback(wire: MakeraWireProtocol) throws {
         let uploader = GCodeUploader()

@@ -3,6 +3,20 @@ import Testing
 @testable import Stratum_CNC
 
 struct MachineConnectionTests {
+    @Test @MainActor func zeroingMockWorkCoordinatesDoesNotMoveTheMachine() throws {
+        let simulator = MockMachineSimulator()
+        simulator.handle(command: "G1 X10 Y20 Z30", reply: { _ in })
+        simulator.handle(command: "G10L20P0X0Y0Z0", reply: { _ in })
+        let raw = try #require(simulator.handleRealtime(.statusQuery))
+        let status = try #require(MakeraMachineStatus.parse(raw))
+        #expect(status.machinePosition.x == 10)
+        #expect(status.machinePosition.y == 20)
+        #expect(status.machinePosition.z == 30)
+        #expect(status.workPosition.x == 0)
+        #expect(status.workPosition.y == 0)
+        #expect(status.workPosition.z == 0)
+    }
+
     @Test @MainActor func disconnectStopsPendingControllerWork() async throws {
         let model = ControllerModel()
         model.connection.connect(to: .mock)

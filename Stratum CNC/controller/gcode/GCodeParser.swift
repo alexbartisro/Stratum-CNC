@@ -279,8 +279,9 @@ final class GCodeParser {
 
         var newPosition = oldPosition
 
-        let scale =
-            state.units.scaleToMillimeters
+        let scale = state.units.scaleToMillimeters
+        // Reject the whole geometry block before it can poison modal position or Metal buffers.
+        guard values.values.allSatisfy({ Float($0 * scale).isFinite }) else { return }
 
         // X
         if let value = values[0x58] {
@@ -317,6 +318,9 @@ final class GCodeParser {
                 newPosition.z += scaled
             }
         }
+
+        guard Float(newPosition.x).isFinite, Float(newPosition.y).isFinite,
+              Float(newPosition.z).isFinite else { return }
 
         let hasXYZ =
             values[0x58] != nil ||
@@ -414,6 +418,7 @@ final class GCodeParser {
         segments: inout [ToolpathSegment]
     ) {
 
+        guard [start.x, start.y, start.z, end.x, end.y, end.z].allSatisfy({ Float($0).isFinite }) else { return }
         guard distanceSquared(
             start,
             end

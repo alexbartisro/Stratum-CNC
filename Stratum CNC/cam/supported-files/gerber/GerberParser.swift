@@ -107,9 +107,7 @@ enum GerberParser {
         for entry in try archive.entries {
             let entryPath = entry.path
             // Prevent ZIP path traversal.
-            let destination = directory.appendingPathComponent(entryPath)
-
-            guard destination.path.hasPrefix(directory.path + "/") else {
+            guard let destination = ArchiveEntryPath.destination(for: entryPath, in: directory) else {
                 continue
             }
 

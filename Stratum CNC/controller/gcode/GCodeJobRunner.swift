@@ -126,7 +126,7 @@ final class GCodeJobRunner: ObservableObject {
             onFailure?()
             return
         }
-        guard line.localizedCaseInsensitiveContains("ok") else { return }
+        guard awaitingAck, response == "ok" || response.hasPrefix("ok ") else { return }
         // Record the ack even while paused, so `resume()` knows whether
         // there's still a line in flight to wait for.
         awaitingAck = false

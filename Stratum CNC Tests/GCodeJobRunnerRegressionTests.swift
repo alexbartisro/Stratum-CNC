@@ -2,6 +2,23 @@ import Testing
 @testable import Stratum_CNC
 
 struct GCodeJobRunnerRegressionTests {
+    @Test @MainActor func unrelatedTextDoesNotAcknowledgeCommands() {
+        let runner = GCodeJobRunner()
+        var sent: [String] = []
+        runner.configure { sent.append($0) }
+        runner.start(lines: ["G1 X1", "G1 X2"])
+        runner.handleMachineLine("looking for probe")
+        #expect(sent == ["G1 X1"])
+        runner.pause()
+        runner.handleMachineLine("ok")
+        runner.handleMachineLine("ok")
+        #expect(sent == ["G1 X1"])
+        runner.resume()
+        #expect(sent == ["G1 X1", "G1 X2"])
+        runner.handleMachineLine("ok")
+        #expect(runner.state == .completed)
+    }
+
     @Test(arguments: ["error: Probe failed", "ALARM: Probe failed"])
     @MainActor func failedCommandsAbortTheMacro(response: String) {
         let runner = GCodeJobRunner()

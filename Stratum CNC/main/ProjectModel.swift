@@ -79,6 +79,7 @@ class ProjectModel: ObservableObject {
     // collapses into a single write once the user pauses.
     private let saveMetadataTrigger = PassthroughSubject<Void, Never>()
     private var cancellables = Set<AnyCancellable>()
+    private var loadedAssetNames = Set<String>()
 
     init(project: Project, paths: ProjectPaths) {
         self.project = project
@@ -143,6 +144,9 @@ class ProjectModel: ObservableObject {
                 try? self?.saveProjectMetadata()
             }
             .store(in: &cancellables)
+
+        // Upgrade legacy assets before a new toolpath can reference their IDs.
+        updateAssetTransforms(from: camModel.canvasState.objects)
     }
 
     func loadProjectData() {
@@ -155,8 +159,11 @@ class ProjectModel: ObservableObject {
         // saved position/scale/rotation on top of the freshly-parsed one.
         for asset in projectData.assets ?? [] {
             let url = paths.assetsDirectory.appendingPathComponent(asset.name)
-            if let object = camModel.loadAndParseFileAt(url), let transform = asset.transform {
-                camModel.canvasState.restoreTransform(transform, objectID: object.id)
+            if let object = camModel.loadAndParseFileAt(url, restoring: asset.objects) {
+                loadedAssetNames.insert(asset.name)
+                if asset.objects == nil, let transform = asset.transform {
+                    camModel.canvasState.restoreTransform(transform, objectID: object.id)
+                }
             }
         }
 
@@ -207,13 +214,14 @@ class ProjectModel: ObservableObject {
     private func updateAssetTransforms(from objects: [D2_Object]) {
         guard var assets = projectData.assets, !assets.isEmpty else { return }
 
-        for object in objects {
-            guard let index = assets.firstIndex(where: { $0.name == object.name }) else { continue }
-            assets[index].transform = AssetTransform(x: object.position.x,
-                                                      y: object.position.y,
-                                                      width: object.width,
-                                                      height: object.height,
-                                                      rotation: object.rotationDegrees)
+        loadedAssetNames.formUnion(objects.compactMap(\.sourceAssetName))
+        for index in assets.indices where loadedAssetNames.contains(assets[index].name) {
+            assets[index].objects = objects.filter { $0.sourceAssetName == assets[index].name }.map { object in
+                AssetObjectData(id: object.id, name: object.name,
+                                transform: AssetTransform(x: object.position.x, y: object.position.y,
+                                                          width: object.width, height: object.height,
+                                                          rotation: object.rotationDegrees))
+            }
         }
         projectData.assets = assets
     }
@@ -231,6 +239,8 @@ class ProjectModel: ObservableObject {
     }
 
     private func saveToolpaths() throws {
+        // Targets reference object IDs in project.json, so persist those first.
+        try saveProjectMetadata()
         let data = try encoder.encode(toolpaths)
         try data.write(to: paths.toolpathsFile, options: .atomic)
     }

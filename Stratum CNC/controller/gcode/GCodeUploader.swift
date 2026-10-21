@@ -146,6 +146,12 @@ final class GCodeUploader: ObservableObject {
         }
     }
 
+    /// Clears local transfer state without sending abort bytes to a replacement connection.
+    func connectionClosed() {
+        guard isActive else { return }
+        reset(to: .failed("Connection closed"))
+    }
+
     /// Aborts an in-progress transfer. No-op if nothing is active.
     func cancel() {
         guard isActive else { return }

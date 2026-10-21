@@ -235,8 +235,9 @@ class ControllerModel: ObservableObject {
             .store(in: &cancellables)
         connection.$isConnected
             .removeDuplicates()
+            .dropFirst()
             .sink { [weak self] connected in
-                Task { @MainActor in self?.connectionChanged(connected) }
+                self?.connectionChanged(connected)
             }
             .store(in: &cancellables)
 
@@ -462,6 +463,11 @@ class ControllerModel: ObservableObject {
             alerts.requestAuthorization()
             return
         }
+        pendingPlayPath = nil
+        pendingLevelingArea = nil
+        jobRunner.stop()
+        uploader.connectionClosed()
+        jogController.stopAll()
         // `lastError` is only set by failures, not by an ordinary disconnect.
         if connection.lastError != nil, ["Run", "Hold", "Pause"].contains(lastBaseState) {
             alerts.post(MachineAlert(

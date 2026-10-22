@@ -47,7 +47,8 @@ Stratum CNC relies entirely on Apple’s modern native frameworks:
 * Apple Silicon (M1/M2/M3/M4 series) recommended for maximum Metal performance.
 * A Makera CNC machine, but it can be used also without if you want just the CAM and G-code
 
-* NOTE: To compile from sources you need to also download StratumCAM. This is temporary till development is getting more stable and will be imported
+* Xcode resolves StratumCAM automatically at the revision pinned in the project. This branch uses the `alexbartisro/StratumCAM` fork to include the pocket-region planning fixes; a sibling checkout is no longer required.
+* Concentric pockets finish each region at the current depth before moving to the next. See the [heart example and development notes](docs/pocket-region-planning.md).
 
 ---
 

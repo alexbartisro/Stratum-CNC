@@ -26,7 +26,6 @@
 
 /* Begin PBXFileReference section */
 		560F76AA3052C5A40017EE04 /* Stratum CNC Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Stratum CNC Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		560F76B63053164E0017EE04 /* StratumCAM */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = StratumCAM; path = ../StratumCAM; sourceTree = SOURCE_ROOT; };
 		56CEA04D30356265008167CA /* Stratum CNC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Stratum CNC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -76,7 +75,6 @@
 		56CEA04430356265008167CA = {
 			isa = PBXGroup;
 			children = (
-				560F76B63053164E0017EE04 /* StratumCAM */,
 				56CEA04F30356265008167CA /* Stratum CNC */,
 				560F76AB3052C5A40017EE04 /* Stratum CNC Tests */,
 				560F78F2305336B90017EE04 /* Frameworks */,
@@ -176,6 +174,7 @@
 			mainGroup = 56CEA04430356265008167CA;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				560F76B63053164E0017EE04 /* XCRemoteSwiftPackageReference "StratumCAM" */,
 				56CEA0903035EC36008167CA /* XCRemoteSwiftPackageReference "OCCTSwift" */,
 				5679E7B230389CC800B08A35 /* XCRemoteSwiftPackageReference "OCCTSwiftIO" */,
 				5679E7B730389D8B00B08A35 /* XCRemoteSwiftPackageReference "OCCTSwiftViewport" */,
@@ -515,6 +514,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		560F76B63053164E0017EE04 /* XCRemoteSwiftPackageReference "StratumCAM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/alexbartisro/StratumCAM.git";
+			requirement = {
+				kind = revision;
+				revision = 80d683eeac6e69317b12c894829fb9a53a2a5eeb;
+			};
+		};
 		560F75733052662B0017EE04 /* XCRemoteSwiftPackageReference "iOverlay" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/iShape-Swift/iOverlay";
@@ -589,6 +596,7 @@
 		};
 		560F78F3305336B90017EE04 /* StratumCAM */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 560F76B63053164E0017EE04 /* XCRemoteSwiftPackageReference "StratumCAM" */;
 			productName = StratumCAM;
 		};
 		5679E83E303C292E00B08A35 /* PocketSVG */ = {

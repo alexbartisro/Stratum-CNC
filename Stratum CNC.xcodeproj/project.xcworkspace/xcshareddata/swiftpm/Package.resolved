@@ -1,4 +1,5 @@
 {
+  "originHash" : "ba0d724dfe0a906dfe0916c961bc3d652299bc3684d4028ffd96b9558c8b1375",
   "pins" : [
     {
       "identity" : "ifixfloat",
@@ -91,6 +92,14 @@
       }
     },
     {
+      "identity" : "stratumcam",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/alexbartisro/StratumCAM.git",
+      "state" : {
+        "revision" : "80d683eeac6e69317b12c894829fb9a53a2a5eeb"
+      }
+    },
+    {
       "identity" : "swiftdxf",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SecondMouseAU/SwiftDXF.git",
@@ -154,5 +163,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
